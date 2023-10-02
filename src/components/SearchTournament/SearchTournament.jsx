@@ -20,14 +20,14 @@ export default function SearchTournament() {
       <Autocomplete
         id="free-solo-demo"
         freeSolo
-        options={top100Films.map((option) => option.title)}
+        options={tournaments.map((option) => option.tournament_name)}
         renderInput={(params) => <TextField {...params} label="freeSolo" />}
       />
       <Autocomplete
   freeSolo
   id="free-solo-2-demo"
   disableClearable
-  options={top100Films.map((option) => option.title)}
+  options={tournaments.map((option) => option.tournament_name)}
   onChange={(event, newValue) => {
     setSelectedTournament(newValue);
   }}
