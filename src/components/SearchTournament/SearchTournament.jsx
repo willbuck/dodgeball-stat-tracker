@@ -18,13 +18,6 @@ export default function SearchTournament() {
   return (
     <Stack spacing={2} sx={{ width: 300 }}>
       <Autocomplete
-        id="free-solo-demo"
-        freeSolo
-        options={tournaments.map((option) => option.tournament_name)}
-        renderInput={(params) => <TextField {...params} label="freeSolo" />}
-      />
-      <Autocomplete
-  freeSolo
   id="free-solo-2-demo"
   disableClearable
   options={tournaments.map((option) => option.tournament_name)}
@@ -34,7 +27,7 @@ export default function SearchTournament() {
   renderInput={(params) => (
     <TextField
       {...params}
-      label="Search input"
+      label="Search For A Tournament"
       InputProps={{
         ...params.InputProps,
         type: 'search',

@@ -5,7 +5,7 @@ import axios from 'axios';
 function* fetchTournaments() {
     try {
         console.log("in GET tourny")
-        const tournaments = yield axios.get('/api/decks');
+        const tournaments = yield axios.get('/api/tournament');
         console.log('get all:', tournaments.data);
         
         yield put({ 
