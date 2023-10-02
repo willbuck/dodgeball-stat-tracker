@@ -8,7 +8,7 @@ CREATE TABLE "user" (
   id SERIAL PRIMARY KEY,
   username VARCHAR(90) NOT NULL,
   password VARCHAR(100),
-  auth_level INTEGER NOT NULL,
+  auth_level INTEGER,
   email VARCHAR(90)
 );
 
