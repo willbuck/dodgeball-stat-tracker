@@ -16,17 +16,21 @@ import '@fontsource/roboto/700.css';
 import store from './redux/store';
 
 import App from './components/App/App';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
 const root = ReactDOM.createRoot(document.getElementById('react-root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider 
-        theme={theme}>
-          <CssBaseline />
-          <App />
-      </ThemeProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <ThemeProvider 
+          theme={theme}>
+            <CssBaseline />
+            <App />
+        </ThemeProvider>
+      </LocalizationProvider>
     </Provider>
   </React.StrictMode>
 );
