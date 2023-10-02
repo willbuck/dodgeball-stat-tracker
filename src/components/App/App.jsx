@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
+import AdminRoutes from '../Admin/AdminRoutes'
 
 
 function App() {
@@ -39,6 +40,9 @@ function App() {
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
+
+          {/* Admin Routes in separate component */}
+          <AdminRoutes />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
