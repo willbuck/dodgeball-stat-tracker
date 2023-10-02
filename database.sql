@@ -3,6 +3,7 @@
 -- You must use double quotes in every query that user is in:
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
+
 CREATE TABLE "user" (
   id SERIAL PRIMARY KEY,
   username VARCHAR(90) NOT NULL,
@@ -50,7 +51,7 @@ CREATE TABLE players (
 CREATE TYPE event AS ENUM('kill', 'catch', 'out');
 CREATE TABLE statistics (
   id SERIAL PRIMARY KEY,
-  event event,
+  events event,
   is_official BOOLEAN NOT NULL,
   game_id INT REFERENCES "game" NOT NULL,
   player_id INT REFERENCES "players" NOT NULL,
