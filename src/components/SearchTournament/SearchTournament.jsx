@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 export default function SearchTournament() {
 
   const tournaments = useSelector((store) => store.tournamentReducer);
-  const [selectedTournament, setSelectedTournament] = useState([]);
+  const [selectedTournament, setSelectedTournament] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
