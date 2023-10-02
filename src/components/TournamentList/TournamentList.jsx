@@ -16,6 +16,9 @@ export default function TournamentList() {
 
   const history = useHistory();
   const tournaments = useSelector((store) => store.tournamentReducer);
+  const selectedTournament = useSelector((store) => store.selectedTournamentReducer);
+  const selectedTournamentFromArray = tournaments.filter((item) => item.tournament_name === selectedTournament)
+  console.log('filtered tourny data', selectedTournamentFromArray);
 
   const handleClick = (id) => {
     history.push(`/tournamentDetails/${id}`)

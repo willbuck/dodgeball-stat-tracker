@@ -8,36 +8,39 @@ import Box from '@mui/material/Box';
 
 export default function SearchTournament() {
 
-    const tournaments = useSelector((store) => store.tournamentReducer);
-    const [selectedTournament, setSelectedTournament] = useState([]);
-    const dispatch = useDispatch();
+  const tournaments = useSelector((store) => store.tournamentReducer);
+  const [selectedTournament, setSelectedTournament] = useState([]);
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch({ type: "FETCH_TOURNAMENTS" });
-      }, [dispatch]);
+  useEffect(() => {
+    dispatch({ type: "FETCH_TOURNAMENTS" });
+  }, [dispatch]);
 
   return (
     <Stack spacing={2} sx={{ width: 300 }}>
       <Autocomplete sx={{ width: 300 }}
-  id="free-solo-2-demo"
-  disableClearable
-  options={tournaments.map((option) => option.tournament_name)}
-  onChange={(event, newValue) => {
-    setSelectedTournament(newValue);
-  }}
-  renderInput={(params) => (
-    <TextField sx={{ width: 300 }}
-      {...params}
-      label="Search For A Tournament"
-      InputProps={{
-        ...params.InputProps,
-        type: 'search',
-      }}
-    />
-  )}
-/>
+        id="free-solo-2-demo"
+        disableClearable
+        options={tournaments.map((option) => option.tournament_name)}
+        onChange={(event, newValue) => {
+          setSelectedTournament(newValue)
+          console.log('new value and selected tournament values', newValue, selectedTournament);
+          dispatch({ type: 'SET_SELECTED_TOURNAMENT', payload: newValue });
+          console.log('selectedTournament', selectedTournament);
+        }}
+        renderInput={(params) => (
+          <TextField sx={{ width: 300 }}
+            {...params}
+            label="Search For A Tournament"
+            InputProps={{
+              ...params.InputProps,
+              type: 'search',
+            }}
+          />
+        )}
+      />
 
     </Stack>
-    
+
   );
 }
