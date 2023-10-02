@@ -1,17 +1,40 @@
-import React from "react";
+import * as React from 'react';
+import {FormContainer, TextFieldElement, DatePickerElement, TimePickerElement, AutocompleteElement } from 'react-hook-form-mui'
 
-import {
-  Stack,
-  Typography,
-  TextField,
-  Button,
-  Box
-} from '@mui/material'
+import { Button, Stack } from '@mui/material'
 
-function CreateTournament() {
-  return(
-    
+
+export default function CreateTournament() {
+  return (
+    <FormContainer defaultValues={{ name: '' 
+    }}>
+      <Stack>
+
+      <TextFieldElement name="name" label="Name" required />
+      <DatePickerElement name='date' label="Date" required />
+      <TimePickerElement name="start" label="Start Time" />
+      <TimePickerElement name="end" label="End Time" />
+      <TextFieldElement name='court' label="Court" />
+      <TextFieldElement name='location' label='Location' />
+      <AutocompleteElement 
+        name='ball'
+        label='Ball Type'
+        options={[
+          {
+            id: 1,
+            label: 'Rubber'
+          },
+          {
+            id: 2,
+            label: 'Cloth'
+          },
+          {
+            id: 3,
+            label: 'Other'
+          },
+        ]}
+      />
+      </Stack>
+    </FormContainer>
   );
 }
-
-export default CreateTournament;
