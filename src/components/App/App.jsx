@@ -20,7 +20,10 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
+import StyleTest from '../StyleTest/StyleTest';
+
 import './App.css';
+
 
 function App() {
   const dispatch = useDispatch();
