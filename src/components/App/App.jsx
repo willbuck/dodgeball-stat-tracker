@@ -13,6 +13,7 @@ import Footer from "../Footer/Footer";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
+<<<<<<< HEAD
 import AboutPage from "../AboutPage/AboutPage";
 import UserPage from "../UserPage/UserPage";
 import InfoPage from "../InfoPage/InfoPage";
@@ -20,6 +21,20 @@ import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import TournamentDetails from "../TournamentDetails/TournamentDetails";
+=======
+// Admin Imports
+import AdminLanding from '../Admin/AdminLanding'
+import CreateTournament from '../Admin/CreateTournament'
+
+import AboutPage from '../AboutPage/AboutPage';
+import UserPage from '../UserPage/UserPage';
+import InfoPage from '../InfoPage/InfoPage';
+import LandingPage from '../LandingPage/LandingPage';
+import LoginPage from '../LoginPage/LoginPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
+
+import './App.css';
+>>>>>>> 7ab938ede5328a398b01ddede67d65ed4c2eb088
 
 import "./App.css";
 
@@ -39,6 +54,19 @@ function App() {
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
+
+         {/* ADMIN ROUTES */}
+          <ProtectedRoute exact path="/admin">
+            <AdminLanding />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/admin/create-tournament">
+            <CreateTournament />
+          </ProtectedRoute>
+        
+          <ProtectedRoute exact path="/admin/manage-tournament">
+            {/* Add admin route components here */}
+          </ProtectedRoute>
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
