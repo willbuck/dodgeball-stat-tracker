@@ -11,12 +11,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const challongeRouter = require('./routes/challonge.router')
 const tournamentRouter = require('./routes/tournament.router')
-<<<<<<< HEAD
 const tournamentDetailsRouter = require('./routes/tournamentDetails.router');
-=======
-
-
->>>>>>> 7ab938ede5328a398b01ddede67d65ed4c2eb088
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
