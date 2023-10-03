@@ -7,6 +7,7 @@ const axios = require('axios');
 router.get('/tournament', (req, res) => {
     const apiKey = process.env.CHALLONGE_API_KEY;
 
+    console.log('req.body:', req.body)
     //! The tournamentURL string should be taken from 
     const tournamentURL = 'lztss79e'
     const endpointURL = `https://api.challonge.com/v1/tournaments/${tournamentURL}.json`;
@@ -37,25 +38,25 @@ router.post('/tournament', (req, res) => {
     const apiKey = process.env.CHALLONGE_API_KEY;
     const endpointURL = `https://api.challonge.com/v1/tournaments.json`;
 
-    const name = "test_tournament_2" //! This string should be a variable passed in by the user
+    console.log('in create tournament router POST:', req.body)
 
     // Function to make API request
     const createTournament = async () => {
         try {
             let response = await axios.post(endpointURL, {
                 api_key: apiKey,
-                name: name,
+                name: req.body.name,
                 game_name: "Dodgeball",
-                description: "",
+                description: req.body.description,
                 tournament_type: "single elimination", // alternative is "round robin"
                 signup_cap: null, // max teams
                 start_at: null,
             });
             
-            // Tournament ID so we can add newly created tournament to our database
-            const tournamentURL = response.data.tournament.name;
+            // Tournament URL so we can add newly created tournament to our database
+            const newTournamentData = response.data.tournament;
 
-            res.sendStatus(200)
+            res.send(newTournamentData)
         } catch (error) {
             console.error('error in tournament post:', error)
             res.sendStatus(500)
