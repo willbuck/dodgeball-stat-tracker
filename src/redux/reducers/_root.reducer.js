@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
 import tournamentReducer from './tournament.reducer';
+import tournamentDetailsReducer from './tournamentDetails.reducer';
 import selectedTournamentReducer from './selectedtournament.reducer';
 import playersReducer from './players.reducer';
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
   tournamentReducer,
+  tournamentDetailsReducer,
   selectedTournamentReducer,
   playersReducer,
 });
