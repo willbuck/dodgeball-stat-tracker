@@ -11,9 +11,7 @@ function Header() {
 
     const getCurrentRouteName = () => {
         const pathname = history.location.pathname;
-
         const routeName = pathname.split('/').filter(Boolean).pop();
-
         return routeName;
     };
 
