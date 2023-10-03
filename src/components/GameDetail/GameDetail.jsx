@@ -51,10 +51,10 @@ function GameDetail() {
                             >
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                                        {player.number}
+                                        {player.jersey_number}
                                     </Typography>
                                     <Typography variant='body2' color='text.secondary'>
-                                        {player.name}
+                                        {player.firstname} {player.lastname}
                                     </Typography>
                                 </CardContent>
                             </Card>
@@ -76,10 +76,10 @@ function GameDetail() {
                             >
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                                        {player.number}
+                                        {player.jersey_number}
                                     </Typography>
                                     <Typography variant='body2' color='text.secondary'>
-                                        {player.name}
+                                        {player.firstname} {player.lastname}
                                     </Typography>
                                 </CardContent>
                             </Card>
