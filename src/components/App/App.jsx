@@ -88,7 +88,7 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <ProtectedRoute exact path="/tournamentDetails">
+          <ProtectedRoute path="/tournamentDetails">
             <TournamentDetails />
           </ProtectedRoute>
 
