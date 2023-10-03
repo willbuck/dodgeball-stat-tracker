@@ -5,6 +5,7 @@ import { FormContainer, TextFieldElement, DatePickerElement, TimePickerElement, 
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import dayjs from 'dayjs'
 
 // Style components
@@ -13,6 +14,7 @@ import { Button, Stack } from '@mui/material'
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { Select } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import NativeSelect from '@mui/material/NativeSelect';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -21,6 +23,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 export default function CreateTournament() {
   const dispatch = useDispatch();
 
+  const user = useSelector(store => store.user)
   const [name, setName] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [ballType, setBallType] = useState('');
@@ -31,7 +34,7 @@ export default function CreateTournament() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const tournamentData = { name, date: startDate, ballType, location, courts, description }
+    const tournamentData = { name, startDate, ballType, location, courts, description, user }
     console.log('tournamentData:', tournamentData)
 
     dispatch({type: 'CREATE_TOURNAMENT', payload: tournamentData})
@@ -89,16 +92,19 @@ export default function CreateTournament() {
         />
 
         {/* Ball Type input */}
+        <InputLabel id="ball-type-label">Ball Type</InputLabel>
         <Select
           required
-          placeholder="Ball Type"
+          labelId="ball-type-label"
+          label="Ball Type"
           value={ballType}
           onChange={(event) => setBallType(event.target.value)}
         >
-          <MenuItem value="hairy">Hairy</MenuItem>
-          <MenuItem value="smooth">Smooth</MenuItem>
+          <MenuItem value="cloth">Cloth</MenuItem>
+          <MenuItem value="foam">Foam</MenuItem>
         </Select>
 
+        {/* Location input */}
         <TextField
           required
           placeholder="Location"
@@ -106,6 +112,7 @@ export default function CreateTournament() {
           onChange={(event) => setLocation(event.target.value)}
         />
 
+        {/* Courts input */}
         <TextField
           required
           placeholder="Courts"
@@ -117,6 +124,7 @@ export default function CreateTournament() {
           onChange={(event) => setCourts(event.target.value)}
         />
 
+        {/* Description input */}
         <TextField 
           placeholder="Description"
           value={description}

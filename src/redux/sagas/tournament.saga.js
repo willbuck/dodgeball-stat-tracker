@@ -19,20 +19,35 @@ function* fetchTournaments() {
 }
 
 function* createTournament(action) {
-    // 1 - post tournament to Challonge
-    // 2 - get tournament from Challonge?
-    // 3 - post tournament to database
+    // X - post tournament to Challonge
+    // 2 - post tournament to database
     //? Should the next two be in their own saga action?
-    // 4 - post participants to Challonge
-    // 5 - post participants to database
+    // 3 - post participants to Challonge
+    // 4 - post participants to database
     console.log('in createTournament', action.payload)
 
-    try {
+    const {name, startDate, ballType, location, courts, description, user} = action.payload
 
+    try {
+        // Create tournament on Challonge
+        const newTournamentData = yield axios.post('/api/challonge/tournament', action.payload);
+        console.log('data from Challonge create:', newTournamentData);
+
+        const queryData = {
+            name,
+            organizer: user.id,
+            location,
+            startDate,
+            ballType,
+            courts, 
+            description,
+            url: newTournamentData.data.url 
+        }
+        // Post tournament data to database
+        yield axios.post('/api/tournament', queryData)
     } catch (error) {
         console.log('error in create tournament saga:', error)
     }
-
 }
 
 function* tournamentSaga() {  
