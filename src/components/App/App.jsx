@@ -13,15 +13,6 @@ import Footer from "../Footer/Footer";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-<<<<<<< HEAD
-import AboutPage from "../AboutPage/AboutPage";
-import UserPage from "../UserPage/UserPage";
-import InfoPage from "../InfoPage/InfoPage";
-import LandingPage from "../LandingPage/LandingPage";
-import LoginPage from "../LoginPage/LoginPage";
-import RegisterPage from "../RegisterPage/RegisterPage";
-import TournamentDetails from "../TournamentDetails/TournamentDetails";
-=======
 // Admin Imports
 import AdminLanding from '../Admin/AdminLanding'
 import CreateTournament from '../Admin/CreateTournament'
@@ -32,9 +23,9 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import TournamentDetails from "../TournamentDetails/TournamentDetails";
 
 import './App.css';
->>>>>>> 7ab938ede5328a398b01ddede67d65ed4c2eb088
 
 import "./App.css";
 
