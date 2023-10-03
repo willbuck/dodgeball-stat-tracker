@@ -67,7 +67,7 @@ function GameDetail() {
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {team1players.map((player) => {
+                    {players.map((player) => {
                         return (
                             <Card
                                 key={player.id}
@@ -103,7 +103,7 @@ function GameDetail() {
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {team2players.map((player) => {
+                    {players.map((player) => {
                         return (
                             <Card
                                 key={player.id}

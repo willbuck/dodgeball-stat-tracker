@@ -25,6 +25,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
+import GameDetail from '../GameDetail/GameDetail';
 
 
 function App() {
@@ -44,7 +45,7 @@ function App() {
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
 
-         {/* ADMIN ROUTES */}
+          {/* ADMIN ROUTES */}
           <ProtectedRoute exact path="/admin">
             <AdminLanding />
           </ProtectedRoute>
@@ -52,7 +53,7 @@ function App() {
           <ProtectedRoute exact path="/admin/create-tournament">
             <CreateTournament />
           </ProtectedRoute>
-        
+
           <ProtectedRoute exact path="/admin/manage-tournament">
             {/* Add admin route components here */}
           </ProtectedRoute>
@@ -84,6 +85,14 @@ function App() {
             path="/info"
           >
             <InfoPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/gameview"
+          >
+            <GameDetail />
           </ProtectedRoute>
 
           <Route
