@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/:id', (req,res) => {
     console.log('heyyyy')
-    console.log('Params:', req.params.id)
+    console.log('Params id:', req.params.id)
 
     const queryText = `
     -- to get all the games inside a specific tournament 
