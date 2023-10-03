@@ -22,11 +22,6 @@ function TournamentDetails() {
     setSelectedGame(newValue);
   };
 
-  // when the page loads, I want all the games in
-  // the selected tournament to be fetched
-  useEffect(() => {
-    dispatch({ type: "GET_TOURNAMENT_DETAILS" });
-  }, []);
 
   console.log("The storreee:", tournamentDetail);
 
