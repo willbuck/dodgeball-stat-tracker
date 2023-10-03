@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, } from "react-redux";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 // MUI Imports
@@ -9,21 +9,43 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import BackHandIcon from '@mui/icons-material/BackHand';
+import DoNotStepIcon from '@mui/icons-material/DoNotStep';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
+// import Button from '@mui/material/Button';
+// import CallMissedIcon from '@mui/icons-material/CallMissed';
+
 
 
 function GameDetail() {
     const user = useSelector((store) => store.user);
-    const team1players = useSelector((store) => store.players);
-    const team2players = useSelector((store) => store.players);
+    const players = useSelector((store) => store.playersReducer);
+    console.log('players data:', players);
+    // const team1players = 
+    // const team2players = 
+
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        dispatch({ type: "FETCH_TEAMS" });
+    }, []);
+
+
+    const handleKill = () => { };
+
+    const handleOutOfBounds = () => { };
+
+    const handleCatch = () => { };
 
 
     return (
-        // Main Holding Box
+        // Main Container Box
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
 
-            {/* Main Box For Scrolling Teams */}
+            {/* Main Container Box For Scrolling */}
             <Box className="scroll-container"
 
                 sx={{
@@ -38,6 +60,8 @@ function GameDetail() {
                     },
                 }}
             >
+
+
                 {/* Left Grid For Team 1 */}
                 <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'left' }}
                     xs={6}
@@ -57,6 +81,17 @@ function GameDetail() {
                                         {player.firstname} {player.lastname}
                                     </Typography>
                                 </CardContent>
+                                <CardActions disableSpacing>
+                                    <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
+                                        <GpsFixedIcon />
+                                    </IconButton>
+                                    <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
+                                        <DoNotStepIcon />
+                                    </IconButton>
+                                    <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
+                                        <BackHandIcon />
+                                    </IconButton>
+                                </CardActions>
                             </Card>
                         )
                     })}
@@ -82,10 +117,22 @@ function GameDetail() {
                                         {player.firstname} {player.lastname}
                                     </Typography>
                                 </CardContent>
+                                <CardActions disableSpacing>
+                                    <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
+                                        <GpsFixedIcon />
+                                    </IconButton>
+                                    <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
+                                        <DoNotStepIcon />
+                                    </IconButton>
+                                    <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
+                                        <BackHandIcon />
+                                    </IconButton>
+                                </CardActions>
                             </Card>
                         )
                     })}
                 </Grid>
+
 
             </Box>
         </Box>
