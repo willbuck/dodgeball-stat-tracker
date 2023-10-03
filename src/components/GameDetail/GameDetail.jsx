@@ -29,8 +29,8 @@ function GameDetail() {
     const dispatch = useDispatch();
 
 
-    useEffect(() => {
-        dispatch({ type: "FETCH_TEAMS" });
+    useEffect((ID) => {
+        dispatch({ type: "FETCH_TEAMS", payload: ID });
     }, []);
 
 
