@@ -1,35 +1,44 @@
 import React from 'react';
-import { Link, useHistory, } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector } from 'react-redux';
 // import { Height } from '@mui/icons-material';
 
 function Header() {
     const history = useHistory();
+    const location = useLocation();
     const user = useSelector((store) => store.user);
 
 
-    const getCurrentRouteName = () => {
-        const pathname = history.location.pathname;
-        const routeName = pathname.split('/').filter(Boolean).pop();
-        return routeName;
+    const getCurrentRouteTitle = () => {
+        const pathname = location.pathname;
+        // const routeName = pathname.split('/').filter(Boolean).pop();
+        // return routeName;
+        if (pathname === '/home') {
+            return 'Home';
+        } else if (pathname.startsWith('/create-tournament')) {
+            return 'Create Tournament';
+        } else if (pathname.startsWith('/gameview')) {
+            return 'Game View';
+        } else {
+            return 'Unknown Page';
+        }
     };
 
-
-    const currentPage = getCurrentRouteName();
+    const currentTitle = getCurrentRouteTitle();
 
 
     return (
-        <div className="header">
+        <div className="header" style={{ justifyContent: 'space-between' }}>
             <Link to="/home">
                 <img
                     src='https://s3.amazonaws.com/playpass-discovery/production/organizers/logos/31127/wide_USAD-SITELOGO.png?1581286742'
-                    style={{ height: '20px', width: '20px' }}
+                    style={{ height: '100px', width: '100px' }}
                 />
             </Link>
 
             <div>
-                <h2 className="header-title">{currentPage}</h2>
+                <h2 className="header-title">{currentTitle}</h2>
             </div>
 
             <div>
