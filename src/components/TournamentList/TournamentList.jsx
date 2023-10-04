@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 
 export default function TournamentList() {
 
+  const dispatch = useDispatch();
   const history = useHistory();
   const tournaments = useSelector((store) => store.tournamentReducer);
   const selectedTournament = useSelector((store) => store.selectedTournamentReducer);
@@ -21,6 +22,11 @@ export default function TournamentList() {
   console.log('filtered tourny data', selectedTournamentFromArray);
 
   const handleClick = (id) => {
+    console.log('GAvin:', id)
+    dispatch({
+      type: 'GET_TOURNAMENT_DETAILS',
+      payload: id
+    })
     history.push(`/tournamentDetails/${id}`)
   }
 

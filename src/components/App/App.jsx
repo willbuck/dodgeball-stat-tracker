@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   HashRouter as Router,
   Redirect,
   Route,
   Switch,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
-import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
+import Nav from "../Nav/Nav";
+import Footer from "../Footer/Footer";
 
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 // Admin Imports
 import AdminLanding from '../Admin/AdminLanding'
@@ -24,19 +24,23 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import TournamentDetails from "../TournamentDetails/TournamentDetails";
 
 import './App.css';
+import GameDetail from '../GameDetail/GameDetail';
 
+import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
 
-  const user = useSelector(store => store.user);
+  const user = useSelector((store) => store.user);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_USER' });
+    dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
 
+  console.log('user id:', user.id)
   return (
     <Router>
       <div>
@@ -45,7 +49,7 @@ function App() {
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
 
-         {/* ADMIN ROUTES */}
+          {/* ADMIN ROUTES */}
           <ProtectedRoute exact path="/admin">
             <AdminLanding />
           </ProtectedRoute>
@@ -53,7 +57,7 @@ function App() {
           <ProtectedRoute exact path="/admin/create-tournament">
             <CreateTournament />
           </ProtectedRoute>
-        
+
           <ProtectedRoute exact path="/admin/manage-tournament">
             {/* Add admin route components here */}
           </ProtectedRoute>
@@ -91,46 +95,52 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <Route
+
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
             exact
-            path="/login"
+            path="/gameview"
           >
-            {user.id ?
-              // If the user is already logged in, 
+            <GameDetail />
+          </ProtectedRoute>
+
+          
+          <ProtectedRoute path="/tournamentDetails">
+            <TournamentDetails />
+          </ProtectedRoute>
+
+          <Route exact path="/login">
+            {user.id ? (
+              // If the user is already logged in,
+
               // redirect to the /user page
               <Redirect to="/user" />
-              :
+            ) : (
               // Otherwise, show the login page
               <LoginPage />
-            }
+            )}
           </Route>
 
-          <Route
-            exact
-            path="/registration"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path="/registration">
+            {user.id ? (
+              // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/user" />
-              :
+            ) : (
               // Otherwise, show the registration page
               <RegisterPage />
-            }
+            )}
           </Route>
 
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path="/home">
+            {user.id ? (
+              // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/user" />
-              :
+            ) : (
               // Otherwise, show the Landing page
               <LandingPage />
-            }
+            )}
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

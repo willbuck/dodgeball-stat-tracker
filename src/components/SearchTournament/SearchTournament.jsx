@@ -12,15 +12,20 @@ export default function SearchTournament() {
   const [selectedTournament, setSelectedTournament] = useState();
   const dispatch = useDispatch();
 
+  function handleClear(){
+    console.log("kjdfgshbf")
+    dispatch({ type: "UNSET_SELECTED_TOURNAMENT" });
+  }
+
   useEffect(() => {
     dispatch({ type: "FETCH_TOURNAMENTS" });
-  }, [dispatch]);
+  }, []);
 
   return (
     <Stack spacing={2} sx={{ width: 300 }}>
       <Autocomplete sx={{ width: 300 }}
         id="free-solo-2-demo"
-        disableClearable
+        //disableClearable 
         options={tournaments.map((option) => option.tournament_name)}
         onChange={(event, newValue) => {
           setSelectedTournament(newValue)
@@ -29,7 +34,7 @@ export default function SearchTournament() {
           console.log('selectedTournament', selectedTournament);
         }}
         renderInput={(params) => (
-          <TextField sx={{ width: 300 }}
+          <TextField onClick={handleClear} sx={{ width: 300 }}
             {...params}
             label="Search For A Tournament"
             InputProps={{
