@@ -29,16 +29,22 @@ function GameDetail() {
     const dispatch = useDispatch();
 
 
-    useEffect((ID) => {
-        dispatch({ type: "FETCH_TEAMS", payload: ID });
-    }, []);
+    // useEffect((ID) => {
+    //     dispatch({ type: "FETCH_TEAMS", payload: ID });
+    // }, []);
 
 
-    const handleKill = () => { };
+    const handleKill = (id) => {
+        console.log(id, 'Got a Kill!')
+     };
 
-    const handleOutOfBounds = () => { };
+    const handleOutOfBounds = (id) => {
+        console.log(id, 'Out of bounds!')
+     };
 
-    const handleCatch = () => { };
+    const handleCatch = (id) => {
+        console.log(id, 'Got a Catch!')
+     };
 
 
     return (
@@ -50,8 +56,8 @@ function GameDetail() {
 
                 sx={{
                     display: 'flex',
-                    width: 255,
-                    height: 500,
+                    width: 350,
+                    height: 600,
                     overflowY: "auto",
                     backgroundColor: 'primary.dark',
                     '&:hover': {
@@ -63,7 +69,7 @@ function GameDetail() {
 
 
                 {/* Left Grid For Team 1 */}
-                <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'left' }}
+                <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'left', paddingLeft: 1 }}
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
@@ -71,17 +77,17 @@ function GameDetail() {
                         return (
                             <Card
                                 key={player.id}
-                                sx={{ minWidth: 100, maxWidth: 125, display: 'flex', justifyContent: 'center' }}
+                                sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
                             >
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                                        {player.jersey_number}
+                                        #{player.jersey_number}
                                     </Typography>
                                     <Typography variant='body2' color='text.secondary'>
                                         {player.firstname} {player.lastname}
                                     </Typography>
                                 </CardContent>
-                                <CardActions disableSpacing>
+                                <CardActions sx={{justifyContent: 'spaceBetween'}}>
                                     <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
                                         <GpsFixedIcon />
                                     </IconButton>
@@ -99,7 +105,7 @@ function GameDetail() {
 
 
                 {/* Right Grid For Team 2 */}
-                <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'right' }}
+                <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'right', paddingRight: 1  }}
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
@@ -107,17 +113,17 @@ function GameDetail() {
                         return (
                             <Card
                                 key={player.id}
-                                sx={{ minWidth: 100, maxWidth: 125, display: 'flex', justifyContent: 'center' }}
+                                sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
                             >
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                                        {player.jersey_number}
+                                        #{player.jersey_number}
                                     </Typography>
                                     <Typography variant='body2' color='text.secondary'>
                                         {player.firstname} {player.lastname}
                                     </Typography>
                                 </CardContent>
-                                <CardActions disableSpacing>
+                                <CardActions sx={{justifyContent: 'spaceBetween'}}>
                                     <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
                                         <GpsFixedIcon />
                                     </IconButton>
