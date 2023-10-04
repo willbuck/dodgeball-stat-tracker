@@ -1,22 +1,37 @@
 import React, { useState } from 'react'
-import { Container, TextField, Typography, Stack, Grid } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Container, TextField, Typography, Stack, Button } from '@mui/material'
 
 export default function CreateTeams() {
+  const dispatch = useDispatch();
+  
+  const [ teamName, setTeamName ] = useState('Unnamed Team')
 
-  const [ teamName, setTeamName ] = useState('')
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const teamData = { teamName }
+
+    dispatch({type: 'CREATE_TEAM', payload: teamData})
+  }
 
   return (
-    <Container>
-    <Stack spacing={2}>
-    <Typography variant='h4'>{teamName}</Typography>
-    <TextField label="Team Name"></TextField>
-    <Typography variant='h5'>Add Player</Typography>
-    <Grid container>
-      <TextField label="First Name"></TextField>
-      <TextField label="Last Name"></TextField>
-    </Grid>
-    </Stack>
-    
+    <Container component='form' onSubmit={handleSubmit}>
+      <Stack spacing={2}>
+        <Typography variant="h4">{teamName}</Typography>
+
+        <TextField
+          required
+          label="Team Name"
+          placeholder="Team Name"
+          onChange={(event) => setTeamName(event.target.value)}
+        ></TextField>
+
+        <Button
+          type="submit"
+          variant="contained"
+        >Submit</Button>
+      </Stack>
     </Container>
-  )
+  );
 }
