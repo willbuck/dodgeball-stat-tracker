@@ -22,16 +22,32 @@ import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 function GameDetail() {
     const user = useSelector((store) => store.user);
     const players = useSelector((store) => store.playersReducer);
+    let team1 = []
+    let team2 = []
+
+
     console.log('players data:', players);
-    // const team1players = 
+     //const team1players = players.filter((team) => {team.team1_id === team1_id})
     // const team2players = 
+
+    for (let player of players){
+        if(player.team_id === player.team1_id){
+            console.log("Team one member:", player)
+            team1.push(player)
+        } else if (player.team_id === player.team2_id){
+            console.log("Team two member:", player)
+            team2.push(player)
+        }
+    }
+  
 
     const dispatch = useDispatch();
 
 
-    // useEffect((ID) => {
-    //     dispatch({ type: "FETCH_TEAMS", payload: ID });
-    // }, []);
+    // Bug to fix: this useEffect does not re-render the data upon page reload.
+    //  useEffect((ID) => {
+    //      dispatch({ type: "FETCH_TEAMS", payload: ID });
+    //  }, []);
 
 
     const handleKill = (id) => {
@@ -73,7 +89,7 @@ function GameDetail() {
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {players.map((player) => {
+                    {team1.map((player) => {
                         return (
                             <Card
                                 key={player.id}
@@ -109,7 +125,7 @@ function GameDetail() {
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {players.map((player) => {
+                    {team2.map((player) => {
                         return (
                             <Card
                                 key={player.id}

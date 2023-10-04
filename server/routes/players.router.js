@@ -20,7 +20,8 @@ players.lastname AS lastname,
 players.jersey_number AS jersey_number,
 game.court AS court,
 players.id AS player_id,
-stats.events AS events
+stats.events AS events,
+team.id AS team_id
 FROM game
 JOIN players
 ON game.team1_id = players.team_id OR game.team2_id = players.team_id
