@@ -27,7 +27,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
-app.use('/api/challonge', challongeRouter)
+app.use('/api/challonge', challongeRouter);
 app.use('/api/tournament', tournamentRouter);
 app.use('/api/gameview', playersRouter);
 app.use('/api/tournamentDetails', tournamentDetailsRouter);

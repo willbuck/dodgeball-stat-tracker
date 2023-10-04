@@ -31,12 +31,24 @@ export default function CreateTournament() {
   const [courts, setCourts] = useState('');
   const [description, setDescription] = useState('')
 
+  //! Dummy participant info
+  //! Exact implementation may change when create-teams / create-participants components are live
+  const participants = [
+    {teamName: "Lions", teamID: 1},
+    {teamName: "Tigers", teamID: 2},
+    {teamName: "Bears", teamID: 3},
+    {teamName: "Falcons", teamID: 4},
+  ]
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const tournamentData = { name, startDate, ballType, location, courts, description, user }
-    console.log('tournamentData:', tournamentData)
 
+    // Tournament info to send
+    const tournamentData = { name, startDate, ballType, location, courts, description, user, participants }
+
+    // console.log('tournamentData:', tournamentData)
+
+    // Dispatching info to Tournament saga
     dispatch({type: 'CREATE_TOURNAMENT', payload: tournamentData})
   }
 
