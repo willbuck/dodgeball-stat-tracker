@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log('in tournament POST', req.body);
+  // console.log('in tournament POST', req.body);
 
   const { 
     name, 
@@ -46,14 +46,62 @@ router.post('/', (req, res) => {
 
   pool.query(queryText, queryValues)
   .then( response => {
-    console.log('pool query success')
     res.sendStatus(200)
   })
   .catch( error => {
     console.log('error in create tournament pool query', error)
     res.sendStatus(500)
   })
+})
+
+router.post('/participants', (req, res) => {
+
+  console.log('in tournament/participants POST', req.body)
+
+  // Creating queryValues by 
+  const queryValues = []
+  req.body.map( index => {
+    queryValues.push(index.teamID);
+    queryValues.push(index.tournamentURL);
+  })
+  console.log('queryValues:', queryValues);
+
+  const createPlaceholders = (array) => {
+    const rowsNeeded = array.length / 2;
+
+    let stringToReturn = ``
+
+    // Looping over queryValues to add ($1, $2), etc.
+    for (let i = 0; i < rowsNeeded; i++) {
+      stringToReturn = stringToReturn + `($${ 1 + (i * 2)}, $${2 + (i * 2)}),`
+    }
+    // Removing last comma
+    stringToReturn = stringToReturn.slice(0, -1);
+    return stringToReturn;
+  }
+  const placeholders = createPlaceholders(queryValues)
+  console.log('placeholders:', placeholders)
+
+  const queryText = `
+    INSERT INTO "participants" (
+      "team_id",
+      "tournament_url"
+    )
+    VALUES ${placeholders}
+    ;
+  `
+   
+  pool.query(queryText, queryValues)
+  .then( response => {
+    console.log('success in pool create participants');
+    res.sendStatus(200);
+  })
+  .catch( error => {
+    console.log('error in pool query crete participants', error);
+    res.sendStatus(500);
+  })
   
+
   
 })
 

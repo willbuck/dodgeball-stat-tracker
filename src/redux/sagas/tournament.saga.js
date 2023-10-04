@@ -1,7 +1,6 @@
 import { takeLatest, takeEvery, put } from 'redux-saga/effects';
 import axios from 'axios';
 
-
 function* fetchTournaments() {
     try {
         console.log("in GET tourny")
@@ -20,18 +19,27 @@ function* fetchTournaments() {
 
 function* createTournament(action) {
     // X - post tournament to Challonge
-    // 2 - post tournament to database
+    // X - post tournament to database
     //? Should the next two be in their own saga action?
-    // 3 - post participants to Challonge
-    // 4 - post participants to database
+    // 3 - post participants to database
+    // 4 - post participants to Challonge
+    
     console.log('in createTournament', action.payload)
 
-    const {name, startDate, ballType, location, courts, description, user} = action.payload
+    const {
+        name, 
+        startDate, 
+        ballType, 
+        location, 
+        courts, 
+        description, 
+        user, 
+        participants } = action.payload
 
     try {
         // Create tournament on Challonge
         const newTournamentData = yield axios.post('/api/challonge/tournament', action.payload);
-        console.log('data from Challonge create:', newTournamentData);
+        // console.log('data from Challonge create:', newTournamentData);
 
         const queryData = {
             name,
@@ -44,7 +52,22 @@ function* createTournament(action) {
             url: newTournamentData.data.url 
         }
         // Post tournament data to database
-        yield axios.post('/api/tournament', queryData)
+        const newTournamentQuery = yield axios.post('/api/tournament', queryData)
+        console.log('response from tournament query:', newTournamentQuery)
+
+        // Function to add tournament ID to participants list
+        const addTournamentID = (array, url) => {
+            for (let index of array) {
+                index.tournamentURL = url;
+            }
+        }
+        yield addTournamentID(participants, newTournamentData.data.url)
+
+        // Post participants to database
+        yield axios.post('/api/tournament/participants', participants)
+        
+        // Send participants to Challonge
+
     } catch (error) {
         console.log('error in create tournament saga:', error)
     }
