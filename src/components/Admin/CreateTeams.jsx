@@ -5,7 +5,7 @@ import { Container, TextField, Typography, Stack, Button } from '@mui/material'
 
 export default function CreateTeams() {
   const dispatch = useDispatch();
-  
+
   const [ teamName, setTeamName ] = useState('Unnamed Team')
 
   const handleSubmit = (event) => {
@@ -14,6 +14,12 @@ export default function CreateTeams() {
 
     dispatch({type: 'CREATE_TEAM', payload: teamData})
   }
+
+  // mapping a list of teams in the DB
+  // create a teams store - fetch all teams from DB
+  // useEffect fetch all teams from teams
+  // create menu map teams array
+  // send selected teams and bundle up a participants array
 
   return (
     <Container component='form' onSubmit={handleSubmit}>
