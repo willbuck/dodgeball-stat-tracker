@@ -9,27 +9,43 @@ router.get('/:id', (req, res) => {
     console.log(req.body)
 
     let querytext = `
-    SELECT DISTINCT
-team.team_name AS team_name,
-game.team1_score AS team1_score,
-game.team2_score AS team2_score,
-game.team1_id AS team1_id,
-game.team2_id AS team2_id,
-players.firstname AS firstname,
-players.lastname AS lastname,
-players.jersey_number AS jersey_number,
-game.court AS court,
-players.id AS player_id,
-stats.events AS events,
-team.id AS team_id
-FROM game
-JOIN players
-ON game.team1_id = players.team_id OR game.team2_id = players.team_id
-JOIN team
-ON players.team_id = team.id
-JOIN statistics AS stats
-ON game.id = stats.game_id
-WHERE game.id = $1;
+    SELECT
+    players.id AS player_id,
+    players.firstname AS firstname,
+    players.lastname AS lastname,
+    players.jersey_number,
+    team.team_name,
+    team.id AS team_id,
+    game.team1_id,
+    game.team2_id,
+    game.team1_score,
+    game.team2_score,
+    game.court,
+    COUNT(statistics.events) FILTER (WHERE statistics.events = 'kill') AS "kills",
+    COUNT(statistics.events) FILTER (WHERE statistics.events = 'catch') AS "catches",
+    COUNT(statistics.events) FILTER (WHERE statistics.events = 'out') AS "outs"
+  FROM
+    game
+  JOIN
+    team ON game.team1_id = team.id OR game.team2_id = team.id
+  JOIN
+    players ON team.id = players.team_id
+  LEFT JOIN
+    statistics ON game.id = statistics.game_id AND players.id = statistics.player_id
+  WHERE
+    game.id = $1
+  GROUP BY
+     players.jersey_number,
+    team.team_name,
+    team.id,
+    game.team1_id,
+    game.team2_id,
+    game.team1_score,
+    game.team2_score,
+    game.court,
+    firstname,
+    lastname,
+    players.id;
     `
 
     const queryParams = [req.params.id];
