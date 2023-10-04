@@ -16,10 +16,22 @@ function Header() {
         // return routeName;
         if (pathname === '/home') {
             return 'Home';
-        } else if (pathname.startsWith('/create-tournament')) {
-            return 'Create Tournament';
+        } else if (pathname.startsWith('/about')) {
+            return 'About';
+        } else if (pathname.startsWith('/info')) {
+            return 'Info';
+        } else if (pathname.startsWith('/admin')) {
+            return 'Admin';
         } else if (pathname.startsWith('/gameview')) {
             return 'Game View';
+        } else if (pathname.startsWith('/tournamentDetails')) {
+            return 'Tournament Details';
+        } else if (pathname.startsWith('/create-tournament')) {
+            return 'Create Tournament';
+        } else if (pathname.startsWith('/manage-tournament')) {
+            return 'Manage Tournament';
+        } else if (pathname.startsWith('/registration')) {
+            return 'Registration';
         } else {
             return 'Unknown Page';
         }
