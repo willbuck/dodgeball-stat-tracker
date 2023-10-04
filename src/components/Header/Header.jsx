@@ -2,6 +2,10 @@ import React from 'react';
 import { Link, useHistory, useLocation, } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector } from 'react-redux';
+
+// MUI Components
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import IconButton from '@mui/material/IconButton';
 // import { Height } from '@mui/icons-material';
 
 function Header() {
@@ -50,9 +54,13 @@ function Header() {
             <Link to="/home">
                 <img
                     src='https://s3.amazonaws.com/playpass-discovery/production/organizers/logos/31127/wide_USAD-SITELOGO.png?1581286742'
-                    style={{ height: '100px', width: '100px' }}
+                    style={{ height: '75px', width: '75px' }}
                 />
             </Link>
+
+            <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
+                <ArrowBackIcon />
+            </IconButton>
 
             <div>
                 <h2 className="header-title">{currentTitle}</h2>
