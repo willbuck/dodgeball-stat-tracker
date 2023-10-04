@@ -25,6 +25,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import TournamentDetails from "../TournamentDetails/TournamentDetails";
+import Header from "../Header/Header";
 
 import './App.css';
 import GameDetail from '../GameDetail/GameDetail';
@@ -44,7 +45,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        <Header />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -62,7 +63,7 @@ function App() {
             {/* Add admin route components here */}
           </ProtectedRoute>
 
-          <ProtectedRoute exact path='/admin/create-team'>
+          <ProtectedRoute exact path="/admin/create-team">
             <CreateTeams />
           </ProtectedRoute>
 
@@ -98,13 +99,12 @@ function App() {
 
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
-            exact
             path="/gameview"
           >
             <GameDetail />
           </ProtectedRoute>
 
-          
+
           <ProtectedRoute path="/tournamentDetails">
             <TournamentDetails />
           </ProtectedRoute>

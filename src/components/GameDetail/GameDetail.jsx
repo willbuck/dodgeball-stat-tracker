@@ -22,23 +22,46 @@ import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 function GameDetail() {
     const user = useSelector((store) => store.user);
     const players = useSelector((store) => store.playersReducer);
+    let team1 = []
+    let team2 = []
+
+
     console.log('players data:', players);
-    // const team1players = 
+    //const team1players = players.filter((team) => {team.team1_id === team1_id})
     // const team2players = 
+
+    for (let player of players) {
+        if (player.team_id === player.team1_id) {
+            console.log("Team one member:", player)
+            team1.push(player)
+        } else if (player.team_id === player.team2_id) {
+            console.log("Team two member:", player)
+            team2.push(player)
+        }
+    }
+
 
     const dispatch = useDispatch();
 
 
-    useEffect((ID) => {
-        dispatch({ type: "FETCH_TEAMS", payload: ID });
-    }, []);
+    // Bug to fix: this useEffect does not re-render the data upon page reload.
+    //  useEffect((ID) => {
+    //      dispatch({ type: "FETCH_TEAMS", payload: ID });
+    //  }, []);
 
 
-    const handleKill = () => { };
+    const handleKill = (id) => {
+        console.log(id, 'Got a Kill!')
 
-    const handleOutOfBounds = () => { };
+    };
 
-    const handleCatch = () => { };
+    const handleOutOfBounds = (id) => {
+        console.log(id, 'Out of bounds!')
+    };
+
+    const handleCatch = (id) => {
+        console.log(id, 'Got a Catch!')
+    };
 
 
     return (
@@ -50,8 +73,8 @@ function GameDetail() {
 
                 sx={{
                     display: 'flex',
-                    width: 255,
-                    height: 500,
+                    width: 350,
+                    height: 600,
                     overflowY: "auto",
                     backgroundColor: 'primary.dark',
                     '&:hover': {
@@ -63,34 +86,61 @@ function GameDetail() {
 
 
                 {/* Left Grid For Team 1 */}
-                <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'left' }}
+                <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'left', paddingLeft: 1 }}
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {players.map((player) => {
+                    {team1.map((player) => {
                         return (
                             <Card
                                 key={player.id}
-                                sx={{ minWidth: 100, maxWidth: 125, display: 'flex', justifyContent: 'center' }}
+                                sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
                             >
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                                        {player.jersey_number}
+                                        #{player.jersey_number}
                                     </Typography>
                                     <Typography variant='body2' color='text.secondary'>
                                         {player.firstname} {player.lastname}
                                     </Typography>
                                 </CardContent>
-                                <CardActions disableSpacing>
-                                    <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
-                                        <GpsFixedIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
-                                        <DoNotStepIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
-                                        <BackHandIcon />
-                                    </IconButton>
+                                <CardActions sx={{ justifyContent: 'spaceBetween' }}>
+                                    <Grid container direction="column" alignItems="center">
+                                        <Grid >
+                                            <Typography variant="body2" color='text.secondary'>
+                                                {player.kills}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid >
+                                            <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
+                                                <GpsFixedIcon />
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container direction="column" alignItems="center">
+                                        <Grid >
+                                            <Typography variant="body2" color='text.secondary'>
+                                                {player.outs}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid >
+                                            <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
+                                                <DoNotStepIcon />
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container direction="column" alignItems="center">
+                                        <Grid >
+                                            <Typography variant="body2" color='text.secondary'>
+                                                {player.catches}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid >
+                                            <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
+                                                <BackHandIcon />
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
                                 </CardActions>
                             </Card>
                         )
@@ -99,34 +149,62 @@ function GameDetail() {
 
 
                 {/* Right Grid For Team 2 */}
-                <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'right' }}
+                <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'right', paddingRight: 1 }}
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {players.map((player) => {
+                    {team2.map((player) => {
                         return (
                             <Card
                                 key={player.id}
-                                sx={{ minWidth: 100, maxWidth: 125, display: 'flex', justifyContent: 'center' }}
+                                sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
                             >
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                                        {player.jersey_number}
+                                        #{player.jersey_number}
                                     </Typography>
                                     <Typography variant='body2' color='text.secondary'>
                                         {player.firstname} {player.lastname}
                                     </Typography>
                                 </CardContent>
-                                <CardActions disableSpacing>
-                                    <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
-                                        <GpsFixedIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
-                                        <DoNotStepIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
-                                        <BackHandIcon />
-                                    </IconButton>
+                                <CardActions sx={{ justifyContent: 'spaceBetween' }}>
+
+                                    <Grid container direction="column" alignItems="center">
+                                        <Grid >
+                                            <Typography variant="body2" color='text.secondary'>
+                                                {player.kills}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid >
+                                            <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
+                                                <GpsFixedIcon />
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container direction="column" alignItems="center">
+                                        <Grid >
+                                            <Typography variant="body2" color='text.secondary'>
+                                                {player.outs}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid >
+                                            <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
+                                                <DoNotStepIcon />
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container direction="column" alignItems="center">
+                                        <Grid >
+                                            <Typography variant="body2" color='text.secondary'>
+                                                {player.catches}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid >
+                                            <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
+                                                <BackHandIcon />
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
                                 </CardActions>
                             </Card>
                         )

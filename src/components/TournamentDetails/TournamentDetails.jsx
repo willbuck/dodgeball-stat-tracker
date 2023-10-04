@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useHistory } from 'react-router-dom';
 
 // This component is for the Tournament details page
 //  It talks to the database to get all the games
@@ -12,6 +13,16 @@ function TournamentDetails() {
   const tournamentDetail = useSelector(
     (store) => store.tournamentDetailsReducer
   );
+  const history = useHistory();
+
+  const handleGame = (id) => {
+    console.log('GAvin:', id)
+    dispatch({
+      type: 'FETCH_TEAMS',
+      payload: id
+    })
+    history.push(`/gameview/${id}`)
+  }
 
   const [selectedGame, setSelectedGame] = useState(null);
   console.log("the game selcected is:", selectedGame);
@@ -70,7 +81,7 @@ function TournamentDetails() {
         <>
           {/* The list of all the games in that tournament */}
           {tournamentDetail.map((details, index) => (
-            <div key={index}>
+            <div key={index} onClick={() => { handleGame(details.game_id) }}>
               <h2>
                 Game {index + 1}: {details.team1_name} VS {details.team2_name}
                 Time {details.start_time} - {details.end_time}
