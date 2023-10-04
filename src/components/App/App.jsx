@@ -16,6 +16,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 // Admin Imports
 import AdminLanding from '../Admin/AdminLanding'
 import CreateTournament from '../Admin/CreateTournament'
+import CreateTeams from '../Admin/CreateTeams'
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
@@ -59,6 +60,10 @@ function App() {
 
           <ProtectedRoute exact path="/admin/manage-tournament">
             {/* Add admin route components here */}
+          </ProtectedRoute>
+
+          <ProtectedRoute>
+            <CreateTeams />
           </ProtectedRoute>
 
           {/* Visiting localhost:3000/about will show the about page. */}

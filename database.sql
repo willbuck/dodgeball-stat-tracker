@@ -216,7 +216,7 @@ VALUES
   ('kill', false, 4, 5, 4),
   ('catch',false, 5, 6, 5),
   ('out', false, 6, 1, 6),
-('kill', true, 1, 1, 1),
+  ('kill', true, 1, 1, 1),
   ('catch', false, 2, 2, 2),
   ('out', false, 3, 3, 3),
   ('kill', false, 4, 4, 4),

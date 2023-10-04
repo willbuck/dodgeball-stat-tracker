@@ -3,7 +3,7 @@ import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import tournamentSaga from './tournament.saga';
-
+import teamSaga from './team.saga'
 import playersSaga from './players.saga';
 import tournamentsDetailsSaga from './tournamentDetails.saga';
 
@@ -20,12 +20,13 @@ export default function* rootSaga() {
     loginSaga(), // login saga is now registered
     registrationSaga(),
     userSaga(),
+
     tournamentSaga(),
-
-    playersSaga(),
-
     tournamentsDetailsSaga(),
     
+    teamSaga(),
+    
+    playersSaga(),
 
   ]);
 }

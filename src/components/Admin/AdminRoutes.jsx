@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
     return (
       <>
 
-
         <ProtectedRoute exact path="/admin/route3">
           {/* Add your admin route components here */}
         </ProtectedRoute>
