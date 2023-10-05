@@ -17,6 +17,7 @@ router.get("/:id", (req, res) => {
     players.firstname AS firstname,
     players.lastname AS lastname,
     team.team_name,
+    team.id AS team_id,
     COUNT(statistics.events) FILTER (WHERE statistics.events = 'kill') AS "kills",
     COUNT(statistics.events) FILTER (WHERE statistics.events = 'catch') AS "catches",
     COUNT(statistics.events) FILTER (WHERE statistics.events = 'out') AS "outs"
@@ -39,7 +40,8 @@ router.get("/:id", (req, res) => {
     players.id,
     players.firstname,
     players.lastname,
-    team.team_name
+    team.team_name,
+    team.id
   ORDER BY COUNT(statistics.events) DESC;`;
 
   const queryParams = [tournamentId];

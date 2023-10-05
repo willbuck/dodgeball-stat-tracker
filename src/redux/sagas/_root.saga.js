@@ -5,6 +5,7 @@ import userSaga from './user.saga';
 import tournamentSaga from './tournament.saga';
 import tournamentsDetailsSaga from './tournamentDetails.saga';
 import fetchLeaderboardSaga from './leaderboard.saga';
+import teamLeaderboardSaga from './teamLeaderboard.sagas';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,6 +22,7 @@ export default function* rootSaga() {
     tournamentSaga(),
     tournamentsDetailsSaga(),
     fetchLeaderboardSaga(),
+    teamLeaderboardSaga(),
 
   ]);
 }

@@ -13,6 +13,7 @@ const challongeRouter = require('./routes/challonge.router')
 const tournamentRouter = require('./routes/tournament.router')
 const tournamentDetailsRouter = require('./routes/tournamentDetails.router');
 const leaderboardRouter = require('./routes/leaderboard.router');
+const teamLeaderboardRouter = require('./routes/teamLeaderboard.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -31,6 +32,7 @@ app.use('/api/challonge', challongeRouter)
 app.use('/api/tournament', tournamentRouter);
 app.use('/api/tournamentDetails', tournamentDetailsRouter);
 app.use('/api/leaderboard', leaderboardRouter);
+app.use('/api/allTeams', teamLeaderboardRouter);
 
 // Serve static files
 app.use(express.static('build'));

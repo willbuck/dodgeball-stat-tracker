@@ -5,6 +5,7 @@ import tournamentReducer from './tournament.reducer';
 import tournamentDetailsReducer from './tournamentDetails.reducer';
 import selectedTournamentReducer from './selectedtournament.reducer';
 import leaderboardReducer from './leaderboard.reducer';
+import teamLeaderboardReducer from './teamLeaderboard.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +20,8 @@ const rootReducer = combineReducers({
   tournamentDetailsReducer,
   selectedTournamentReducer,
   leaderboardReducer,
+  teamLeaderboardReducer,
+  
 });
 
 export default rootReducer;
