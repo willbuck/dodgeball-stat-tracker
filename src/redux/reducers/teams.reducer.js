@@ -1,6 +1,6 @@
-const teamReducer = (state = [], action) => {
+const teamsReducer = (state = [], action) => {
   switch (action.type) {
-    case 'SET_TEAM':
+    case 'SET_TEAMS':
       return action.payload;
     case 'REMOVE_TEAM':
       return [];
@@ -8,4 +8,4 @@ const teamReducer = (state = [], action) => {
       return state;
   }
 };
-export default teamReducer;
+export default teamsReducer;

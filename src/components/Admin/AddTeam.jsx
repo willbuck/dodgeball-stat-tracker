@@ -3,16 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Container, TextField, Typography, Stack, Button } from '@mui/material'
 
-export default function CreateTeams() {
+export default function AddTeam() {
   const dispatch = useDispatch();
 
   const [ teamName, setTeamName ] = useState('Unnamed Team')
 
+
   const handleSubmit = (event) => {
     event.preventDefault()
+    
+    // TODO: add jersey color
     const teamData = { teamName }
-
-    dispatch({type: 'CREATE_TEAM', payload: teamData})
+    dispatch({ type: 'ADD_TEAM', payload: teamData })
   }
 
   // mapping a list of teams in the DB

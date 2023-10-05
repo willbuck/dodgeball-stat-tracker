@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 
-
+// PLACEHOLDER COMPONENT - NOT IN USE
 
   function AdminRoutes() {
     return (
