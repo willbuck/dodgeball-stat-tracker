@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
@@ -7,9 +9,20 @@ import { useHistory } from 'react-router-dom';
 
 // This component is for the Tournament details page
 //  It talks to the database to get all the games
-// in a sppeific tournment
+// in a specific tournment
 function TournamentDetails() {
   const dispatch = useDispatch();
+
+  // Testing Challonge games get
+  axios.get('/api/challonge/tournament/participants')
+  .then( response => {
+    console.log('response from Challonge:', response);
+  })
+  .catch( error => {
+    console.log('error:', error)
+  })
+
+
   const tournamentDetail = useSelector(
     (store) => store.tournamentDetailsReducer
   );
@@ -42,11 +55,11 @@ function TournamentDetails() {
       <Stack spacing={2} sx={{ width: 300 }}>
         <Autocomplete
           id="free-solo-2-demo"
-          options={tournamentDetail}
-          getOptionLabel={(option) =>
+          options = {tournamentDetail}
+          getOptionLabel = { (option) =>
             `${option.team1_name} VS ${option.team2_name} ${option.game_id}`
           }
-          onChange={(event, newValue) => {
+          onChange = {(event, newValue) => {
             handleClick(newValue);
           }}
           renderInput={(params) => (
