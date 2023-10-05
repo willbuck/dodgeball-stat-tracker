@@ -14,6 +14,7 @@ const tournamentRouter = require('./routes/tournament.router')
 const tournamentDetailsRouter = require('./routes/tournamentDetails.router');
 const leaderboardRouter = require('./routes/leaderboard.router');
 const teamLeaderboardRouter = require('./routes/teamLeaderboard.router');
+const searchTeamLeaderboardRouter = require('./routes/searchTeamLeaderboard.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -33,6 +34,7 @@ app.use('/api/tournament', tournamentRouter);
 app.use('/api/tournamentDetails', tournamentDetailsRouter);
 app.use('/api/leaderboard', leaderboardRouter);
 app.use('/api/allTeams', teamLeaderboardRouter);
+app.use('/api/searchTeam', searchTeamLeaderboardRouter);
 
 // Serve static files
 app.use(express.static('build'));

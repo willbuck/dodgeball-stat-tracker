@@ -17,9 +17,18 @@ function Leaderboard() {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
 
-  const handleClick = (newValue) => {
+  const handleClickPlayer = (newValue) => {
     setSelectedPlayer(newValue);
   };
+
+  const handleClickTeam = (newValue) => {
+    setSelectedTeam(newValue);
+    console.log('Search Team:',selectedTeam);
+    // dispatch({
+    //     type: 'SEARCH_TEAM_STAT',
+    //     payload: 
+    // })
+  }
 
   //as the page loads
   //it will GET statistics from DB
@@ -45,7 +54,7 @@ function Leaderboard() {
           options={leaderboardStore}
           getOptionLabel={(option) => `${option.firstname} ${option.lastname} `}
           onChange={(event, newValue) => {
-            handleClick(newValue);
+            handleClickPlayer(newValue);
           }}
           renderInput={(params) => (
             <TextField
@@ -60,12 +69,33 @@ function Leaderboard() {
         />
       </Stack>
 
-      {/* The Search of Teams will go here */}
+      {/* The Search for a Teams to see 
+        all players stats in that team*/}
+      <Stack spacing={2} sx={{ width: 300 }}>
+        <Autocomplete
+          id="free-solo-2-demo"
+          options={teamLeaderboardStore}
+          getOptionLabel={(option) => `${option.team_name} `}
+          onChange={(event, newValue) => {
+            handleClickTeam(newValue);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search For A Team"
+              InputProps={{
+                ...params.InputProps,
+                type: "search",
+              }}
+            />
+          )}
+        />
+      </Stack>
 
       {selectedPlayer ? (
         // Display selected players stat details
         <div>
-          <h2>Selected Player:</h2>
+          <h2>Selected Player</h2>
           <p>
             {" "}
             Name: {selectedPlayer.firstname} {selectedPlayer.lastname}
@@ -92,6 +122,7 @@ function Leaderboard() {
           })}
         </>
       )}
+      
     </>
   );
 }
