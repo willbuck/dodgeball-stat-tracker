@@ -23,7 +23,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 export default function CreateTournament() {
   const dispatch = useDispatch();
 
-  const user = useSelector(store => store.user)
+  const user = useSelector(store => store.user);
+
   const [name, setName] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [ballType, setBallType] = useState('');
