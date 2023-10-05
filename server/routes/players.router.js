@@ -21,9 +21,9 @@ router.get('/:id', (req, res) => {
     game.team1_score,
     game.team2_score,
     game.court,
-    COUNT(statistics.events) FILTER (WHERE statistics.events = 'kill') AS "kills",
-    COUNT(statistics.events) FILTER (WHERE statistics.events = 'catch') AS "catches",
-    COUNT(statistics.events) FILTER (WHERE statistics.events = 'out') AS "outs"
+    COUNT(statistics.stat) FILTER (WHERE statistics.stat = 'kill') AS "kills",
+    COUNT(statistics.stat) FILTER (WHERE statistics.stat = 'catch') AS "catches",
+    COUNT(statistics.stat) FILTER (WHERE statistics.stat = 'out') AS "outs"
   FROM
     game
   JOIN

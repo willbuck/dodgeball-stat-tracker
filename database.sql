@@ -1,9 +1,10 @@
+-- UPDATES 10/5
+  -- Added columns to tournament table
+  -- Added column to team table
+  -- Changed column statistics.events to statistics.stat (and updated query in players.router.js to reflect this change)
+  -- Added participants table to database
 
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
-
+-- User table
 CREATE TABLE "user" (
   id SERIAL PRIMARY KEY,
   username VARCHAR(90) NOT NULL,
@@ -11,18 +12,34 @@ CREATE TABLE "user" (
   auth_level INTEGER,
   email VARCHAR(90)
 );
+
+-- Tournament table
+-- Updated 10/5 @ 10:00am
+  -- Added columns for ball type, description, start_date, url, and courts
 CREATE TABLE tournament (
-  id SERIAL PRIMARY KEY,
-  tournament_name VARCHAR(90) NOT NULL,
-  tournament_organizer INT REFERENCES "user" NOT NULL,
-  location VARCHAR(100) NOT NULL
+    id SERIAL PRIMARY KEY,
+    tournament_name character varying(60) NOT NULL,
+    tournament_organizer integer NOT NULL REFERENCES "user"(id),
+    "location" character varying(100) NOT NULL,
+    "ball_type" character varying(20),
+    "description" character varying(250),
+    "start_date" timestamp with time zone,
+    "url" character varying(25) UNIQUE,
+    courts integer
 );
+
+-- Team table
+-- Updated 10/5 @ 10:00am
+  -- Added column for image_path
 CREATE TABLE team (
   id SERIAL PRIMARY KEY,
   team_name VARCHAR(60) NOT NULL,
   jersey_color VARCHAR(50),
-  tournament_id INT REFERENCES "tournament" NOT NULL
+  tournament_id INT REFERENCES "tournament" NOT NULL,
+  image_path character varying(250)
 );
+
+-- Game table
 CREATE TYPE status AS ENUM ('not started', 'in progress', 'completed');
 CREATE TABLE game (
   id SERIAL PRIMARY KEY,
@@ -30,7 +47,7 @@ CREATE TABLE game (
   team2_id INT REFERENCES "team" NOT NULL,
   start_time TIME,
   end_time TIME,
-  date date,
+  "date" date,
   court VARCHAR(50),
   team1_score INTEGER,
   team2_score INTEGER,
@@ -38,12 +55,16 @@ CREATE TABLE game (
   ball_type VARCHAR(20),
   tournament_id INT REFERENCES "tournament" NOT NULL
 );
+
+-- Social table
 CREATE TABLE social (
   id SERIAL PRIMARY KEY,
   platform VARCHAR(40) NOT NULL,
   username VARCHAR(90) NOT NULL,
   link VARCHAR(200) NOT NULL
 );
+
+-- Players table
 CREATE TABLE players (
   id SERIAL PRIMARY KEY,
   firstname VARCHAR(90) NOT NULL,
@@ -56,15 +77,29 @@ CREATE TABLE players (
   can_referee BOOLEAN NOT NULL,
   captain BOOLEAN NOT NULL
 );
+
+-- Statistics table
+-- Updated 10/5 @ 10:00am
+  -- changed column "event" to be "stat"
 CREATE TYPE event AS ENUM('kill', 'catch', 'out');
 CREATE TABLE statistics (
   id SERIAL PRIMARY KEY,
-  events event,
+  stat event,
   is_official BOOLEAN NOT NULL,
   game_id INT REFERENCES "game" NOT NULL,
   player_id INT REFERENCES "players" NOT NULL,
   user_id INT REFERENCES "user" NOT NULL
 );
+
+-- Participants table
+-- Updated 10/5 @ 10:00am
+  -- Added table
+CREATE TABLE participants (
+    id SERIAL PRIMARY KEY,
+    team_id integer REFERENCES team(id),
+    tournament_url character varying(250) REFERENCES tournament(url)
+);
+
 
 -- Insert fake data into the "user" table (9 rows)
 INSERT INTO "user" (username, password, auth_level, email)
