@@ -52,15 +52,26 @@ function GameDetail() {
 
     const handleKill = (id) => {
         console.log(id, 'Got a Kill!')
-
+        dispatch({
+            type: 'POST_KILL',
+            payload: id
+          })
     };
 
     const handleOutOfBounds = (id) => {
         console.log(id, 'Out of bounds!')
+        dispatch({
+            type: 'POST_OUT',
+            payload: id
+          })
     };
 
     const handleCatch = (id) => {
         console.log(id, 'Got a Catch!')
+        dispatch({
+            type: 'POST_CATCH',
+            payload: id
+          })
     };
 
 
@@ -112,7 +123,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleKill(player) }} sx={{ color: '#186BCC', }}>
                                                 <GpsFixedIcon />
                                             </IconButton>
                                         </Grid>
@@ -124,7 +135,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleOutOfBounds(player) }} sx={{ color: '#186BCC', }}>
                                                 <DoNotStepIcon />
                                             </IconButton>
                                         </Grid>
@@ -136,7 +147,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleCatch(player) }} sx={{ color: '#186BCC', }}>
                                                 <BackHandIcon />
                                             </IconButton>
                                         </Grid>
@@ -176,7 +187,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleKill(player) }} sx={{ color: '#186BCC', }}>
                                                 <GpsFixedIcon />
                                             </IconButton>
                                         </Grid>
@@ -188,7 +199,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleOutOfBounds(player) }} sx={{ color: '#186BCC', }}>
                                                 <DoNotStepIcon />
                                             </IconButton>
                                         </Grid>
@@ -200,7 +211,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleCatch(player) }} sx={{ color: '#186BCC', }}>
                                                 <BackHandIcon />
                                             </IconButton>
                                         </Grid>
