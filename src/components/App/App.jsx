@@ -62,7 +62,7 @@ function App() {
             {/* Add admin route components here */}
           </ProtectedRoute>
 
-          <ProtectedRoute>
+          <ProtectedRoute exact path="/admin/create-team">
             <CreateTeams />
           </ProtectedRoute>
 

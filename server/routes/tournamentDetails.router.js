@@ -2,13 +2,11 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-router.get('/:id', (req,res) => {
+router.get('/:id', (req, res) => {
     console.log('heyyyy')
     console.log('Params id:', req.params.id)
 
     const queryText = `
-    -- to get all the games inside a specific tournament 
-    --Also more details form the teams that are playing in that specific tournament
     SELECT
         game.id AS game_id,
         game.team1_id AS team1_id,
