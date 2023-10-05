@@ -10,6 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Sidebar from '../Sidebar/Sidebar';
 
 
 export default function TournamentList() {
@@ -33,6 +34,7 @@ export default function TournamentList() {
   if (selectedTournament == "") {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Sidebar />
         <Box className="scroll-container"
 
           sx={{

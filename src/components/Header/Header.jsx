@@ -61,9 +61,11 @@ function Header() {
                 />
             </Link>
 
-            <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
-                <ArrowBackIcon />
-            </IconButton>
+            {location.pathname !== '/user' && (
+                <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
+                    <ArrowBackIcon />
+                </IconButton>
+            )}
 
             <div>
                 <h2 className="header-title">{currentTitle}</h2>
