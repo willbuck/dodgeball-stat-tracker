@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Box, Card, Typography, Grid, Container } from '@mui/material';
+import { Button, Box, Card, Typography, Grid, Container, Stack } from '@mui/material';
 import { IconTrash } from '@tabler/icons-react';
 
 export default function ManageTournaments() {
@@ -9,12 +9,12 @@ export default function ManageTournaments() {
   const allTeams = useSelector((store) => store.tournamentReducer)
 
   useEffect(() => {
-    dispatch({ type: "" });
+    dispatch({ type: "FETCH_TOURNAMENTS" });
   }, []);
 
     const handleDelete = (id) => {
-      dispatch({ type: "", payload: id });
-      dispatch({ type: '' })
+      dispatch({ type: "DELETE_TOURNAMENT", payload: id });
+      dispatch({ type: "FETCH_TOURNAMENTS" })
     }
   
   
@@ -28,10 +28,16 @@ export default function ManageTournaments() {
             {/*  */}
             <Card sx={{ padding: '20px', margin: '10px', border: '1px solid grey' }}>
               <Box display="flex" justifyContent="space-between">
-                <Typography variant="h5">
-                  {/* tournament name here */}
-                  {}
-                </Typography>
+                <Stack>
+                  <Typography variant="h5">
+                    {/* tournament name here */}
+                    {tournament.tournament_name}
+                  </Typography>
+                  <Typography variant='h6'>
+                    {tournament.location}
+                  </Typography>
+                </Stack>
+
                 <Button 
                   onClick={() => handleDelete(tournament.id)}
                   color="secondary">

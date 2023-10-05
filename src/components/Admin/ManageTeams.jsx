@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Box, Card, Typography, Grid, Container } from '@mui/material';
+import { Button, Box, Card, Typography, Grid, Container, Badge } from '@mui/material';
 import { IconTrash } from '@tabler/icons-react';
+import { IconShirtFilled } from '@tabler/icons-react';
 
-export default function TeamList() {
+export default function ManageTeams() {
 
   const dispatch = useDispatch()
   const allTeams = useSelector((store) => store.teamsReducer)
@@ -17,16 +18,18 @@ export default function TeamList() {
       dispatch({ type: 'FETCH_TEAM_LIST' })
     }
   
-  
+
 
   return (
     <Container>
       <Grid container spacing={3}>
         {allTeams.map((team) => (
           <Grid item xs={12} sm={6} md={4} key={team.id}>
-            {/* Can add a badge that matches jersey color */}
-            {/*  */}
+
             <Card sx={{ padding: '20px', margin: '10px', border: '1px solid grey' }}>
+            <Badge badgeContent="" sx={{ color: team.jersey_color }}>
+              <IconShirtFilled />
+            </Badge>
               <Box display="flex" justifyContent="space-between">
                 <Typography variant="h5">
                   {team.team_name}

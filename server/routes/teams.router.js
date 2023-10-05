@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   console.log("Getting all teams", req.body)
 
-  let queryText = `SELECT * FROM "team"`
+  let queryText = `SELECT * FROM "team" ORDER BY "id" ASC`
   pool.query(queryText)
     .then((response) => {
       res.send(response.rows)

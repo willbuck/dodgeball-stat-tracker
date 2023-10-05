@@ -16,8 +16,9 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 // Admin Imports
 import AdminLanding from '../Admin/AdminLanding'
 import CreateTournament from '../Admin/CreateTournament'
+import ManageTournaments from "../Admin/ManageTournaments";
 import AddTeam from '../Admin/AddTeam'
-import TeamList from '../Admin/TeamList'
+import ManageTeams from '../Admin/ManageTeams'
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
@@ -32,6 +33,7 @@ import './App.css';
 import GameDetail from '../GameDetail/GameDetail';
 
 import "./App.css";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -59,13 +61,17 @@ function App() {
           <ProtectedRoute exact path="/admin/create-tournament">
             <CreateTournament />
           </ProtectedRoute>
+
+          <ProtectedRoute exact path="/admin/manage-tournaments">
+            <ManageTournaments />
+          </ProtectedRoute>
           
           <ProtectedRoute exact path="/admin/add-team">
             <AddTeam />
           </ProtectedRoute>
           
           <ProtectedRoute exact path="/admin/manage-teams">
-            <TeamList />
+            <ManageTeams />
           </ProtectedRoute>
 
           
