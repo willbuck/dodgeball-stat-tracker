@@ -14,6 +14,8 @@ const tournamentRouter = require('./routes/tournament.router')
 const playersRouter = require('./routes/players.router')
 const tournamentDetailsRouter = require('./routes/tournamentDetails.router');
 const killRouter = require('./routes/kill.router')
+const teamsRouter = require('./routes/teams.router')
+
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -33,6 +35,8 @@ app.use('/api/tournament', tournamentRouter);
 app.use('/api/gameview', playersRouter);
 app.use('/api/tournamentDetails', tournamentDetailsRouter);
 app.use('/api/kill', killRouter);
+app.use('/api/teams', teamsRouter)
+
 
 
 // Serve static files

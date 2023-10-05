@@ -3,7 +3,7 @@ import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import tournamentSaga from './tournament.saga';
-import teamSaga from './team.saga'
+import teamsSaga from './teams.saga'
 import playersSaga from './players.saga';
 import tournamentsDetailsSaga from './tournamentDetails.saga';
 import killSaga from './kill.saga';
@@ -25,7 +25,7 @@ export default function* rootSaga() {
     tournamentSaga(),
     tournamentsDetailsSaga(),
     
-    teamSaga(),
+    teamsSaga(),
     
     playersSaga(),
     killSaga(),
