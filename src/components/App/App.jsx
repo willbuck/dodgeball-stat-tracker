@@ -17,6 +17,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import AdminLanding from '../Admin/AdminLanding'
 import CreateTournament from '../Admin/CreateTournament'
 import AddTeam from '../Admin/AddTeam'
+import TeamList from '../Admin/TeamList'
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
@@ -63,8 +64,8 @@ function App() {
             <AddTeam />
           </ProtectedRoute>
           
-          <ProtectedRoute exact path="/admin/manage-tournament">
-            {/* Add admin route components here */}
+          <ProtectedRoute exact path="/admin/manage-teams">
+            <TeamList />
           </ProtectedRoute>
 
           
