@@ -21,8 +21,6 @@ router.get('/:id', (req, res) => {
     game.team1_score,
     game.team2_score,
     game.court,
-    game.id,
-    user_id,
     COUNT(statistics.stat) FILTER (WHERE statistics.stat = 'kill') AS "kills",
     COUNT(statistics.stat) FILTER (WHERE statistics.stat = 'catch') AS "catches",
     COUNT(statistics.stat) FILTER (WHERE statistics.stat = 'out') AS "outs"
@@ -47,9 +45,7 @@ router.get('/:id', (req, res) => {
     game.court,
     firstname,
     lastname,
-    players.id,
-    game.id,
-    user_id;
+    players.id;
     `
 
     const queryParams = [req.params.id];

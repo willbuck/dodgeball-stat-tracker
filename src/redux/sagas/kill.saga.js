@@ -1,21 +1,24 @@
-import { takeLatest, takeEvery, put } from 'redux-saga/effects';
+import { takeEvery, put } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* createKill(action) {
-    console.log("Kill: ", action.payload)
+
+function* storeKills() {
     try {
-        console.log("game id?", action.payload.id)
-        const newKill = yield axios.post(`/api/kill/`, action.payload);
-        //console.log('get all:', newKill.data);
+        console.log("in fetch decks")
+        
+        // yield put({ 
+        //     type: 'SET_DECKS', 
+        //     payload: decks.data
+        // });
 
-        //yield put({ type: 'FETCH_PLAYERS'});
-    } catch (error) {
-        console.log('Kill error', error);
+    } catch (error){
+        console.log('get all error', error);
     }
+        
 }
 
-function* KillSaga() {  
-    yield takeLatest('POST_KILL', createKill)
+function* killSaga() {  
+    yield takeEvery('STORE_KILL', storeKills);
 }
 
-export default KillSaga;
+export default killSaga;

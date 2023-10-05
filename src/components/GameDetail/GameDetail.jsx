@@ -52,26 +52,29 @@ function GameDetail() {
 
     const handleKill = (id) => {
         console.log(id, 'Got a Kill!')
-        dispatch({
-            type: 'POST_KILL',
-            payload: id
-          })
+
+         dispatch({
+             type: 'POST_KILL',
+             payload: id
+           })
     };
 
     const handleOutOfBounds = (id) => {
         console.log(id, 'Out of bounds!')
-        dispatch({
-            type: 'POST_OUT',
-            payload: id
-          })
+
+        // dispatch({
+        //     type: 'POST_OUT',
+        //     payload: id
+        //   })
     };
 
     const handleCatch = (id) => {
         console.log(id, 'Got a Catch!')
-        dispatch({
-            type: 'POST_CATCH',
-            payload: id
-          })
+
+        // dispatch({
+        //     type: 'POST_CATCH',
+        //     payload: id
+        //   })
     };
 
 
