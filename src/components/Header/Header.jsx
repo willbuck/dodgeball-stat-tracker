@@ -12,6 +12,9 @@ function Header() {
     const history = useHistory();
     const location = useLocation();
     const user = useSelector((store) => store.user);
+    // const currentScore = useSelector((store) => store.playersReducer);
+    // const team1_score = currentScore.game.team1_score;
+    // const team2_score = currentScore.game.team2_score;
 
 
     let currentTitle = '';
@@ -64,6 +67,11 @@ function Header() {
 
             <div>
                 <h2 className="header-title">{currentTitle}</h2>
+                {/* {currentTitle === 'Game View' &&
+                    <div>
+                        <h3>Score: {team1_score} - {team2_score}</h3>
+                    </div>
+                } */}
             </div>
 
             <div>
