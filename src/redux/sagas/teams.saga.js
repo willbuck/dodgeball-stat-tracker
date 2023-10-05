@@ -7,7 +7,7 @@ function* fetchTeams() {
     const teams = yield axios.get('api/teams')
 
     yield put({
-      type: 'SET_TEAMS',
+      type: 'SET_TEAM_LIST',
       payload: teams.data
     })
   } catch (error) {
@@ -28,19 +28,22 @@ function* addTeam(action) {
   }
 
   try {
-
     const newTeamQuery = yield axios.post('/api/teams', newTeamData)
     console.log('Connecting to server...')
     console.log(`Response: ${(newTeamQuery)}`)
-
     } catch (error) {
         console.error(`Cannot connect to server.  Try again later. ${error}`)
     }
   }
 
+  function* deleteTeam() {
+    console.log(`In *deleteTeam`)
+  }
+
 function* teamsSaga() {  
     yield takeLatest('ADD_TEAM', addTeam)
-    yield takeLatest('FETCH_TEAMS', fetchTeams)
+    yield takeLatest('FETCH_TEAM_LIST', fetchTeams)
+    yield takeLatest('DELETE_TEAM', deleteTeam)
 }
 
 export default teamsSaga;

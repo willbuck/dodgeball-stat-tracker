@@ -1,9 +1,8 @@
 const teamsReducer = (state = [], action) => {
   switch (action.type) {
-    case 'SET_TEAMS':
+    case 'SET_TEAM_LIST':
       return action.payload;
-    case 'REMOVE_TEAM':
-      return [];
+    
     default:
       return state;
   }
