@@ -5,49 +5,59 @@ import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 // This component is for the Tournament details page
-//  It talks to the database to get all the games
+// It talks to the database to get all the games
 // in a specific tournment
+
 function TournamentDetails() {
   const dispatch = useDispatch();
-
-  // Testing Challonge games get
-  axios.get('/api/challonge/tournament/participants')
-  .then( response => {
-    console.log('response from Challonge:', response);
-  })
-  .catch( error => {
-    console.log('error:', error)
-  })
-
-
-  const tournamentDetail = useSelector(
-    (store) => store.tournamentDetailsReducer
-  );
   const history = useHistory();
 
-  const handleGame = (id) => {
-    console.log('GAvin:', id)
+  // Getting tournament ID from 
+  // react-router url params and  
+  // changing data type back to number
+  const {id, tournamentID = Number(id)} = useParams();
+
+  // Updating store with all players in database
+  //! This dispatch should be renamed to 'FETCH_PLAYERS'
+  useEffect(() => {
     dispatch({
-      type: 'FETCH_TEAMS',
-      payload: id
+      type: 'FETCH_TEAMS'
     })
-    history.push(`/gameview/${id}`)
+  }, [])
+
+  // Getting games from store
+  const allGames = useSelector((store) => store.tournamentDetailsReducer);
+
+  // Creating array for games in current tournament
+  const tournamentGames = [];
+  for (let game of allGames) {
+    if(game.tournament_id === tournamentID) {
+      tournamentGames.push(game);
+    }
+  }
+  
+  // Handler function for selected game
+  const handleGameClick = (game) => {
+
+    // using location object to add state to next page in history
+    const location = {
+      pathname: `/gameview/${game.game_id}`,
+      state: game
+    }
+
+    // Navigating to next page using location object
+    history.push(location)
   }
 
   const [selectedGame, setSelectedGame] = useState(null);
-  console.log("the game selcected is:", selectedGame);
 
   // This functions handles the selected game
-  const handleClick = (newValue) => {
-    console.log("In here clicked:", newValue);
+  const handleSearchbarClick = (newValue) => {
     setSelectedGame(newValue);
   };
-
-
-  console.log("The storreee:", tournamentDetail);
 
   return (
     <>
@@ -55,12 +65,12 @@ function TournamentDetails() {
       <Stack spacing={2} sx={{ width: 300 }}>
         <Autocomplete
           id="free-solo-2-demo"
-          options = {tournamentDetail}
-          getOptionLabel = { (option) =>
+          options={allGames}
+          getOptionLabel={(option) =>
             `${option.team1_name} VS ${option.team2_name} ${option.game_id}`
           }
-          onChange = {(event, newValue) => {
-            handleClick(newValue);
+          onChange={(event, newValue) => {
+            handleSearchbarClick(newValue);
           }}
           renderInput={(params) => (
             <TextField
@@ -93,8 +103,8 @@ function TournamentDetails() {
         // Render tournament details when selectedGame is empty
         <>
           {/* The list of all the games in that tournament */}
-          {tournamentDetail.map((details, index) => (
-            <div key={index} onClick={() => { handleGame(details.game_id) }}>
+          {tournamentGames.map((details, index) => (
+            <div key={index} onClick={() => { handleGameClick(details) }}>
               <h2>
                 Game {index + 1}: {details.team1_name} VS {details.team2_name}
                 Time {details.start_time} - {details.end_time}
