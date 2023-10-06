@@ -6,7 +6,11 @@ import tournamentSaga from './tournament.saga';
 import teamsSaga from './teams.saga'
 import playersSaga from './players.saga';
 import tournamentsDetailsSaga from './tournamentDetails.saga';
+import fetchLeaderboardSaga from './leaderboard.saga';
+import teamLeaderboardSaga from './teamLeaderboard.sagas';
+import searchTeamLeaderboardSaga from './searchTeamLeaderboard.saga';
 import killSaga from './kill.saga';
+
 
 
 // rootSaga is the primary saga.
@@ -24,6 +28,9 @@ export default function* rootSaga() {
 
     tournamentSaga(),
     tournamentsDetailsSaga(),
+    fetchLeaderboardSaga(),
+    teamLeaderboardSaga(),
+    searchTeamLeaderboardSaga(),
     
     teamsSaga(),
     

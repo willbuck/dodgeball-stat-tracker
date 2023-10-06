@@ -28,9 +28,13 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import TournamentDetails from "../TournamentDetails/TournamentDetails";
+
+import Leaderboard from "../Leaderboard/Leaderboard";
+import './App.css';
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import GameDetail from '../GameDetail/GameDetail';
+
 
 import "./App.css";
 
@@ -117,6 +121,10 @@ function App() {
 
           <ProtectedRoute path="/tournamentDetails/:id">
             <TournamentDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/leaderboard">
+            <Leaderboard />
           </ProtectedRoute>
 
           <Route exact path="/login">
