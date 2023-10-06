@@ -8,8 +8,6 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
@@ -20,6 +18,9 @@ import ManageTournaments from "../Admin/ManageTournaments";
 import AddTeam from '../Admin/AddTeam'
 import ManageTeams from '../Admin/ManageTeams'
 
+// Component Imports
+import Nav from "../Nav/Nav";
+import Footer from "../Footer/Footer";
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
@@ -27,12 +28,16 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import TournamentDetails from "../TournamentDetails/TournamentDetails";
-import Header from "../Header/Header";
 
+import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
+import Header from "../Header/Header";
+import Sidebar from "../Sidebar/Sidebar";
 import GameDetail from '../GameDetail/GameDetail';
 
+
 import "./App.css";
+
 
 
 function App() {
@@ -44,11 +49,11 @@ function App() {
     dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
 
-  console.log('user id:', user.id)
   return (
     <Router>
       <div>
         <Header />
+        <Sidebar />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -65,16 +70,16 @@ function App() {
           <ProtectedRoute exact path="/admin/manage-tournaments">
             <ManageTournaments />
           </ProtectedRoute>
-          
+
           <ProtectedRoute exact path="/admin/add-team">
             <AddTeam />
           </ProtectedRoute>
-          
+
           <ProtectedRoute exact path="/admin/manage-teams">
             <ManageTeams />
           </ProtectedRoute>
 
-          
+
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -108,14 +113,18 @@ function App() {
 
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
-            path="/gameview"
+            path="/gameview/:id"
           >
             <GameDetail />
           </ProtectedRoute>
 
 
-          <ProtectedRoute path="/tournamentDetails">
+          <ProtectedRoute path="/tournamentDetails/:id">
             <TournamentDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/leaderboard">
+            <Leaderboard />
           </ProtectedRoute>
 
           <Route exact path="/login">

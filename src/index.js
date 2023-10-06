@@ -13,17 +13,19 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import store from './redux/store';
-
 import App from './components/App/App';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import store from './redux/store.js';
+import { persistor } from './redux/store.js';
 
 const root = ReactDOM.createRoot(document.getElementById('react-root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <ThemeProvider 
           theme={theme}>
@@ -31,6 +33,7 @@ root.render(
             <App />
         </ThemeProvider>
       </LocalizationProvider>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
