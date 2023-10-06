@@ -234,7 +234,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleStat("kill", player) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleStat("kills", player) }} sx={{ color: '#186BCC', }}>
                                                 <GpsFixedIcon />
                                             </IconButton>
                                         </Grid>
@@ -246,7 +246,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleStat("out", player) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleStat("outs", player) }} sx={{ color: '#186BCC', }}>
                                                 <DoNotStepIcon />
                                             </IconButton>
                                         </Grid>
@@ -258,7 +258,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleStat("catch", player) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleStat("catches", player) }} sx={{ color: '#186BCC', }}>
                                                 <BackHandIcon />
                                             </IconButton>
                                         </Grid>
