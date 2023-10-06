@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory, useLocation, } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector } from 'react-redux';
+// import LogOutButton from '../LogOutButton/LogOutButton';
 
 // MUI Components
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -76,24 +76,7 @@ function Header() {
                 } */}
             </div>
 
-            <div>
-                {/* If no user is logged in, show these links */}
-                {!user.id && (
-                    // If there's no user, show login/registration links
-                    <Link className="navLink" to="/login">
-                        Login / Register
-                    </Link>
-                )}
-
-                {/* If a user is logged in, show these links */}
-                {user.id && (
-                    <>
-                        <LogOutButton className="navLink" />
-                    </>
-                )}
-
-            </div>
-
+            <div>{/* Temporary Empty Div for Title Placement */}</div>
 
         </div>
     );
