@@ -3,8 +3,6 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/:id', (req, res) => {
-    console.log('heyyyy')
-    console.log('Params id:', req.params.id)
 
     const queryText = `
     SELECT
@@ -44,7 +42,5 @@ router.get('/:id', (req, res) => {
             console.log('Error with the GET_TournamentDetails', error);
         })
 })
-
-
 
 module.exports = router;

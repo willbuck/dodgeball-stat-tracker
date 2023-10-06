@@ -7,22 +7,18 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
 
 export default function TournamentList() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
   const tournaments = useSelector((store) => store.tournamentReducer);
   const selectedTournament = useSelector((store) => store.selectedTournamentReducer);
   const selectedTournamentFromArray = tournaments.filter((item) => item.tournament_name === selectedTournament)
-  console.log('filtered tourny data', selectedTournamentFromArray);
 
   const handleClick = (id) => {
-    console.log('GAvin:', id)
     dispatch({
       type: 'GET_TOURNAMENT_DETAILS',
       payload: id
@@ -72,8 +68,6 @@ export default function TournamentList() {
         </Box>
       </Box>
     );
-
-
   } else {
 
 
@@ -121,6 +115,3 @@ export default function TournamentList() {
 
   }
 }
-// <CardActions>
-//               <Button size='small'>Learn More</Button>
-//             </CardActions>

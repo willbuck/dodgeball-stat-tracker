@@ -44,7 +44,6 @@ function App() {
     dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
 
-  console.log('user id:', user.id)
   return (
     <Router>
       <div>
