@@ -8,15 +8,19 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 // Admin Imports
 import AdminLanding from '../Admin/AdminLanding'
 import CreateTournament from '../Admin/CreateTournament'
+import ManageTournaments from "../Admin/ManageTournaments";
+import AddTeam from '../Admin/AddTeam'
+import ManageTeams from '../Admin/ManageTeams'
 
+// Component Imports
+import Nav from "../Nav/Nav";
+import Footer from "../Footer/Footer";
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
@@ -24,11 +28,17 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import TournamentDetails from "../TournamentDetails/TournamentDetails";
-import Leaderboard from "../Leaderboard/Leaderboard";
 
+import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
+import Header from "../Header/Header";
+import Sidebar from "../Sidebar/Sidebar";
+import GameDetail from '../GameDetail/GameDetail';
+
 
 import "./App.css";
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -42,12 +52,13 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        <Header />
+        <Sidebar />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
 
-         {/* ADMIN ROUTES */}
+          {/* ADMIN ROUTES */}
           <ProtectedRoute exact path="/admin">
             <AdminLanding />
           </ProtectedRoute>
@@ -55,10 +66,20 @@ function App() {
           <ProtectedRoute exact path="/admin/create-tournament">
             <CreateTournament />
           </ProtectedRoute>
-        
-          <ProtectedRoute exact path="/admin/manage-tournament">
-            {/* Add admin route components here */}
+
+          <ProtectedRoute exact path="/admin/manage-tournaments">
+            <ManageTournaments />
           </ProtectedRoute>
+
+          <ProtectedRoute exact path="/admin/add-team">
+            <AddTeam />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/admin/manage-teams">
+            <ManageTeams />
+          </ProtectedRoute>
+
+
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -89,7 +110,16 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
-          <ProtectedRoute path="/tournamentDetails">
+
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            path="/gameview/:id"
+          >
+            <GameDetail />
+          </ProtectedRoute>
+
+
+          <ProtectedRoute path="/tournamentDetails/:id">
             <TournamentDetails />
           </ProtectedRoute>
 
@@ -100,6 +130,7 @@ function App() {
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
+
               // redirect to the /user page
               <Redirect to="/user" />
             ) : (

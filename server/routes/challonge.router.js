@@ -20,7 +20,6 @@ router.get('/tournament', (req, res) => {
                     include_matches: true
                 }
             });
-            console.log('response:', response.data);
             const tournamentData = response.data;
             res.send(tournamentData)
         } catch (error) {
@@ -30,32 +29,30 @@ router.get('/tournament', (req, res) => {
     fetchTournament();
 });
 
-// Get index of tournaments
+//! Get index of tournaments
 
 // Create tournament
 router.post('/tournament', (req, res) => {
     const apiKey = process.env.CHALLONGE_API_KEY;
     const endpointURL = `https://api.challonge.com/v1/tournaments.json`;
 
-    const name = "test_tournament_2" //! This string should be a variable passed in by the user
-
     // Function to make API request
     const createTournament = async () => {
         try {
             let response = await axios.post(endpointURL, {
                 api_key: apiKey,
-                name: name,
-                game_name: "Dodgeball",
-                description: "",
+                name: req.body.name,
+                game_name: "dodgeball",
+                description: req.body.description,
                 tournament_type: "single elimination", // alternative is "round robin"
                 signup_cap: null, // max teams
                 start_at: null,
             });
             
-            // Tournament ID so we can add newly created tournament to our database
-            const tournamentURL = response.data.tournament.name;
+            // Tournament URL so we can add newly created tournament to our database
+            const newTournamentData = response.data.tournament;
 
-            res.sendStatus(200)
+            res.send(newTournamentData)
         } catch (error) {
             console.error('error in tournament post:', error)
             res.sendStatus(500)
@@ -77,28 +74,56 @@ router.post('/tournament', (req, res) => {
 // Delete tournament
 
 // Get participant list for a tournament
+router.get('/tournament/participants', (req, res) => {
+    const apiKey = process.env.CHALLONGE_API_KEY;
+
+    const tournamentURL = 'wrkfqk65';
+    const endpointURL = `https://api.challonge.com/v1/tournaments/${tournamentURL}/participants.json`;
+
+    const fetchParticipants = async () => {
+        try {
+            const response = await axios.get(endpointURL, {
+                params: {
+                    api_key: apiKey
+                }
+            })
+            console.log('fetchParticipants response:', response.data)
+            res.send(response.data)
+        } catch (error) {
+            console.log('error in fetchParticipants:', error)
+        }
+    }
+    fetchParticipants()
+
+})
 
 // Add participant to tournament
-router.post('/tournament/participant', (req, res) => {
+router.post('/tournament/participants', (req, res) => {
 
     const apiKey = process.env.CHALLONGE_API_KEY;
-    const tournamentID = 'lztss79e';
+    const {participants, newTournamentID} = req.body;
+    console.log('in challonge add participants:', participants, newTournamentID);
 
-    const endpointURL = `https://api.challonge.com/v1/tournaments/${tournamentID}/participants.json`;
+    const participantsToSend = participants.map( participant => {
+        return {
+            "name": participant.teamName, 
+            "misc": participant.teamID
+    }
+    });
+    console.log('participantsToSend:', participantsToSend)
 
-    const name = "test_participant"
+    const endpointURL = `https://api.challonge.com/v1/tournaments/${newTournamentID}/participants/bulk_add.json`;
+    
     const createParticipant = async () => {
         try {
             let response = await axios.post(endpointURL, {
                 api_key: apiKey,
-                name: name,
-                challonge_username: null,
-                email: null,
+                participants: participantsToSend,
             });
-            console.log('response:', response.data.participant);
-            res.sendStatus(200)
+            console.log('response from Challonge:', response.data);
+            res.sendStatus(200);
         } catch (error) {
-            console.error('error in tournament post:', error)
+            console.error('error in challonge participants post:', error)
             res.sendStatus(500)
         }
     }
@@ -109,9 +134,31 @@ router.post('/tournament/participant', (req, res) => {
 
 // Delete participant
 
-// Get match list for tournament
+//! Get match list for tournament
 
-// Get individual match
+//! Get individual match
+router.get('/match', (req, res) => {
+    const apiKey = process.env.CHALLONGE_API_KEY;
+
+    const testTournamentID = `wrkfqk65`
+
+    const endpointURL = `https://api.challonge.com/v1/tournaments/${testTournamentID}/matches.json`
+
+    const getMatches = async () => {
+        try {
+            const response = await axios.get(endpointURL, {
+                params: {
+                    api_key: apiKey
+                }
+            })
+            console.log('getMatches response:', response.data)
+            res.send(response.data)
+        } catch (error) {
+            console.log('error in getMatches:', error)
+        }
+    }
+    getMatches()
+})
 
 // Update match
 
