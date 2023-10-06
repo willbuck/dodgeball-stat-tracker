@@ -7,7 +7,7 @@ function* teamLeaderboard(){
     // all teams from a given tournament 
 
     // I am hard coding the id, need to fix that 😅
-    const allTeams = yield axios('/api/allTeams/1');
+    const allTeams = yield axios.get('/api/allTeams/1');
 
     //Storing the data in a store
     yield put({

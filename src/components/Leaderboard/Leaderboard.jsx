@@ -11,24 +11,23 @@ function Leaderboard() {
   const dispatch = useDispatch();
   const leaderboardStore = useSelector((store) => store.leaderboardReducer);
   console.log("THE leaderboard store:", leaderboardStore);
-  const teamLeaderboardStore = useSelector((store)  => store.teamLeaderboardReducer);
-  console.log('All teams store:', teamLeaderboardStore);
-  
+
+  const teamLeaderboardStore = useSelector(
+    (store) => store.teamLeaderboardReducer
+  );
+  console.log("All teams store:", teamLeaderboardStore);
+
+  const searchTeamLeaderboardStore = useSelector(
+    (store) => store.searchTeamLeaderboardReducer
+  );
+  console.log("Search Team stats as:", searchTeamLeaderboardStore);
+
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
 
   const handleClickPlayer = (newValue) => {
     setSelectedPlayer(newValue);
   };
-
-  const handleClickTeam = (newValue) => {
-    setSelectedTeam(newValue);
-    console.log('Search Team:',selectedTeam);
-    // dispatch({
-    //     type: 'SEARCH_TEAM_STAT',
-    //     payload: 
-    // })
-  }
 
   //as the page loads
   //it will GET statistics from DB
@@ -39,9 +38,19 @@ function Leaderboard() {
     //This dispatch is to GET all the teams
     //in the tournament
     dispatch({
-        type:'GET_ALL_TEAMS'
-    })
-  }, []);
+      type: "GET_ALL_TEAMS",
+    });
+
+    // check if selectedTeam is not Null
+    // Run the effect whenever selectedTeam changes
+    if (selectedTeam) {
+      console.log("IN IF:", selectedTeam);
+      dispatch({
+        type: "SEARCH_TEAM_STAT",
+        payload: selectedTeam,
+      });
+    }
+  }, [selectedTeam]);
 
   return (
     <>
@@ -77,7 +86,7 @@ function Leaderboard() {
           options={teamLeaderboardStore}
           getOptionLabel={(option) => `${option.team_name} `}
           onChange={(event, newValue) => {
-            handleClickTeam(newValue);
+            setSelectedTeam(newValue);
           }}
           renderInput={(params) => (
             <TextField
@@ -104,6 +113,24 @@ function Leaderboard() {
           <p> Out: {selectedPlayer.outs}</p>
           <p> Catch: {selectedPlayer.catches}</p>
         </div>
+      ) : selectedTeam ? (
+        //Display selected Team, a list of all
+        // their players and stats
+        <div>
+          {searchTeamLeaderboardStore.map((member) => {
+            return (
+              <>
+                <p>
+                  {" "}
+                  Name: {member.firstname} {member.lastname}{" "}
+                </p>
+                <p> Kill: {member.kills} </p>
+                <p> Outs: {member.outs} </p>
+                <p> Catches: {member.catches} </p>
+              </>
+            );
+          })}
+        </div>
       ) : (
         // Render all stats for each players in that tournament
         //  when no search has happened
@@ -122,7 +149,6 @@ function Leaderboard() {
           })}
         </>
       )}
-      
     </>
   );
 }
