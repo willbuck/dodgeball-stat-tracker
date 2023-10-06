@@ -123,7 +123,7 @@ function App() {
             <TournamentDetails />
           </ProtectedRoute>
 
-          <ProtectedRoute path="/leaderboard">
+          <ProtectedRoute path="/leaderboard/:id">
             <Leaderboard />
           </ProtectedRoute>
 
