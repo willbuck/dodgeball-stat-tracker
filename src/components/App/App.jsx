@@ -35,6 +35,7 @@ import GameDetail from '../GameDetail/GameDetail';
 import "./App.css";
 
 
+
 function App() {
   const dispatch = useDispatch();
 
@@ -44,7 +45,6 @@ function App() {
     dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
 
-  console.log('user id:', user.id)
   return (
     <Router>
       <div>
@@ -108,13 +108,13 @@ function App() {
 
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
-            path="/gameview"
+            path="/gameview/:id"
           >
             <GameDetail />
           </ProtectedRoute>
 
 
-          <ProtectedRoute path="/tournamentDetails">
+          <ProtectedRoute path="/tournamentDetails/:id">
             <TournamentDetails />
           </ProtectedRoute>
 
