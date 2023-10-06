@@ -28,13 +28,9 @@ router.get('/:id', (req, res) => {
         team t1 ON game.team1_id = t1.id
     JOIN
         team t2 ON game.team2_id = t2.id
-    WHERE
-        game.tournament_id = $1;
     `
 
-    const queryParams = [req.params.id];
-
-    pool.query(queryText, queryParams)
+    pool.query(queryText)
         .then((result) => {
             res.send(result.rows)
         }).catch((error) => {

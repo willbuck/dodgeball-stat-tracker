@@ -5,14 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 // This component is for the Tournament details page
-//  It talks to the database to get all the games
+// It talks to the database to get all the games
 // in a specific tournment
+
 function TournamentDetails() {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // Getting tournament ID from 
+  // react-router url params and  
+  // changing data type back to number
+  const {id, tournamentID = Number(id)} = useParams();
 
   // Updating store with all players in database
   //! This dispatch should be renamed to 'FETCH_PLAYERS'
@@ -22,49 +28,19 @@ function TournamentDetails() {
     })
   }, [])
 
-  const tournamentDetail = useSelector((store) => store.tournamentDetailsReducer);
-  const players = useSelector((store) => store.playersReducer);
+  // Getting games from store
+  const allGames = useSelector((store) => store.tournamentDetailsReducer);
 
-  // Helper function to set team rosters before navigating to GameDetail component
-    // This could probably live here or in GameDetail component, not sure which makes more sense
-  const setRosters = (game) => {
-    const teamsObject = {
-      team1: {
-        id: game.team1_id,
-        name: game.team1_name,
-        color: game.team1_jersey_color,
-        players: []
-      },
-
-      team2: {
-        id: game.team2_id,
-        name: game.team2_name,
-        color: game.team2_jersey_color,
-        players: []
-      },
+  // Creating array for games in current tournament
+  const tournamentGames = [];
+  for (let game of allGames) {
+    if(game.tournament_id === tournamentID) {
+      tournamentGames.push(game);
     }
-
-    // Looping over players to find players in this game
-    for (let player of players) {
-      if (player.team_id === game.team1_id) {
-        player.kills = 0;
-        player.outs = 0;
-        player.catches = 0;
-        teamsObject.team1.players.push(player);
-      } else if (player.team_id === game.team2_id) {
-        player.kills = 0;
-        player.outs = 0;
-        player.catches = 0;
-        teamsObject.team2.players.push(player);
-      }
-    }
-    return teamsObject
   }
-
+  
   // Handler function for selected game
-  const handleGame = (game) => {
-    game.teams = setRosters(game);
-    console.log('game object after adding teams:', game)
+  const handleGameClick = (game) => {
 
     // using location object to add state to next page in history
     const location = {
@@ -79,7 +55,7 @@ function TournamentDetails() {
   const [selectedGame, setSelectedGame] = useState(null);
 
   // This functions handles the selected game
-  const handleClick = (newValue) => {
+  const handleSearchbarClick = (newValue) => {
     setSelectedGame(newValue);
   };
 
@@ -89,12 +65,12 @@ function TournamentDetails() {
       <Stack spacing={2} sx={{ width: 300 }}>
         <Autocomplete
           id="free-solo-2-demo"
-          options={tournamentDetail}
+          options={allGames}
           getOptionLabel={(option) =>
             `${option.team1_name} VS ${option.team2_name} ${option.game_id}`
           }
           onChange={(event, newValue) => {
-            handleClick(newValue);
+            handleSearchbarClick(newValue);
           }}
           renderInput={(params) => (
             <TextField
@@ -127,8 +103,8 @@ function TournamentDetails() {
         // Render tournament details when selectedGame is empty
         <>
           {/* The list of all the games in that tournament */}
-          {tournamentDetail.map((details, index) => (
-            <div key={index} onClick={() => { handleGame(details) }}>
+          {tournamentGames.map((details, index) => (
+            <div key={index} onClick={() => { handleGameClick(details) }}>
               <h2>
                 Game {index + 1}: {details.team1_name} VS {details.team2_name}
                 Time {details.start_time} - {details.end_time}

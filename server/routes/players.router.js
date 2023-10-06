@@ -18,9 +18,9 @@ router.get('/', (req, res) => {
       players
       JOIN team
         ON players.team_id = team.id
-      JOIN participants
+      FULL JOIN participants
         ON team.id = participants.team_id
-      JOIN tournament
+      LEFT JOIN tournament
         ON participants.tournament_url = tournament.url
     ;
     `

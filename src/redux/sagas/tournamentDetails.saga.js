@@ -8,7 +8,7 @@ function* fetchTournamentsDetails(action){
     // need to fix the  id part of the router🙃
     const detailsTournaments = yield axios.get(`/api/tournamentDetails/${action.payload}`);
 
-    //Storing the data in a global store
+    // Storing the data in a global store
     yield put({
         type:'TOURNAMENT_DETAILS',
         payload: detailsTournaments.data

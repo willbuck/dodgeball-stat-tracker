@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";
-import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom';
 
 // MUI Imports
 import Box from '@mui/material/Box';
@@ -15,26 +15,89 @@ import BackHandIcon from '@mui/icons-material/BackHand';
 import DoNotStepIcon from '@mui/icons-material/DoNotStep';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 
-
 function GameDetail() {
-    // Getting information for current game
-    const location = useLocation();
-    const game = location.state
-    // const teams = game.teams
+    const { id, gameID = Number(id) } = useParams();
 
-    const [teams, setTeams] = useState(game.teams);
+    const allPlayers = useSelector((store) => store.playersReducer);
+    const allGames = useSelector((store) => store.tournamentDetailsReducer);
+
+    //! Make this an importable helper function
+    const findIDMatch = (array, id, key, all) => {
+        const matches = [];
+        
+        for (let item of array) {
+          let test
+          if (key === undefined) {
+            test = item;
+          } else {
+            test = item[key]
+          }
+          
+          if (test === id) {
+            if (all === false) {
+              return item
+            }
+            matches.push(item);
+          }
+        }  
+        return matches;
+      }
+
+    // Getting information for current game
+    const game = findIDMatch(allGames, gameID, 'game_id', false)
+
+    const [teams, setTeams] = useState({
+        team1: {
+            id: game.team1_id,
+            name: game.team1_name,
+            color: game.team1_jersey_color,
+            players: []
+        },
+
+        team2: {
+            id: game.team2_id,
+            name: game.team2_name,
+            color: game.team2_jersey_color,
+            players: []
+        }
+    })
+
+    // Helper function to set team rosters
+    const setRosters = (currentGame) => {
+        const teamsObject = Object.assign({}, teams);
+        // Looping over players to find players in this game
+        for (let player of allPlayers) {
+            if (player.team_id === currentGame.team1_id && !teamsObject.team1.players.includes(player)) {
+                player.kills = 0;
+                player.outs = 0;
+                player.catches = 0;
+                teamsObject.team1.players.push(player);
+            } else if (player.team_id === currentGame.team2_id && !teamsObject.team2.players.includes(player)) {
+                player.kills = 0;
+                player.outs = 0;
+                player.catches = 0;
+                teamsObject.team2.players.push(player);
+            }
+        }
+        return teamsObject
+    }
+
+    useEffect(() => {
+        setTeams(setRosters(game))
+
+    }, [])
 
     // Handler function for stat tracking
     const handleStat = (stat, player) => {
 
         player[stat]++;
 
-        // Creating copy of teams state
-            // React won't rerender if we don't make a copy
+        // Creating copy of teams state so
+        // react will re-render on state change
         const teamsCopy = Object.assign({}, teams)
 
         // Loop to find player in teams object
-            // This is very inelegant
+        // This is very inelegant
         let counter = 0;
         for (let roster of teamsCopy.team1.players) {
             if (player.player_id === roster.player_id) {
@@ -82,7 +145,7 @@ function GameDetail() {
                         return (
                             // PLAYER COMPONENT
                             <Card
-                                key={player.id}
+                                key={player.player_id}
                                 sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
                             >
                                 <CardContent>
@@ -151,7 +214,7 @@ function GameDetail() {
                     {teams.team2.players.map((player) => {
                         return (
                             <Card
-                                key={player.id}
+                                key={player.player_id}
                                 sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
                             >
                                 <CardContent>
