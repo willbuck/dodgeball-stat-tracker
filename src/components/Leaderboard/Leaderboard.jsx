@@ -32,9 +32,6 @@ function Leaderboard() {
   //as the page loads
   //it will GET statistics from DB
   useEffect(() => {
-    dispatch({
-      type: "GET_STATISTICS",
-    });
     //This dispatch is to GET all the teams
     //in the tournament
     dispatch({
