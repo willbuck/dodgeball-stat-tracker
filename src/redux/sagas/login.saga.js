@@ -7,8 +7,6 @@ function* loginUser(action) {
     // clear any existing error on the login page
     yield put({ type: 'CLEAR_LOGIN_ERROR' });
 
-    console.log('action.payload in login saga:', action.payload);
-
     const config = {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,

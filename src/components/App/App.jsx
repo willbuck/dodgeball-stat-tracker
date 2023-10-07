@@ -48,7 +48,7 @@ function App() {
   const uniqueID = {
     // Generating UUID from DNS namespace
     uuid: uuidv5('usa_dodgeball', uuidv5.DNS),
-    
+
     // Generating pseudonym for easier readability
     pseudonym: uniqueNamesGenerator({
       dictionaries: [adjectives, colors, animals ],
@@ -56,11 +56,8 @@ function App() {
       seed: uuidv5('usa_dodgeball', uuidv5.DNS)
     })
   }
-
   
   const user = useSelector((store) => store.user);
-  console.log('user:', user)
-
 
   useEffect(() => {
     dispatch({ type: "FETCH_USER", payload: uniqueID });

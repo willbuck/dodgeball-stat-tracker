@@ -8,7 +8,6 @@ function LoginForm() {
   const user = useSelector(store => store.user);
   const errors = useSelector(store => store.errors);
   const dispatch = useDispatch();
-  console.log('payload to send:',{...user, username, password});
 
   const login = (event) => {
     event.preventDefault();
