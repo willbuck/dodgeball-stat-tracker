@@ -7,6 +7,8 @@ function* loginUser(action) {
     // clear any existing error on the login page
     yield put({ type: 'CLEAR_LOGIN_ERROR' });
 
+    console.log('action.payload in login saga:', action.payload);
+
     const config = {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
@@ -19,7 +21,7 @@ function* loginUser(action) {
 
     // after the user has logged in
     // get the user information from the server
-    yield put({ type: 'FETCH_USER' });
+    yield put({ type: 'FETCH_USER', payload: action.payload });
   } catch (error) {
     console.log('Error with user login:', error);
     if (error.response.status === 401) {
@@ -43,6 +45,9 @@ function* logoutUser(action) {
       withCredentials: true,
     };
 
+    // Unique credentials to maintain after logout
+    const {uuid, pseudonym} = action.payload
+
     // the config includes credentials which
     // allow the server session to recognize the user
     // when the server recognizes the user session
@@ -52,7 +57,7 @@ function* logoutUser(action) {
     // now that the session has ended on the server
     // remove the client-side user object to let
     // the client-side code know the user is logged out
-    yield put({ type: 'UNSET_USER' });
+    yield put({ type: 'UNSET_USER', payload: {uuid, pseudonym} });
   } catch (error) {
     console.log('Error with user logout:', error);
   }

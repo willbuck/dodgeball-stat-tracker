@@ -5,8 +5,10 @@ import {useSelector} from 'react-redux';
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const user = useSelector(store => store.user);
   const errors = useSelector(store => store.errors);
   const dispatch = useDispatch();
+  console.log('payload to send:',{...user, username, password});
 
   const login = (event) => {
     event.preventDefault();
@@ -15,6 +17,7 @@ function LoginForm() {
       dispatch({
         type: 'LOGIN',
         payload: {
+          ...user,
           username: username,
           password: password,
         },
