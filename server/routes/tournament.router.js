@@ -3,8 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  console.log("in tournament GET", req.body)
-
+ 
   let queryText = `SELECT * FROM "tournament"`
   pool.query(queryText)
     .then((response) => {
@@ -56,15 +55,12 @@ router.post('/', (req, res) => {
 
 router.post('/participants', (req, res) => {
 
-  console.log('in tournament/participants POST', req.body)
-
   // Creating queryValues by 
   const queryValues = []
   req.body.map( index => {
     queryValues.push(index.teamID);
     queryValues.push(index.tournamentURL);
   })
-  console.log('queryValues:', queryValues);
 
   const createPlaceholders = (array) => {
     const rowsNeeded = array.length / 2;
@@ -93,16 +89,12 @@ router.post('/participants', (req, res) => {
    
   pool.query(queryText, queryValues)
   .then( response => {
-    console.log('success in pool create participants');
     res.sendStatus(200);
   })
   .catch( error => {
     console.log('error in pool query crete participants', error);
     res.sendStatus(500);
   })
-  
-
-  
 })
 
 module.exports = router;

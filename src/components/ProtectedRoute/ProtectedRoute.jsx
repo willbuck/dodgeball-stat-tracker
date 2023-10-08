@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import LoginPage from '../LoginPage/LoginPage';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component
@@ -20,7 +20,11 @@ function ProtectedRoute({ component, children, ...props }) {
   // or as a child component.
   const ProtectedComponent = component || (() => children);
 
-  // We return a Route component that gets added to our list of routes
+  //! The below return statement creates protected routes.
+  //! The protection has been removed, but protected version
+  //! is being left in the code as a comment until we can test
+  //! the difference thoroughly
+  /*
   return (
     <Route
       // all props like 'exact' and 'path' that were passed in
@@ -36,6 +40,14 @@ function ProtectedRoute({ component, children, ...props }) {
       }
     </Route>
 
+  );
+  */
+
+  // Unprotected version
+  return (
+    <Route {...props}>
+      <ProtectedComponent />
+    </Route>
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory, useLocation, } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector } from 'react-redux';
+// import LogOutButton from '../LogOutButton/LogOutButton';
 
 // MUI Components
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -12,6 +12,9 @@ function Header() {
     const history = useHistory();
     const location = useLocation();
     const user = useSelector((store) => store.user);
+    // const currentScore = useSelector((store) => store.playersReducer);
+    // const team1_score = currentScore.game.team1_score;
+    // const team2_score = currentScore.game.team2_score;
 
 
     let currentTitle = '';
@@ -58,32 +61,22 @@ function Header() {
                 />
             </Link>
 
-            <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
-                <ArrowBackIcon />
-            </IconButton>
+            {location.pathname !== '/user' && (
+                <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
+                    <ArrowBackIcon />
+                </IconButton>
+            )}
 
             <div>
                 <h2 className="header-title">{currentTitle}</h2>
+                {/* {currentTitle === 'Game View' &&
+                    <div>
+                        <h3>Score: {team1_score} - {team2_score}</h3>
+                    </div>
+                } */}
             </div>
 
-            <div>
-                {/* If no user is logged in, show these links */}
-                {!user.id && (
-                    // If there's no user, show login/registration links
-                    <Link className="navLink" to="/login">
-                        Login / Register
-                    </Link>
-                )}
-
-                {/* If a user is logged in, show these links */}
-                {user.id && (
-                    <>
-                        <LogOutButton className="navLink" />
-                    </>
-                )}
-
-            </div>
-
+            <div>{/* Temporary Empty Div for Title Placement */}</div>
 
         </div>
     );

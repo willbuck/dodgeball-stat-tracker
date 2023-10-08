@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom';
 
 // MUI Imports
 import Box from '@mui/material/Box';
@@ -14,63 +14,121 @@ import IconButton from '@mui/material/IconButton';
 import BackHandIcon from '@mui/icons-material/BackHand';
 import DoNotStepIcon from '@mui/icons-material/DoNotStep';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
-// import Button from '@mui/material/Button';
-// import CallMissedIcon from '@mui/icons-material/CallMissed';
-
-
 
 function GameDetail() {
-    const user = useSelector((store) => store.user);
-    const players = useSelector((store) => store.playersReducer);
-    let team1 = []
-    let team2 = []
+    const { id, gameID = Number(id) } = useParams();
 
+    const allPlayers = useSelector((store) => store.playersReducer);
+    const allGames = useSelector((store) => store.tournamentDetailsReducer);
 
-    console.log('players data:', players);
-    //const team1players = players.filter((team) => {team.team1_id === team1_id})
-    // const team2players = 
+    //! Make this an importable helper function
+    // Helper function to find matching ID in an array
+        // array (required): the array to scan
+        // id (required): the value to scan for
+        // key (optional): the key to scan for within each array item
+        // all (optional): whether to return all matches. default is true. false will return first match.
+    const findIDMatch = (array, id, key, all) => {
+        //! refactor: it doesn't really account for a person who wants one match from an array of non-objects. Need to allow for that (this should be easy since key and all will never have same data type)
+        const matches = [];
+        
+        for (let item of array) {
+          let test
+          if (key === undefined) {
+            test = item;
+          } else {
+            test = item[key]
+          }
+          
+          if (test === id) {
+            if (all === false) {
+              return item
+            }
+            matches.push(item);
+          }
+        }  
+        return matches;
+      }
 
-    for (let player of players) {
-        if (player.team_id === player.team1_id) {
-            console.log("Team one member:", player)
-            team1.push(player)
-        } else if (player.team_id === player.team2_id) {
-            console.log("Team two member:", player)
-            team2.push(player)
+    // Getting information for current game
+    const game = findIDMatch(allGames, gameID, 'game_id', false)
+
+    const [teams, setTeams] = useState({
+        team1: {
+            id: game.team1_id,
+            name: game.team1_name,
+            color: game.team1_jersey_color,
+            players: []
+        },
+
+        team2: {
+            id: game.team2_id,
+            name: game.team2_name,
+            color: game.team2_jersey_color,
+            players: []
         }
+    })
+
+    // Helper function to set team rosters
+    const setRosters = (currentGame) => {
+        const teamsObject = Object.assign({}, teams);
+        // Looping over players to find players in this game
+        for (let player of allPlayers) {
+            if (player.team_id === currentGame.team1_id && !teamsObject.team1.players.includes(player)) {
+                player.kills = 0;
+                player.outs = 0;
+                player.catches = 0;
+                teamsObject.team1.players.push(player);
+            } else if (player.team_id === currentGame.team2_id && !teamsObject.team2.players.includes(player)) {
+                player.kills = 0;
+                player.outs = 0;
+                player.catches = 0;
+                teamsObject.team2.players.push(player);
+            }
+        }
+        return teamsObject
     }
 
+    useEffect(() => {
+        setTeams(setRosters(game))
 
-    const dispatch = useDispatch();
+    }, [])
 
+    // Handler function for stat tracking
+    const handleStat = (stat, player) => {
 
-    // Bug to fix: this useEffect does not re-render the data upon page reload.
-    //  useEffect((ID) => {
-    //      dispatch({ type: "FETCH_TEAMS", payload: ID });
-    //  }, []);
+        player[stat]++;
 
+        // Creating copy of teams state so
+        // react will re-render on state change
+        const teamsCopy = Object.assign({}, teams)
 
-    const handleKill = (id) => {
-        console.log(id, 'Got a Kill!')
+        // Loop to find player in teams object
+        // This is very inelegant
+        let counter = 0;
+        for (let roster of teamsCopy.team1.players) {
+            if (player.player_id === roster.player_id) {
+                teamsCopy.team1.players[counter] = player;
+            }
+            counter++
+        }
+        counter = 0;
+        for (let roster of teamsCopy.team2.players) {
+            if (player.player_id === roster.player_id) {
+                teamsCopy.team2.players[counter] = player;
+            }
+            counter++;
+        }
+        // Updating state
+        setTeams(teamsCopy);
+    }
 
-    };
-
-    const handleOutOfBounds = (id) => {
-        console.log(id, 'Out of bounds!')
-    };
-
-    const handleCatch = (id) => {
-        console.log(id, 'Got a Catch!')
-    };
-
-
+    //! Make separate team grids into a separate component
     return (
         // Main Container Box
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
 
             {/* Main Container Box For Scrolling */}
             <Box className="scroll-container"
-
                 sx={{
                     display: 'flex',
                     width: 350,
@@ -84,35 +142,41 @@ function GameDetail() {
                 }}
             >
 
-
                 {/* Left Grid For Team 1 */}
                 <Grid container sx={{ minWidth: 100, display: 'flex', justifyContent: 'left', paddingLeft: 1 }}
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {team1.map((player) => {
+                    {teams.team1.players.map((player) => {
                         return (
+                            // PLAYER COMPONENT
                             <Card
-                                key={player.id}
+                                key={player.player_id}
                                 sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
                             >
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
                                         #{player.jersey_number}
                                     </Typography>
+
+                                    {/* PLAYER NAME */}
                                     <Typography variant='body2' color='text.secondary'>
                                         {player.firstname} {player.lastname}
                                     </Typography>
                                 </CardContent>
                                 <CardActions sx={{ justifyContent: 'spaceBetween' }}>
+
+                                    {/* STAT ROW */}
                                     <Grid container direction="column" alignItems="center">
+                                        {/* Kills value */}
                                         <Grid >
                                             <Typography variant="body2" color='text.secondary'>
                                                 {player.kills}
                                             </Typography>
                                         </Grid>
+                                        {/* Kill icon */}
                                         <Grid >
-                                            <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleStat('kills', player) }} sx={{ color: '#186BCC', }}>
                                                 <GpsFixedIcon />
                                             </IconButton>
                                         </Grid>
@@ -124,7 +188,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleStat('outs', player) }} sx={{ color: '#186BCC', }}>
                                                 <DoNotStepIcon />
                                             </IconButton>
                                         </Grid>
@@ -136,7 +200,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleStat('catches', player) }} sx={{ color: '#186BCC', }}>
                                                 <BackHandIcon />
                                             </IconButton>
                                         </Grid>
@@ -153,10 +217,10 @@ function GameDetail() {
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {team2.map((player) => {
+                    {teams.team2.players.map((player) => {
                         return (
                             <Card
-                                key={player.id}
+                                key={player.player_id}
                                 sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
                             >
                                 <CardContent>
@@ -176,7 +240,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleKill(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleStat("kills", player) }} sx={{ color: '#186BCC', }}>
                                                 <GpsFixedIcon />
                                             </IconButton>
                                         </Grid>
@@ -188,7 +252,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleOutOfBounds(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleStat("outs", player) }} sx={{ color: '#186BCC', }}>
                                                 <DoNotStepIcon />
                                             </IconButton>
                                         </Grid>
@@ -200,7 +264,7 @@ function GameDetail() {
                                             </Typography>
                                         </Grid>
                                         <Grid >
-                                            <IconButton onClick={() => { handleCatch(player.id) }} sx={{ color: '#186BCC', }}>
+                                            <IconButton onClick={() => { handleStat("catches", player) }} sx={{ color: '#186BCC', }}>
                                                 <BackHandIcon />
                                             </IconButton>
                                         </Grid>
@@ -215,7 +279,6 @@ function GameDetail() {
             </Box>
         </Box>
     );
-
 }
 
 export default GameDetail;

@@ -13,7 +13,6 @@ export default function SearchTournament() {
   const dispatch = useDispatch();
 
   function handleClear(){
-    console.log("kjdfgshbf")
     dispatch({ type: "UNSET_SELECTED_TOURNAMENT" });
   }
 

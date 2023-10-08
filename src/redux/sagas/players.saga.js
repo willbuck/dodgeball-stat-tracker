@@ -17,10 +17,7 @@ function* fetchAllPlayers(action) {
 
 function* fetchPlayers(action) {
     try {
-        console.log("in GET players")
-        console.log("get players action payload", action.payload)
-        const players = yield axios.get(`/api/gameview/${action.payload}`);
-        console.log('get all:', players.data);
+        const players = yield axios.get(`/api/gameview`);
 
         yield put({
             type: 'SET_PLAYERS',
@@ -30,7 +27,6 @@ function* fetchPlayers(action) {
     } catch (error) {
         console.log('get all error', error);
     }
-
 }
 
 function* playersSaga() {

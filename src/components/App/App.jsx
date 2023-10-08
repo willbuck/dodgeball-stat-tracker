@@ -8,8 +8,6 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
@@ -21,6 +19,9 @@ import AddTeam from '../Admin/AddTeam'
 import ManageTeams from '../Admin/ManageTeams'
 import ManagePlayers from '../Admin/ManagePlayers'
 
+// Component Imports
+import Nav from "../Nav/Nav";
+import Footer from "../Footer/Footer";
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
@@ -28,28 +29,50 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import TournamentDetails from "../TournamentDetails/TournamentDetails";
-import Header from "../Header/Header";
 
+import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
+import Header from "../Header/Header";
+import Sidebar from "../Sidebar/Sidebar";
 import GameDetail from '../GameDetail/GameDetail';
 
+
 import "./App.css";
+
+// Unique identifiers for anonymous users
+import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
+import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
+import checkEmpty from "../../utilities/checkEmpty";
+
 
 
 function App() {
   const dispatch = useDispatch();
 
+  // Creating unique user ID
+  const uniqueID = {
+    // Generating UUID from DNS namespace
+    uuid: uuidv5('usa_dodgeball', uuidv5.DNS),
+
+    // Generating pseudonym for easier readability
+    pseudonym: uniqueNamesGenerator({
+      dictionaries: [adjectives, colors, animals ],
+      length: 3,
+      seed: uuidv5('usa_dodgeball', uuidv5.DNS)
+    })
+  }
+  
   const user = useSelector((store) => store.user);
 
   useEffect(() => {
-    dispatch({ type: "FETCH_USER" });
+    dispatch({ type: "FETCH_USER", payload: uniqueID });
   }, [dispatch]);
 
-  console.log('user id:', user.id)
   return (
     <Router>
       <div>
         <Header />
+        <Sidebar />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -66,11 +89,11 @@ function App() {
           <ProtectedRoute exact path="/admin/manage-tournaments">
             <ManageTournaments />
           </ProtectedRoute>
-          
+
           <ProtectedRoute exact path="/admin/add-team">
             <AddTeam />
           </ProtectedRoute>
-          
+
           <ProtectedRoute exact path="/admin/manage-teams">
             <ManageTeams />
           </ProtectedRoute>
@@ -113,14 +136,18 @@ function App() {
 
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
-            path="/gameview"
+            path="/gameview/:id"
           >
             <GameDetail />
           </ProtectedRoute>
 
 
-          <ProtectedRoute path="/tournamentDetails">
+          <ProtectedRoute path="/tournamentDetails/:id">
             <TournamentDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/leaderboard/:id">
+            <Leaderboard />
           </ProtectedRoute>
 
           <Route exact path="/login">

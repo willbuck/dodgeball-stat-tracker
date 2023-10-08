@@ -13,8 +13,15 @@ const challongeRouter = require('./routes/challonge.router')
 const tournamentRouter = require('./routes/tournament.router')
 const playersRouter = require('./routes/players.router')
 const tournamentDetailsRouter = require('./routes/tournamentDetails.router');
+
+const leaderboardRouter = require('./routes/leaderboard.router');
+const teamLeaderboardRouter = require('./routes/teamLeaderboard.router');
+const searchTeamLeaderboardRouter = require('./routes/searchTeamLeaderboard.router');
+const killRouter = require('./routes/kill.router')
 const teamsRouter = require('./routes/teams.router')
 const allPlayersRouter = require('./routes/allPlayers.router')
+
+
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -34,8 +41,15 @@ app.use('/api/tournament', tournamentRouter);
 // why is this playersRouter?  is it only for specific games?
 app.use('/api/gameview', playersRouter);
 app.use('/api/tournamentDetails', tournamentDetailsRouter);
+
+app.use('/api/leaderboard', leaderboardRouter);
+app.use('/api/allTeams', teamLeaderboardRouter);
+app.use('/api/searchTeam', searchTeamLeaderboardRouter);
+app.use('/api/kill', killRouter);
 app.use('/api/teams', teamsRouter)
 app.use('/api/players', allPlayersRouter)
+
+
 
 
 // Serve static files
