@@ -6,19 +6,15 @@ import { IconTrash } from '@tabler/icons-react';
 export default function ManageTournaments() {
 
   const dispatch = useDispatch()
-  const allTeams = useSelector((store) => store.tournamentReducer)
+  const allTeams = useSelector((store) => store.tournamentsReducer)
 
-  useEffect(() => {
-    dispatch({ type: "FETCH_TOURNAMENTS" });
-  }, []);
+  //! Should this be async?
+  const handleDelete = (id) => {
+    dispatch({ type: "DELETE_TOURNAMENT", payload: id });
+    dispatch({ type: "FETCH_TOURNAMENTS" })
+  }
 
-    const handleDelete = (id) => {
-      dispatch({ type: "DELETE_TOURNAMENT", payload: id });
-      dispatch({ type: "FETCH_TOURNAMENTS" })
-    }
-  
-  
-// This is the basic framework - need to check all the variables 
+  // This is the basic framework - need to check all the variables 
   return (
     <Container>
       <Grid container spacing={3}>
@@ -38,7 +34,7 @@ export default function ManageTournaments() {
                   </Typography>
                 </Stack>
 
-                <Button 
+                <Button
                   onClick={() => handleDelete(tournament.id)}
                   color="secondary">
                   <IconTrash size={24} />

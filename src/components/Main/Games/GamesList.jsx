@@ -1,7 +1,4 @@
-
-import axios from "axios";
 import { useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -21,16 +18,8 @@ function TournamentDetails() {
   // changing data type back to number
   const {id, tournamentID = Number(id)} = useParams();
 
-  // Updating store with all players in database
-  //! This dispatch should be renamed to 'FETCH_PLAYERS'
-  useEffect(() => {
-    dispatch({
-      type: 'FETCH_TEAMS'
-    })
-  }, [])
-
   // Getting games from store
-  const allGames = useSelector((store) => store.tournamentDetailsReducer);
+  const allGames = useSelector((store) => store.gamesReducer);
 
   // Creating array for games in current tournament
   const tournamentGames = [];
@@ -60,20 +49,8 @@ function TournamentDetails() {
     setSelectedGame(newValue);
   };
 
-  const handleClickLearderboard = () => {
-    console.log('In here',  tournamentID);
-    dispatch({
-      type: "GET_STATISTICS",
-      payload: tournamentID
-    });
-    history.push(`/leaderboard/${tournamentID}`)
-
-
-  }
-
   return (
     <>
-    <button onClick={handleClickLearderboard}>Leaderboard</button>
       {/* Search for a specific game */}
       <Stack spacing={2} sx={{ width: 300 }}>
         <Autocomplete

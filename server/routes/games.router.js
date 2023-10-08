@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
             res.send(result.rows)
         }).catch((error) => {
             res.sendStatus(500);
-            console.log('Error with the GET_TournamentDetails', error);
+            console.log('Error with the games router GET', error);
         })
 })
 

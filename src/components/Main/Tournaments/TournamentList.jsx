@@ -15,16 +15,12 @@ export default function TournamentList() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const tournaments = useSelector((store) => store.tournamentReducer);
+  const tournaments = useSelector((store) => store.tournamentsReducer);
   const selectedTournament = useSelector((store) => store.selectedTournamentReducer);
   const selectedTournamentFromArray = tournaments.filter((item) => item.tournament_name === selectedTournament)
 
   const handleClick = (id) => {
-    dispatch({
-      type: 'GET_TOURNAMENT_DETAILS',
-      payload: id
-    })
-    history.push(`/tournamentDetails/${id}`)
+    history.push(`/games/${id}`)
   }
 
   if (selectedTournament == "") {
