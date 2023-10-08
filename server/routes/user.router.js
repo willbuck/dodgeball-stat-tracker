@@ -47,4 +47,45 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
+router.post('/uuid', async (req, res) => {
+
+  // Check if current uuid is already in database
+  const getUUID = async (userUUID, userPseudonym) => {
+    try {
+      // Query text for getting UUID from database
+      const getQueryText = `
+        SELECT *
+        FROM "uuid"
+        WHERE "uuid" = $1
+        ;
+      `
+
+      // Query text for posting UUID to database
+      const postQueryText = `
+        INSERT INTO "uuid" ("uuid", "pseudonym")
+        VALUES ($1, $2)
+        ;
+      `
+
+      // Check database for user UUID
+      const response = await pool.query(getQueryText, [userUUID]);
+
+      const uuidResponse = response.rows
+    
+      // Post unique credentials to database if not already present
+      if (uuidResponse.length === 0) {
+        await pool.query(postQueryText, [userUUID, userPseudonym]);
+      }
+
+      res.sendStatus(200);
+
+    } catch (error) {
+      console.log('error in GET UUID', error);
+      res.sendStatus(500);
+    }
+  }
+  getUUID(req.body.uuid, req.body.pseudonym);
+
+})
+
 module.exports = router;

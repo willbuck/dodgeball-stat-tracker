@@ -9,15 +9,18 @@ function* fetchUser(action) {
       withCredentials: true,
     };
 
-    console.log('action.payload for first SET_USER:', action.payload)
+    // Sending UUID info to user reducer
+      // Doing this first because anonymous users trigger the error catch before the other SET_USER dispatch can run
     yield put({type: 'SET_USER', payload: action.payload})
+
+    // Post UUID to database
+    yield axios.post('/api/user/uuid', action.payload);
+    
     // the config includes credentials which
     // allow the server session to recognize the user
     // If a user is logged in, this will return their information
     // from the server session (req.user)
     const response = yield axios.get('/api/user', config);
-
-    console.log('user object for second SET_USER:', {...action.payload, ...response.data})
 
     // now that the session has given us a user object
     // with an id and username set the client-side user object to let
