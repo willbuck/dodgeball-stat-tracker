@@ -19,6 +19,7 @@ import CreateTournament from '../Admin/CreateTournament'
 import ManageTournaments from "../Admin/ManageTournaments";
 import AddTeam from '../Admin/AddTeam'
 import ManageTeams from '../Admin/ManageTeams'
+import ManagePlayers from '../Admin/ManagePlayers'
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
@@ -72,6 +73,10 @@ function App() {
           
           <ProtectedRoute exact path="/admin/manage-teams">
             <ManageTeams />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/admin/manage-players">
+            <ManagePlayers />
           </ProtectedRoute>
 
           
