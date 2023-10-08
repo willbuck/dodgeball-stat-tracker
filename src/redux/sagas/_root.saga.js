@@ -8,11 +8,11 @@ import playersSaga from './players.saga';
 import gamesSaga from './games.saga';
 
 
-import tournamentsDetailsSaga from './tournamentDetails.saga';
+
 import fetchLeaderboardSaga from './leaderboard.saga';
 import teamLeaderboardSaga from './teamLeaderboard.sagas';
 import searchTeamLeaderboardSaga from './searchTeamLeaderboard.saga';
-import killSaga from './kill.saga';
+
 
 
 
@@ -30,7 +30,6 @@ export default function* rootSaga() {
     userSaga(),
     tournamentSaga(),
     gamesSaga(),
-    tournamentsDetailsSaga(),
     fetchLeaderboardSaga(),
     teamLeaderboardSaga(),
     searchTeamLeaderboardSaga(),
