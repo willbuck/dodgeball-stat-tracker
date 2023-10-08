@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+
+
 
 import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
@@ -20,16 +20,10 @@ const middlewareList = process.env.NODE_ENV === 'development' ?
   [sagaMiddleware, logger] :
   [sagaMiddleware];
 
-const persistConfig = {
-  key: 'root',
-  storage: storage,
-};
-const pReducer = persistReducer(persistConfig, rootReducer);
-
 const store = createStore(
   // tells the saga middleware to use the rootReducer
   // rootSaga contains all of our other reducers
-  pReducer,
+  rootReducer,
   // adds all middleware to our project including saga and logger
   applyMiddleware(...middlewareList),
 );
@@ -39,4 +33,3 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 export default store;
-export const persistor = persistStore(store)
