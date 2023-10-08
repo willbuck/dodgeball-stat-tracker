@@ -17,6 +17,7 @@ import CreateTournament from '../Admin/CreateTournament'
 import ManageTournaments from "../Admin/ManageTournaments";
 import AddTeam from '../Admin/AddTeam'
 import ManageTeams from '../Admin/ManageTeams'
+import ManagePlayers from '../Admin/ManagePlayers'
 
 // Component Imports
 import Nav from "../Nav/Nav";
@@ -97,7 +98,11 @@ function App() {
             <ManageTeams />
           </ProtectedRoute>
 
+          <ProtectedRoute exact path="/admin/manage-players">
+            <ManagePlayers />
+          </ProtectedRoute>
 
+          
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route

@@ -19,6 +19,7 @@ const teamLeaderboardRouter = require('./routes/teamLeaderboard.router');
 const searchTeamLeaderboardRouter = require('./routes/searchTeamLeaderboard.router');
 const killRouter = require('./routes/kill.router')
 const teamsRouter = require('./routes/teams.router')
+const allPlayersRouter = require('./routes/allPlayers.router')
 
 
 
@@ -37,6 +38,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/challonge', challongeRouter);
 app.use('/api/tournament', tournamentRouter);
+// why is this playersRouter?  is it only for specific games?
 app.use('/api/gameview', playersRouter);
 app.use('/api/tournamentDetails', tournamentDetailsRouter);
 
@@ -45,6 +47,7 @@ app.use('/api/allTeams', teamLeaderboardRouter);
 app.use('/api/searchTeam', searchTeamLeaderboardRouter);
 app.use('/api/kill', killRouter);
 app.use('/api/teams', teamsRouter)
+app.use('/api/players', allPlayersRouter)
 
 
 
