@@ -49,6 +49,8 @@
     "workbox-routing": "^7.0.0",
     "workbox-strategies": "^7.0.0",
     "workbox-streams": "^7.0.0"
+    "unique-names-generator": "^4.7.1",
+    "uuid": "^9.0.1"
   },
   "scripts": {
     "start": "node server/server.js",

@@ -38,15 +38,33 @@ import GameDetail from '../GameDetail/GameDetail';
 
 import "./App.css";
 
+// Unique identifiers for anonymous users
+import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
+import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
+import checkEmpty from "../../utilities/checkEmpty";
+
 
 
 function App() {
   const dispatch = useDispatch();
 
+  // Creating unique user ID
+  const uniqueID = {
+    // Generating UUID from DNS namespace
+    uuid: uuidv5('usa_dodgeball', uuidv5.DNS),
+
+    // Generating pseudonym for easier readability
+    pseudonym: uniqueNamesGenerator({
+      dictionaries: [adjectives, colors, animals ],
+      length: 3,
+      seed: uuidv5('usa_dodgeball', uuidv5.DNS)
+    })
+  }
+  
   const user = useSelector((store) => store.user);
 
   useEffect(() => {
-    dispatch({ type: "FETCH_USER" });
+    dispatch({ type: "FETCH_USER", payload: uniqueID });
   }, [dispatch]);
 
   return (
