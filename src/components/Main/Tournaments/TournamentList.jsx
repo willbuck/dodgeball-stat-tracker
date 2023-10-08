@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import Sidebar from '../Sidebar/Sidebar';
 
 export default function TournamentList() {
 
@@ -25,6 +26,7 @@ export default function TournamentList() {
   if (selectedTournament == "") {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Sidebar />
         <Box className="scroll-container"
 
           sx={{

@@ -8,7 +8,6 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Footer from "../Header-Footer/Footer/Footer";
 
 import ProtectedRoute from "../Utility/ProtectedRoute";
 
@@ -26,9 +25,24 @@ import CreateTournament from '../Admin/CreateTournament'
 import ManageTournaments from "../Admin/ManageTournaments";
 import AddTeam from '../Admin/AddTeam'
 import ManageTeams from '../Admin/ManageTeams'
+import ManagePlayers from '../Admin/ManagePlayers'
 
-// Style
+// Component Imports
+import Nav from "../Nav/Nav";
+import Footer from "../Footer/Footer";
+import AboutPage from '../AboutPage/AboutPage';
+import UserPage from '../UserPage/UserPage';
+import InfoPage from '../InfoPage/InfoPage';
+import LandingPage from '../LandingPage/LandingPage';
+import LoginPage from '../LoginPage/LoginPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
+import TournamentDetails from "../TournamentDetails/TournamentDetails";
+
+import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
+import Header from "../Header/Header";
+import Sidebar from "../Sidebar/Sidebar";
+import GameDetail from '../GameDetail/GameDetail';
 
 // Unique identifiers for anonymous users
 import { v5 as uuidv5 } from 'uuid';
@@ -73,6 +87,7 @@ function App() {
     <Router>
       <div>
         <Header />
+        <Sidebar />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -98,6 +113,10 @@ function App() {
             <ManageTeams />
           </ProtectedRoute>
 
+          <ProtectedRoute exact path="/admin/manage-players">
+            <ManagePlayers />
+          </ProtectedRoute>
+
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
@@ -116,6 +135,10 @@ function App() {
 
           <ProtectedRoute path="/games/:id">
             <TournamentDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/leaderboard/:id">
+            <Leaderboard />
           </ProtectedRoute>
 
           <Route exact path="/login">
