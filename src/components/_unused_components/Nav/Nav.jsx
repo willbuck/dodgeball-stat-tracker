@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
+import LogOutButton from '../../Login-Register/LogOutButton/LogOutButton';
 import './Nav.css';
 import { useSelector } from 'react-redux';
 

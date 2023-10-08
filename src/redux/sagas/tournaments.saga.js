@@ -1,10 +1,13 @@
 import { takeLatest, takeEvery, put } from 'redux-saga/effects';
 import axios from 'axios';
 
+// Get all tournaments from database
 function* fetchTournaments() {
     try {
+        // Get tournaments from database
         const tournaments = yield axios.get('/api/tournament');
         
+        // Update tournaments reducer
         yield put({ 
             type: 'SET_TOURNAMENTS', 
             payload: tournaments.data
@@ -15,14 +18,8 @@ function* fetchTournaments() {
     }
 }
 
+// Create new tournament and participants in Challonge and database
 function* createTournament(action) {
-    // X - post tournament to Challonge
-    // X - post tournament to database
-    //? Should the next two be in their own saga action?
-    // 3 - post participants to database
-    // 4 - post participants to Challonge
-    
-    console.log('in createTournament', action.payload)
 
     const {
         name, 
@@ -53,9 +50,8 @@ function* createTournament(action) {
 
         // Post tournament data to database
         const newTournamentQuery = yield axios.post('/api/tournament', queryData)
-        console.log('response from tournament query:', newTournamentQuery)
 
-        // Function to add tournament ID to participants list
+        // Add tournament ID to participants list
         const addTournamentID = (array, url) => {
             for (let index of array) {
                 index.tournamentURL = url;
@@ -69,15 +65,13 @@ function* createTournament(action) {
         // Send participants to Challonge
         yield axios.post('/api/challonge//tournament/participants', {participants, newTournamentID});
 
-
     } catch (error) {
         console.log('error in create tournament saga:', error)
     }
 }
 
 function* tournamentSaga() {  
-    //? Why takeEvery over takeLatest for FETCH_TOURNAMENTS?
-    yield takeEvery('FETCH_TOURNAMENTS', fetchTournaments);
+    yield takeLatest('FETCH_TOURNAMENTS', fetchTournaments);
     yield takeLatest('CREATE_TOURNAMENT', createTournament)
 }
 

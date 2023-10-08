@@ -8,41 +8,37 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
+import Footer from "../Header-Footer/Footer/Footer";
 
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../Utility/ProtectedRoute";
 
-// Admin Imports
+// Component Imports
+import Home from "../Main/Home";
+import LoginPage from '../Login-Register/Login/LoginPage';
+import RegisterPage from "../Login-Register/Register/RegisterPage";
+import TournamentDetails from "../Main/Games/GamesList";
+import Header from "../Header-Footer/Header/Header";
+import GameDetail from '../Main/Games/GameDetail';
+
+// Admin Component Imports
 import AdminLanding from '../Admin/AdminLanding'
 import CreateTournament from '../Admin/CreateTournament'
 import ManageTournaments from "../Admin/ManageTournaments";
 import AddTeam from '../Admin/AddTeam'
 import ManageTeams from '../Admin/ManageTeams'
 
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
-import TournamentDetails from "../TournamentDetails/TournamentDetails";
-import Header from "../Header/Header";
-
+// Style
 import './App.css';
-import GameDetail from '../GameDetail/GameDetail';
-
-import "./App.css";
 
 // Unique identifiers for anonymous users
-import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
 import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
-import checkEmpty from "../../utilities/checkEmpty";
 
 
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
 
   // Creating unique user ID
   const uniqueID = {
@@ -51,16 +47,26 @@ function App() {
 
     // Generating pseudonym for easier readability
     pseudonym: uniqueNamesGenerator({
-      dictionaries: [adjectives, colors, animals ],
+      dictionaries: [adjectives, colors, animals],
       length: 3,
       seed: uuidv5('usa_dodgeball', uuidv5.DNS)
     })
   }
-  
-  const user = useSelector((store) => store.user);
 
+  // Fetching global state from database at app load
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PLAYERS' });
+    dispatch({ type: "FETCH_TEAMS" });
+    dispatch({ type: "FETCH_TOURNAMENTS" });
+    dispatch({ type: 'FETCH_GAMES' });
+  }, [])
+
+  // Fetch user
+  //! Question: why do we need to do this any time
+  //! there is a dispatch in the app?
   useEffect(() => {
     dispatch({ type: "FETCH_USER", payload: uniqueID });
+
   }, [dispatch]);
 
   return (
@@ -83,46 +89,22 @@ function App() {
           <ProtectedRoute exact path="/admin/manage-tournaments">
             <ManageTournaments />
           </ProtectedRoute>
-          
+
           <ProtectedRoute exact path="/admin/add-team">
             <AddTeam />
           </ProtectedRoute>
-          
+
           <ProtectedRoute exact path="/admin/manage-teams">
             <ManageTeams />
           </ProtectedRoute>
 
-          
-
-          {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
-            <AboutPage />
-          </Route>
-
-          {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/user"
+            path="/home"
           >
-            <UserPage />
+            <Home />
           </ProtectedRoute>
-
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
-          </ProtectedRoute>
-
 
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
@@ -132,7 +114,7 @@ function App() {
           </ProtectedRoute>
 
 
-          <ProtectedRoute path="/tournamentDetails/:id">
+          <ProtectedRoute path="/games/:id">
             <TournamentDetails />
           </ProtectedRoute>
 
@@ -141,7 +123,7 @@ function App() {
               // If the user is already logged in,
 
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/home" />
             ) : (
               // Otherwise, show the login page
               <LoginPage />
@@ -152,7 +134,7 @@ function App() {
             {user.id ? (
               // If the user is already logged in,
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/home" />
             ) : (
               // Otherwise, show the registration page
               <RegisterPage />
@@ -160,14 +142,7 @@ function App() {
           </Route>
 
           <Route exact path="/home">
-            {user.id ? (
-              // If the user is already logged in,
-              // redirect them to the /user page
-              <Redirect to="/user" />
-            ) : (
-              // Otherwise, show the Landing page
-              <LandingPage />
-            )}
+              <Home />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

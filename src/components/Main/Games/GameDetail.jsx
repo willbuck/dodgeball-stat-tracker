@@ -19,7 +19,7 @@ function GameDetail() {
     const { id, gameID = Number(id) } = useParams();
 
     const allPlayers = useSelector((store) => store.playersReducer);
-    const allGames = useSelector((store) => store.tournamentDetailsReducer);
+    const allGames = useSelector((store) => store.gamesReducer);
 
     //! Make this an importable helper function
     // Helper function to find matching ID in an array

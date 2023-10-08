@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory, useLocation, } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
+import LogOutButton from '../../Login-Register/Login/LogOutButton';
 import { useSelector } from 'react-redux';
 
 // MUI Components
@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 function Header() {
     const history = useHistory();
     const location = useLocation();
+    console.log('location:', location)
     const user = useSelector((store) => store.user);
     // const currentScore = useSelector((store) => store.playersReducer);
     // const team1_score = currentScore.game.team1_score;
@@ -19,6 +20,7 @@ function Header() {
 
     let currentTitle = '';
 
+    //! Would be great if we could use location state to render information specific to the selected tournament/game for those screens
     switch (true) {
         case location.pathname.startsWith('/gameview'):
             currentTitle = 'Game View';
@@ -26,13 +28,13 @@ function Header() {
         case location.pathname.startsWith('/admin/manage-tournament'):
             currentTitle = 'Manage Tournament';
             break;
-        case location.pathname.startsWith('/tournamentDetails'):
-            currentTitle = 'Tournament Details';
+        case location.pathname.startsWith('/games'):
+            currentTitle = 'Games';
             break;
         case location.pathname.startsWith('/admin/create-tournament'):
             currentTitle = 'Create Tournament';
             break;
-        case location.pathname.startsWith('/user'):
+        case location.pathname.startsWith('/home'):
             currentTitle = 'Home';
             break;
         case location.pathname.startsWith('/admin'):
@@ -50,7 +52,6 @@ function Header() {
         default:
             currentTitle = 'Unknown Page';
     }
-
 
     return (
         <div className="header" style={{ display: 'flex', justifyContent: 'space-between' }}>

@@ -1,4 +1,4 @@
-const tournamentReducer = (state = [], action) => {
+const tournamentsReducer = (state = [], action) => {
     switch (action.type) {
       case 'SET_TOURNAMENTS':
         return action.payload;
@@ -8,4 +8,4 @@ const tournamentReducer = (state = [], action) => {
         return state;
     }
   };
-  export default tournamentReducer;
+  export default tournamentsReducer;
