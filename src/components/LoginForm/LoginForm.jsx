@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const user = useSelector(store => store.user);
   const errors = useSelector(store => store.errors);
   const dispatch = useDispatch();
 
@@ -15,6 +16,7 @@ function LoginForm() {
       dispatch({
         type: 'LOGIN',
         payload: {
+          ...user,
           username: username,
           password: password,
         },

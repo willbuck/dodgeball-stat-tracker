@@ -72,7 +72,6 @@ export default function TournamentList() {
     );
   } else {
 
-
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box className="scroll-container"

@@ -24,6 +24,7 @@ router.get('/tournament', (req, res) => {
             res.send(tournamentData)
         } catch (error) {
             console.error(error);
+            res.sendStatus(500);
         }
     }
     fetchTournament();
