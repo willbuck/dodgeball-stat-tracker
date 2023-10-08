@@ -28,13 +28,13 @@ const root = ReactDOM.createRoot(document.getElementById('react-root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+
         <ThemeProvider 
           theme={theme}>
             <CssBaseline />
             <App />
         </ThemeProvider>
-      </LocalizationProvider>
+
     </Provider>
   </React.StrictMode>
 );
