@@ -1,10 +1,9 @@
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeLatest, put } from 'redux-saga/effects';
 import axios from 'axios';
 
-
-function* fetchPlayers(action) {
+function* fetchPlayers() {
     try {
-        const players = yield axios.get(`/api/gameview`);
+        const players = yield axios.get(`/api/players`);
 
         yield put({
             type: 'SET_PLAYERS',
@@ -17,8 +16,7 @@ function* fetchPlayers(action) {
 }
 
 function* playersSaga() {
-    //! dispatch name should probably be FETCH_PLAYERS
-    yield takeEvery('FETCH_TEAMS', fetchPlayers);
+    yield takeLatest('FETCH_PLAYERS', fetchPlayers);
 }
 
 export default playersSaga;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory, useLocation, } from 'react-router-dom';
+import LogOutButton from '../../Login-Register/Login/LogOutButton';
 import { useSelector } from 'react-redux';
-// import LogOutButton from '../LogOutButton/LogOutButton';
 
 // MUI Components
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 function Header() {
     const history = useHistory();
     const location = useLocation();
+    console.log('location:', location)
     const user = useSelector((store) => store.user);
     // const currentScore = useSelector((store) => store.playersReducer);
     // const team1_score = currentScore.game.team1_score;
@@ -19,6 +20,7 @@ function Header() {
 
     let currentTitle = '';
 
+    //! Would be great if we could use location state to render information specific to the selected tournament/game for those screens
     switch (true) {
         case location.pathname.startsWith('/gameview'):
             currentTitle = 'Game View';
@@ -26,13 +28,13 @@ function Header() {
         case location.pathname.startsWith('/admin/manage-tournament'):
             currentTitle = 'Manage Tournament';
             break;
-        case location.pathname.startsWith('/tournamentDetails'):
-            currentTitle = 'Tournament Details';
+        case location.pathname.startsWith('/games'):
+            currentTitle = 'Games';
             break;
         case location.pathname.startsWith('/admin/create-tournament'):
             currentTitle = 'Create Tournament';
             break;
-        case location.pathname.startsWith('/user'):
+        case location.pathname.startsWith('/home'):
             currentTitle = 'Home';
             break;
         case location.pathname.startsWith('/admin'):
@@ -51,7 +53,6 @@ function Header() {
             currentTitle = 'Unknown Page';
     }
 
-
     return (
         <div className="header" style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Link to="/home">
@@ -61,11 +62,9 @@ function Header() {
                 />
             </Link>
 
-            {location.pathname !== '/user' && (
-                <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
-                    <ArrowBackIcon />
-                </IconButton>
-            )}
+            <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
+                <ArrowBackIcon />
+            </IconButton>
 
             <div>
                 <h2 className="header-title">{currentTitle}</h2>
@@ -76,7 +75,24 @@ function Header() {
                 } */}
             </div>
 
-            <div>{/* Temporary Empty Div for Title Placement */}</div>
+            <div>
+                {/* If no user is logged in, show these links */}
+                {!user.id && (
+                    // If there's no user, show login/registration links
+                    <Link className="navLink" to="/login">
+                        Login / Register
+                    </Link>
+                )}
+
+                {/* If a user is logged in, show these links */}
+                {user.id && (
+                    <>
+                        <LogOutButton className="navLink" />
+                    </>
+                )}
+
+            </div>
+
 
         </div>
     );
