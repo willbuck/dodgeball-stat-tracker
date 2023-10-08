@@ -39,7 +39,7 @@ import GameDetail from '../GameDetail/GameDetail';
 import "./App.css";
 
 // Unique identifiers for anonymous users
-import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
 import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
 import checkEmpty from "../../utilities/checkEmpty";
 
