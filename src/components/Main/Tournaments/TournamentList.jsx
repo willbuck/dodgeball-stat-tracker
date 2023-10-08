@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Sidebar from '../Sidebar/Sidebar';
+import Sidebar from '../../Sidebar/Sidebar';
 
 export default function TournamentList() {
 

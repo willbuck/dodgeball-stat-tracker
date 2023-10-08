@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import LogOutButton from '../LogOutButton/LogOutButton';
+import LogOutButton from '../Login-Register/Login/LogOutButton';
 
 // MUI Imports
 import Box from '@mui/material/Box';
