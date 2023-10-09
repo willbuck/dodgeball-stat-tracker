@@ -74,7 +74,10 @@ export default function Sidebar() {
             {user.id && (
                 <ListItem key="logout" >
                     <ListItemButton>
-                        <LogOutButton className="navLink" />
+                        <LogOutButton
+                            className="navLink"
+                            onClick={() => history.push('/home')}
+                        />
                     </ListItemButton>
                 </ListItem>
             )}

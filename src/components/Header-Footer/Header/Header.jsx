@@ -21,7 +21,10 @@ function Header() {
 
     switch (true) {
         case location.pathname.startsWith('/gameview'):
-            currentTitle = 'Game View';
+            currentTitle = 'Game: ';
+            break;
+        case location.pathname.startsWith('/games'):
+            currentTitle = 'Games';
             break;
         case location.pathname.startsWith('/admin/create-tournament'):
             currentTitle = 'Create Tournament';
@@ -49,6 +52,9 @@ function Header() {
             break;
         case location.pathname.startsWith('/info'):
             currentTitle = 'Info';
+            break;
+        case location.pathname.startsWith('/login'):
+            currentTitle = 'Login / Register';
             break;
         case location.pathname.startsWith('/about'):
             currentTitle = 'About';
