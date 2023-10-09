@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";
 import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom';
+import findIDMatch from '../../../utilities/findIDMatch'
 
 // MUI Imports
 import Box from '@mui/material/Box';
@@ -20,34 +21,6 @@ function GameDetail() {
 
     const allPlayers = useSelector((store) => store.playersReducer);
     const allGames = useSelector((store) => store.gamesReducer);
-
-    //! Make this an importable helper function
-    // Helper function to find matching ID in an array
-        // array (required): the array to scan
-        // id (required): the value to scan for
-        // key (optional): the key to scan for within each array item
-        // all (optional): whether to return all matches. default is true. false will return first match.
-    const findIDMatch = (array, id, key, all) => {
-        //! refactor: it doesn't really account for a person who wants one match from an array of non-objects. Need to allow for that (this should be easy since key and all will never have same data type)
-        const matches = [];
-        
-        for (let item of array) {
-          let test
-          if (key === undefined) {
-            test = item;
-          } else {
-            test = item[key]
-          }
-          
-          if (test === id) {
-            if (all === false) {
-              return item
-            }
-            matches.push(item);
-          }
-        }  
-        return matches;
-      }
 
     // Getting information for current game
     const game = findIDMatch(allGames, gameID, 'game_id', false)

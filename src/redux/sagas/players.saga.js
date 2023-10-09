@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function* fetchPlayers() {
     try {
-        const players = yield axios.get(`/api/players`);
+        const players = yield axios.get(`api/players`);
 
         yield put({
             type: 'SET_PLAYERS',
