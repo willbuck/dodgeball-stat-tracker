@@ -49,17 +49,18 @@ registerRoute(
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
+// will try network first otherwise use the offline cache for any page with '/' (all of them for now)
+  ({ url }) => url.origin === self.location.origin && !url.pathname.startsWith('/_'),
   new StaleWhileRevalidate({
-    cacheName: 'images',
+    cacheName: 'pages',
     plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 }),
+      new ExpirationPlugin({
+        maxEntries: 50, // Adjust this value according to your needs
+      }),
     ],
   })
 );
+
 
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
