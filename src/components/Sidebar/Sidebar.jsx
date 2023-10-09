@@ -168,7 +168,7 @@ export default function Sidebar() {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            position: 'absolute',
+                            position: 'fixed',
                             bottom: 125,
                             right: 16,
                             backgroundColor: 'primary.main',
