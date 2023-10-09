@@ -3,26 +3,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Modal } from '@mui/material';
 import { IconEdit } from '@tabler/icons-react';
 
+import EditPlayerForm from './EditPlayerForm'
 
 export default function ManagePlayers() {
 
   const dispatch = useDispatch()
   const allPlayers = useSelector((store) => store.playersReducer)
+  const [ playerToEdit, setPlayerToEdit ] = useState('')
+  const [ isFormOpen, setIsFormOpen ] = useState(false)
 
   useEffect(() => {
     dispatch({ type: "FETCH_PLAYERS" });
   }, []);
 
-  const handleEdit = () => {
+const handleClick = (player) => {
+  setIsFormOpen(true)
+  setPlayerToEdit(player)
+}
 
-  }
-    // const handleDelete = (id) => {
-    //   dispatch({ type: "DELETE_PLAYER", payload: id });
-    //   dispatch({ type: 'FETCH_ALL_PLAYERS' })
-    // }
+const handleCancel = () => {
+  setIsFormOpen(false);
+  setPlayerToEdit(null);
+};
+  
+
 
     return (
       <TableContainer component={Paper}>
+        {isFormOpen && <EditPlayerForm player={playerToEdit} onClose={handleCancel} />}
         <Table>
           <TableHead>
             <TableRow>
@@ -54,7 +62,7 @@ export default function ManagePlayers() {
                 </TableCell>
                 <TableCell align="right">
                   <Button 
-                    onClick={() => handleEdit(player.id)}
+                    onClick={() => handleClick(player)}
                     color="secondary">
                     <IconEdit size={24} />
                   </Button>

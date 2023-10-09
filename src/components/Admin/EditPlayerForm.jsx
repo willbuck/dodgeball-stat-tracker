@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextField, FormControlLabel, Switch } from '@material-ui/core';
+import { Button, TextField, FormControlLabel, Switch, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 export default function PlayerEditForm({ player, onClose }) {
 
@@ -12,19 +12,33 @@ export default function PlayerEditForm({ player, onClose }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // update database || challonge
+    // update DB / challonge
     onClose();
   };
 
+  const handleDelete = (event) => {
+    event.preventDefault()
+    // delete player from DB / challonge
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField label="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} />
-      <TextField label="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} />
-      <TextField label="Jersey Number" value={jerseyNumber} onChange={e => setJerseyNumber(e.target.value)} />
-      <TextField label="Phone Number" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
-      <FormControlLabel control={<Switch checked={canReferee} onChange={e => setCanReferee(e.target.checked)} />} label="Referee" />
-      <FormControlLabel control={<Switch checked={isCaptain} onChange={e => setIsCaptain(e.target.checked)} />} label="Captain" />
-      <Button type="submit">Submit</Button>
-    </form>
-  );
-};
+    <Dialog open={true} onClose={onClose}>
+      <DialogTitle>Edit Player</DialogTitle>
+      <DialogContent>
+        <form onSubmit={handleSubmit}>
+          <TextField label="First Name" value={firstName} onChange={event => setFirstName(event.target.value)} />
+          <TextField label="Last Name" value={lastName} onChange={event => setLastName(event.target.value)} />
+          <TextField label="Jersey Number" value={jerseyNumber} onChange={event => setJerseyNumber(event.target.value)} />
+          <TextField label="Phone Number" value={phoneNumber} onChange={event => setPhoneNumber(event.target.value)} />
+          <FormControlLabel control={<Switch checked={canReferee} onChange={event => setCanReferee(event.target.checked)} />} label="Referee" />
+          <FormControlLabel control={<Switch checked={isCaptain} onChange={event => setIsCaptain(event.target.checked)} />} label="Captain" />
+        </form>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={handleSubmit} color="primary">Submit</Button>
+        <Button onClick={handleDelete} color='error'>Delete</Button>
+      </DialogActions>
+    </Dialog>
+  )
+}
