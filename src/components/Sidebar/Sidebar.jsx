@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import LogOutButton from '../LogOutButton/LogOutButton';
+import LogOutButton from '../Login-Register/Login/LogOutButton';
 
 // MUI Imports
 import Box from '@mui/material/Box';
@@ -64,10 +64,8 @@ export default function Sidebar() {
             {!user.id && (
                 // If there's no user, show login/registration links
                 <ListItem key="login" >
-                    <ListItemButton>
-                        <Link className="navLink" to="/login">
-                            Login / Register
-                        </Link>
+                    <ListItemButton onClick={() => history.push('/login')}>
+                        <ListItemText primary="Login/Register" />
                     </ListItemButton>
                 </ListItem>
             )}
@@ -82,7 +80,7 @@ export default function Sidebar() {
             )}
             <Divider />
             <ListItem key="Home" >
-                <ListItemButton onClick={() => history.push('/user')}>
+                <ListItemButton onClick={() => history.push('/home')}>
                     <ListItemText primary="Home" />
                 </ListItemButton>
             </ListItem>

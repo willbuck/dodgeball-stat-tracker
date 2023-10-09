@@ -38,7 +38,7 @@ function Header() {
         case location.pathname.startsWith('/admin/manage-teams'):
             currentTitle = 'Manage Teams';
             break;
-        case location.pathname.startsWith('/user'):
+        case location.pathname.startsWith('/home'):
             currentTitle = 'Home';
             break;
         case location.pathname.startsWith('/admin'):
