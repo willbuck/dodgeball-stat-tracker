@@ -46,10 +46,10 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 );
 
-// An example runtime caching route for requests that aren't handled by the
-// precache, in this case same-origin .png requests like those from in public/
+
 registerRoute(
-// will try network first otherwise use the offline cache for any page with '/' (all of them for now)
+// app will try to pull data from the network first for all pages
+// if the network is offline or unavailable we will use the cache
   ({ url }) => url.origin === self.location.origin && !url.pathname.startsWith('/_'),
   new StaleWhileRevalidate({
     cacheName: 'pages',
@@ -67,6 +67,28 @@ registerRoute(
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
+  }
+});
+
+// Work in progress to save requests until online
+self.addEventListener('fetch', (event) => {
+  if (event.request.method === 'DELETE') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            // Save the failed request to be retried later
+            console.log('saving delete response')
+            return saveRequest(event.request);
+          }
+        })
+        .catch(() => {
+          // Save the failed request to be retried later
+          return saveRequest(event.request);
+        })
+    );
   }
 });
 
