@@ -23,14 +23,20 @@ function Header() {
         case location.pathname.startsWith('/gameview'):
             currentTitle = 'Game View';
             break;
+        case location.pathname.startsWith('/admin/create-tournament'):
+            currentTitle = 'Create Tournament';
+            break;
         case location.pathname.startsWith('/admin/manage-tournament'):
             currentTitle = 'Manage Tournament';
             break;
         case location.pathname.startsWith('/tournamentDetails'):
             currentTitle = 'Tournament Details';
             break;
-        case location.pathname.startsWith('/admin/create-tournament'):
-            currentTitle = 'Create Tournament';
+        case location.pathname.startsWith('/admin/add-team'):
+            currentTitle = 'Add Teams';
+            break;
+        case location.pathname.startsWith('/admin/manage-teams'):
+            currentTitle = 'Manage Teams';
             break;
         case location.pathname.startsWith('/user'):
             currentTitle = 'Home';
@@ -48,7 +54,7 @@ function Header() {
             currentTitle = 'About';
             break;
         default:
-            currentTitle = 'Unknown Page';
+            currentTitle = 'Page Not Found';
     }
 
 

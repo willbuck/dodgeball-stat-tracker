@@ -21,8 +21,6 @@ import Avatar from '@mui/material/Avatar';
 // import BasicSpeedDial from './BasicSpeedDial';
 
 
-// type Anchor = 'top' | 'left' | 'bottom' | 'right';
-
 export default function Sidebar() {
     const history = useHistory();
 
@@ -92,6 +90,36 @@ export default function Sidebar() {
 
                 {/* Conditionally Renders Admin Links */}
             </List>
+            {user.auth_level === 3 && (
+                <>
+                    <Divider />
+                    <ListItem disablePadding>
+                        <ListItemText primary="Team Captain" />
+                    </ListItem>
+                    <List>
+                        <ListItem key="link1" disablePadding>
+                            <ListItemButton onClick={() => history.push('/admin//admin/manage-teams')}>
+                                <ListItemText primary="Manage Team" />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </>
+            )}
+            {user.auth_level === 4 && (
+                <>
+                    <Divider />
+                    <ListItem disablePadding>
+                        <ListItemText primary="Tournament Admin" />
+                    </ListItem>
+                    <List>
+                        <ListItem key="link1" disablePadding>
+                            <ListItemButton onClick={() => history.push('/admin/manage-tournaments')}>
+                                <ListItemText primary="Manage Tournaments" />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </>
+            )}
             {user.auth_level === 5 && (
                 <>
                     <Divider />
