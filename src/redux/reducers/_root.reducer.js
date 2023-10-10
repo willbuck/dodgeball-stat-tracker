@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
-import tournamentReducer from './tournament.reducer';
-import tournamentDetailsReducer from './tournamentDetails.reducer';
+import tournamentsReducer from './tournaments.reducer';
+import gamesReducer from './games.reducer';
 import selectedTournamentReducer from './selectedtournament.reducer';
 import leaderboardReducer from './leaderboard.reducer';
 import teamLeaderboardReducer from './teamLeaderboard.reducer';
@@ -19,10 +19,10 @@ import manageUsersReducer from './manageUsers.reducer';
 // Lets make a bigger object for our store, with the objects from our reducers.
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
-  errors, // contains registrationMessage and loginMessage
-  user, // will have an id and username if someone is logged in
-  tournamentReducer,
-  tournamentDetailsReducer,
+  errors,
+  user,
+  tournamentsReducer,
+  gamesReducer,
   selectedTournamentReducer,
 
   leaderboardReducer,

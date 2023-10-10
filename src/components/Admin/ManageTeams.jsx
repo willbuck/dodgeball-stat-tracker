@@ -9,16 +9,11 @@ export default function ManageTeams() {
   const dispatch = useDispatch()
   const allTeams = useSelector((store) => store.teamsReducer)
 
-  useEffect(() => {
-    dispatch({ type: "FETCH_TEAM_LIST" });
-  }, []);
-
-    const handleDelete = (id) => {
-      dispatch({ type: "DELETE_TEAM", payload: id });
-      dispatch({ type: 'FETCH_TEAM_LIST' })
-    }
-  
-
+  //! Should this function be async?
+  const handleDelete = (id) => {
+    dispatch({ type: "DELETE_TEAM", payload: id });
+    dispatch({ type: 'FETCH_TEAMS' })
+  }
 
   return (
     <Container>
@@ -27,14 +22,14 @@ export default function ManageTeams() {
           <Grid item xs={12} sm={6} md={4} key={team.id}>
 
             <Card sx={{ padding: '20px', margin: '10px', border: '1px solid grey' }}>
-            <Badge badgeContent="" sx={{ color: team.jersey_color }}>
-              <IconShirtFilled />
-            </Badge>
+              <Badge badgeContent="" sx={{ color: team.jersey_color }}>
+                <IconShirtFilled />
+              </Badge>
               <Box display="flex" justifyContent="space-between">
                 <Typography variant="h5">
                   {team.team_name}
                 </Typography>
-                <Button 
+                <Button
                   onClick={() => handleDelete(team.id)}
                   color="secondary">
                   <IconTrash size={24} />

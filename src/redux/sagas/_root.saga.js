@@ -2,15 +2,19 @@ import { all } from 'redux-saga/effects';
 import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
-import tournamentSaga from './tournament.saga';
+import tournamentSaga from './tournaments.saga';
 import teamsSaga from './teams.saga'
 import playersSaga from './players.saga';
-import tournamentsDetailsSaga from './tournamentDetails.saga';
+import gamesSaga from './games.saga';
+
+
+
 import fetchLeaderboardSaga from './leaderboard.saga';
 import teamLeaderboardSaga from './teamLeaderboard.sagas';
 import searchTeamLeaderboardSaga from './searchTeamLeaderboard.saga';
 import killSaga from './kill.saga';
 import manageUserSaga from './manageUser.saga';
+
 
 
 
@@ -26,15 +30,13 @@ export default function* rootSaga() {
     loginSaga(), // login saga is now registered
     registrationSaga(),
     userSaga(),
-
     tournamentSaga(),
-    tournamentsDetailsSaga(),
+    gamesSaga(),
     fetchLeaderboardSaga(),
     teamLeaderboardSaga(),
     searchTeamLeaderboardSaga(),
     
     teamsSaga(),
-    
     playersSaga(),
     killSaga(),
     manageUserSaga(),

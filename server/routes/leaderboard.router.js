@@ -18,9 +18,9 @@ router.get("/:id", (req, res) => {
     players.lastname AS lastname,
     team.team_name,
     team.id AS team_id,
-    COUNT(statistics.events) FILTER (WHERE statistics.events = 'kill') AS "kills",
-    COUNT(statistics.events) FILTER (WHERE statistics.events = 'catch') AS "catches",
-    COUNT(statistics.events) FILTER (WHERE statistics.events = 'out') AS "outs"
+    COALESCE(SUM (statistics.kills),0) AS "kills",
+    COALESCE(SUM (statistics.catches),0) AS "catches",
+    COALESCE(SUM (statistics.outs),0) AS "outs"
   FROM
     game 
   JOIN tournament ON game.tournament_id = tournament.id
@@ -42,7 +42,7 @@ router.get("/:id", (req, res) => {
     players.lastname,
     team.team_name,
     team.id
-  ORDER BY COUNT(statistics.events) DESC;`;
+  ORDER BY COALESCE(SUM(statistics.kills),0) DESC;`;
 
   const queryParams = [tournamentId];
 
