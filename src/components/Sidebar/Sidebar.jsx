@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
+import LogOutButton from '../LogOutButton/LogOutButton';
+
 // MUI Imports
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -11,15 +13,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
+// import InboxIcon from '@mui/icons-material/MoveToInbox';
+// import MailIcon from '@mui/icons-material/Mail';
 // import Button from '@mui/material/Button';
 // import BasicSpeedDial from './BasicSpeedDial';
 
-
-// type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function Sidebar() {
     const history = useHistory();
@@ -41,6 +41,7 @@ export default function Sidebar() {
         setState({ ...state, [anchor]: open });
     };
 
+    // Sidebar List Content
     const list = (anchor) => (
         <Box
             sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -48,6 +49,7 @@ export default function Sidebar() {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
+            {/* User Info and Logout/Register */}
             <List>
                 <ListItem key={user.username} disablePadding>
                     <ListItemButton>
@@ -58,19 +60,66 @@ export default function Sidebar() {
                     </ListItemButton>
                 </ListItem>
             </List>
+            {/* If no user is logged in, show these links */}
+            {!user.id && (
+                // If there's no user, show login/registration links
+                <ListItem key="login" >
+                    <ListItemButton>
+                        <Link className="navLink" to="/login">
+                            Login / Register
+                        </Link>
+                    </ListItemButton>
+                </ListItem>
+            )}
+
+            {/* If a user is logged in, show these links */}
+            {user.id && (
+                <ListItem key="logout" >
+                    <ListItemButton>
+                        <LogOutButton className="navLink" />
+                    </ListItemButton>
+                </ListItem>
+            )}
             <Divider />
+            <ListItem key="Home" >
+                <ListItemButton onClick={() => history.push('/user')}>
+                    <ListItemText primary="Home" />
+                </ListItemButton>
+            </ListItem>
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+
+                {/* Conditionally Renders Admin Links */}
             </List>
+            {user.auth_level === 3 && (
+                <>
+                    <Divider />
+                    <ListItem disablePadding>
+                        <ListItemText primary="Team Captain" />
+                    </ListItem>
+                    <List>
+                        <ListItem key="link1" disablePadding>
+                            <ListItemButton onClick={() => history.push('/admin//admin/manage-teams')}>
+                                <ListItemText primary="Manage Team" />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </>
+            )}
+            {user.auth_level === 4 && (
+                <>
+                    <Divider />
+                    <ListItem disablePadding>
+                        <ListItemText primary="Tournament Admin" />
+                    </ListItem>
+                    <List>
+                        <ListItem key="link1" disablePadding>
+                            <ListItemButton onClick={() => history.push('/admin/manage-tournaments')}>
+                                <ListItemText primary="Manage Tournaments" />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </>
+            )}
             {user.auth_level === 5 && (
                 <>
                     <Divider />
