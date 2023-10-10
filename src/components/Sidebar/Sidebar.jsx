@@ -15,6 +15,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
+import HomeIcon from '@mui/icons-material/Home';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import BadgeIcon from '@mui/icons-material/Badge';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import GroupsIcon from '@mui/icons-material/Groups';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+// import Badge from '@mui/icons-material/Badge';
 // import InboxIcon from '@mui/icons-material/MoveToInbox';
 // import MailIcon from '@mui/icons-material/Mail';
 // import Button from '@mui/material/Button';
@@ -84,7 +91,7 @@ export default function Sidebar() {
             <Divider />
             <ListItem key="Home" >
                 <ListItemButton onClick={() => history.push('/home')}>
-                    <ListItemText primary="Home" />
+                    <HomeIcon /><ListItemText primary="Home" />
                 </ListItemButton>
             </ListItem>
             <List>
@@ -100,7 +107,7 @@ export default function Sidebar() {
                     <List>
                         <ListItem key="link1" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin//admin/manage-teams')}>
-                                <ListItemText primary="Manage Team" />
+                                <GroupsIcon /><ListItemText primary="Manage Team" />
                             </ListItemButton>
                         </ListItem>
                     </List>
@@ -115,7 +122,7 @@ export default function Sidebar() {
                     <List>
                         <ListItem key="link1" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/manage-tournaments')}>
-                                <ListItemText primary="Manage Tournaments" />
+                                <EditNoteIcon /><ListItemText primary="Manage Tournaments" />
                             </ListItemButton>
                         </ListItem>
                     </List>
@@ -130,22 +137,27 @@ export default function Sidebar() {
                     <List>
                         <ListItem key="link1" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/create-tournament')}>
-                                <ListItemText primary="Create Tournament" />
+                                <PlaylistAddIcon /><ListItemText primary="Create Tournament" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem key="link2" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/manage-tournaments')}>
-                                <ListItemText primary="Manage Tournaments" />
+                                <EditNoteIcon /><ListItemText primary="Manage Tournaments" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem key="link3" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/add-team')}>
-                                <ListItemText primary="Add Team" />
+                                <GroupAddIcon /><ListItemText primary="Add Team" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem key="link4" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/manage-teams')}>
-                                <ListItemText primary="Manage Teams" />
+                                <GroupsIcon /><ListItemText primary="Manage Teams" />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem key="link5" disablePadding>
+                            <ListItemButton onClick={() => history.push('/admin/manage-users')}>
+                                <BadgeIcon /><ListItemText primary="Manage Users" />
                             </ListItemButton>
                         </ListItem>
                     </List>

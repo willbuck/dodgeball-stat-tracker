@@ -7,6 +7,14 @@ CREATE TABLE "user" (
   email VARCHAR(90)
 );
 
+-- Table for unique user ID's (used for unregistered users)
+-- Updated 10/10 @ 11:30am
+CREATE TABLE uuid (
+    uuid character varying(40) NOT NULL UNIQUE,
+    pseudonym character varying(60),
+    id SERIAL PRIMARY KEY
+);
+
 -- Tournament table
 -- Updated 10/5 @ 10:00am
 CREATE TABLE tournament (
@@ -70,6 +78,7 @@ CREATE TABLE players (
   captain BOOLEAN NOT NULL
 );
 
+
 -- Statistics table
 -- Updated 10/10 @ 11:30am
 CREATE TABLE statistics (
@@ -92,13 +101,6 @@ CREATE TABLE participants (
     tournament_url character varying(250) REFERENCES tournament(url)
 );
 
--- Table for unique user ID's (used for unregistered users)
--- Updated 10/10 @ 11:30am
-CREATE TABLE uuid (
-    uuid character varying(40) NOT NULL UNIQUE,
-    pseudonym character varying(60),
-    id integer DEFAULT nextval('uuid_id_sequence'::regclass) PRIMARY KEY
-);
 
 
 -- Insert fake data into the "user" table (9 rows)
