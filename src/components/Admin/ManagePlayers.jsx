@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { IconEdit } from '@tabler/icons-react';
 
 import EditPlayerForm from './EditPlayerForm'
+import AddPlayerForm from './AddPlayerForm';
 
 export default function ManagePlayers() {
 
@@ -21,6 +22,11 @@ const handleClick = (player) => {
   setPlayerToEdit(player)
 }
 
+const handleAddPlayer = () => {
+    console.log('Hey you can add!')
+    setIsFormOpen(true)
+}
+
 const handleCancel = () => {
   setIsFormOpen(false);
   setPlayerToEdit(null);
@@ -31,8 +37,10 @@ const handleCancel = () => {
     return (
       <TableContainer component={Paper}>
         {isFormOpen && <EditPlayerForm player={playerToEdit} onClose={handleCancel} />}
+        {isFormOpen && <AddPlayerForm onClose={handleCancel} />}
         <Table>
           <TableHead>
+          <Button onClick={handleAddPlayer}>ADD PLAYER</Button>
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Jersey Number</TableCell>
