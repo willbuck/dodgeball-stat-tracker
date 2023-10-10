@@ -19,6 +19,7 @@ const teamLeaderboardRouter = require('./routes/teamLeaderboard.router');
 const searchTeamLeaderboardRouter = require('./routes/searchTeamLeaderboard.router');
 const killRouter = require('./routes/kill.router')
 const teamsRouter = require('./routes/teams.router')
+const manageUsersRouter = require('./routes/manageUsers.router');
 const allPlayersRouter = require('./routes/allPlayers.router')
 
 
@@ -47,6 +48,7 @@ app.use('/api/allTeams', teamLeaderboardRouter);
 app.use('/api/searchTeam', searchTeamLeaderboardRouter);
 app.use('/api/kill', killRouter);
 app.use('/api/teams', teamsRouter)
+app.use('/api/manageUsers', manageUsersRouter);
 app.use('/api/players', allPlayersRouter)
 
 

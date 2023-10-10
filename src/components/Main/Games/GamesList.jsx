@@ -49,8 +49,20 @@ function TournamentDetails() {
     setSelectedGame(newValue);
   };
 
+  const handleClickLearderboard = () => {
+    console.log('In here',  tournamentID);
+    dispatch({
+      type: "GET_STATISTICS",
+      payload: tournamentID
+    });
+    history.push(`/leaderboard/${tournamentID}`)
+
+
+  }
+
   return (
     <>
+    <button onClick={handleClickLearderboard}>Leaderboard</button>
       {/* Search for a specific game */}
       <Stack spacing={2} sx={{ width: 300 }}>
         <Autocomplete

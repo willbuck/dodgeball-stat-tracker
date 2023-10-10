@@ -12,6 +12,7 @@ import gamesSaga from './games.saga';
 import fetchLeaderboardSaga from './leaderboard.saga';
 import teamLeaderboardSaga from './teamLeaderboard.sagas';
 import searchTeamLeaderboardSaga from './searchTeamLeaderboard.saga';
+import manageUserSaga from './manageUser.saga';
 
 
 
@@ -36,5 +37,8 @@ export default function* rootSaga() {
     
     teamsSaga(),
     playersSaga(),
+    manageUserSaga(),
+    
+
   ]);
 }
