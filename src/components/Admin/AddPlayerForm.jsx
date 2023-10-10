@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
 import {
   Button,
   TextField,
@@ -18,6 +18,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 export default function AddPlayerForm({ onClose }) {
   const teamStore = useSelector((store) => store.teamsReducer);
   console.log("hey the store:", teamStore);
+  const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -40,6 +41,10 @@ export default function AddPlayerForm({ onClose }) {
       selectedTeamId: selectedTeam,
     };
     console.log("ObjectToSend:", objectToSend);
+    dispatch({
+        type:'ADD_PLAYER',
+        payload: objectToSend
+    })
     onClose();
   };
 
