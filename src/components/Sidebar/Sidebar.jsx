@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import LogOutButton from '../Login-Register/Login/LogOutButton';
 
@@ -174,6 +174,7 @@ export default function Sidebar() {
                 <React.Fragment key={anchor}>
                     <Box
                         sx={{
+                            zIndex: 1,
                             width: 60,
                             height: 60,
                             borderRadius: '50%',
