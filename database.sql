@@ -1,9 +1,3 @@
--- UPDATES 10/5
-  -- Added columns to tournament table
-  -- Added column to team table
-  -- Changed column statistics.events to statistics.stat (and updated query in players.router.js to reflect this change)
-  -- Added participants table to database
-
 -- User table
 CREATE TABLE "user" (
   id SERIAL PRIMARY KEY,
@@ -15,7 +9,6 @@ CREATE TABLE "user" (
 
 -- Tournament table
 -- Updated 10/5 @ 10:00am
-  -- Added columns for ball type, description, start_date, url, and courts
 CREATE TABLE tournament (
     id SERIAL PRIMARY KEY,
     tournament_name character varying(60) NOT NULL,
@@ -30,7 +23,6 @@ CREATE TABLE tournament (
 
 -- Team table
 -- Updated 10/5 @ 10:00am
-  -- Added column for image_path
 CREATE TABLE team (
   id SERIAL PRIMARY KEY,
   team_name VARCHAR(60) NOT NULL,
@@ -79,25 +71,33 @@ CREATE TABLE players (
 );
 
 -- Statistics table
--- Updated 10/5 @ 10:00am
-  -- changed column "event" to be "stat"
-CREATE TYPE event AS ENUM('kill', 'catch', 'out');
+-- Updated 10/10 @ 11:30am
 CREATE TABLE statistics (
   id SERIAL PRIMARY KEY,
-  stat event,
   is_official BOOLEAN NOT NULL,
   game_id INT REFERENCES "game" NOT NULL,
   player_id INT REFERENCES "players" NOT NULL,
-  user_id INT REFERENCES "user" NOT NULL
+  user_id INT REFERENCES "user" NOT NULL,
+  kills integer,
+  outs integer,
+  catches integer,
+  uuid integer REFERENCES uuid(id)
 );
 
 -- Participants table
 -- Updated 10/5 @ 10:00am
-  -- Added table
 CREATE TABLE participants (
     id SERIAL PRIMARY KEY,
     team_id integer REFERENCES team(id),
     tournament_url character varying(250) REFERENCES tournament(url)
+);
+
+-- Table for unique user ID's (used for unregistered users)
+-- Updated 10/10 @ 11:30am
+CREATE TABLE uuid (
+    uuid character varying(40) NOT NULL UNIQUE,
+    pseudonym character varying(60),
+    id integer DEFAULT nextval('uuid_id_sequence'::regclass) PRIMARY KEY
 );
 
 
