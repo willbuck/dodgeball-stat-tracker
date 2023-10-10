@@ -73,7 +73,7 @@ function Header() {
                 />
             </Link>
 
-            {location.pathname !== '/user' && (
+            {location.pathname !== '/home' && (
                 <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
                     <ArrowBackIcon />
                 </IconButton>
