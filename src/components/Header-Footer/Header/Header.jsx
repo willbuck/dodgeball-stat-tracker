@@ -21,7 +21,10 @@ function Header() {
 
     switch (true) {
         case location.pathname.startsWith('/gameview'):
-            currentTitle = 'Game View';
+            currentTitle = 'Game: ';
+            break;
+        case location.pathname.startsWith('/games'):
+            currentTitle = 'Games';
             break;
         case location.pathname.startsWith('/admin/create-tournament'):
             currentTitle = 'Create Tournament';
@@ -38,7 +41,7 @@ function Header() {
         case location.pathname.startsWith('/admin/manage-teams'):
             currentTitle = 'Manage Teams';
             break;
-        case location.pathname.startsWith('/user'):
+        case location.pathname.startsWith('/home'):
             currentTitle = 'Home';
             break;
         case location.pathname.startsWith('/admin'):
@@ -49,6 +52,9 @@ function Header() {
             break;
         case location.pathname.startsWith('/info'):
             currentTitle = 'Info';
+            break;
+        case location.pathname.startsWith('/login'):
+            currentTitle = 'Login / Register';
             break;
         case location.pathname.startsWith('/about'):
             currentTitle = 'About';
@@ -67,7 +73,7 @@ function Header() {
                 />
             </Link>
 
-            {location.pathname !== '/user' && (
+            {location.pathname !== '/home' && (
                 <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
                     <ArrowBackIcon />
                 </IconButton>
