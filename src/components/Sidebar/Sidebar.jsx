@@ -98,6 +98,11 @@ export default function Sidebar() {
                                 <ListItemText primary="Manage Teams" />
                             </ListItemButton>
                         </ListItem>
+                        <ListItem key="link5" disablePadding>
+                            <ListItemButton onClick={() => history.push('/admin/manage-players')}>
+                                <ListItemText primary="Manage Players" />
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                 </>
             )}
