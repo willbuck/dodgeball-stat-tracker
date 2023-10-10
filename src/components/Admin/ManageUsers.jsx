@@ -30,13 +30,23 @@ export default function ManageUsers() {
         dispatch({ type: "FETCH_USER_LIST" });
     }, []);
 
-    const handleEdit = (id) => {
+    const handleCaptain = (id) => {
         console.log("allusers", allUsers)
         console.log("user", id);
-        //dispatch({ type: "DELETE_TEAM", payload: id });
-        //dispatch({ type: 'FETCH_TEAM_LIST' })
+        dispatch({ type: "PROMOTE_USER", payload: id, auth: 3});
     }
 
+    const handleAdmin = (id) => {
+        console.log("allusers", allUsers)
+        console.log("user", id);
+        dispatch({ type: "PROMOTE_USER", payload: id, auth: 4});
+    }
+
+    const handleSiteAdmin = (id) => {
+        console.log("allusers", allUsers)
+        console.log("user", id);
+        dispatch({ type: "PROMOTE_USER", payload: id, auth: 5});
+    }
 
 
     return (
@@ -52,6 +62,7 @@ export default function ManageUsers() {
                                 </Typography>
                                 <Button
                                     id="demo-customized-button"
+                                    value={user.id}
                                     aria-controls={open ? 'demo-customized-menu' : undefined}
                                     aria-haspopup="true"
                                     aria-expanded={open ? 'true' : undefined}
@@ -59,13 +70,9 @@ export default function ManageUsers() {
                                     disableElevation
                                     onClick={handleClick}
                                     endIcon={<KeyboardArrowDownIcon />}
-                                >
-                                    <p>
-                                        <Button
-                                            color="secondary">
+                                > 
                                             <MilitaryTechIcon sx={{ fontSize: 30 }} />
                                             Promote
-                                        </Button> </p>
                                 </Button>
                                 <Menu
                                     id="demo-customized-menu"
@@ -76,15 +83,15 @@ export default function ManageUsers() {
                                     open={open}
                                     onClose={handleClose}
                                 >
-                                    <MenuItem onClick={() => { handleClose(); handleEdit(user.id); }} disableRipple>
+                                    <MenuItem onClick={() => { handleClose(); handleCaptain(anchorEl.value); }} disableRipple>
                                         <EditIcon />
-                                        Make Team Captain {user.username}
+                                        Make Team Captain
                                     </MenuItem>
-                                    <MenuItem onClick={handleClose} disableRipple>
+                                    <MenuItem onClick={() => { handleClose(); handleAdmin(anchorEl.value); }} disableRipple>
                                         <FileCopyIcon />
                                         Make Tournament Admin
                                     </MenuItem>
-                                    <MenuItem onClick={handleClose} disableRipple>
+                                    <MenuItem onClick={() => { handleClose(); handleSiteAdmin(anchorEl.value); }} disableRipple>
                                         <ArchiveIcon />
                                         Make Site Admin
                                     </MenuItem>

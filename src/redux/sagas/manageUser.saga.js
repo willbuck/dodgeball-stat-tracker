@@ -14,11 +14,28 @@ function* fetchUsers() {
         console.log('get all error', error);
     }
 }
+function* promoteUser(action) {
+    try {
+        const data = {
+            payload: action.payload,
+            auth: action.auth
+        };
 
+        const users = yield axios.put(`/api/manageUsers/${action.payload}`, data);
+        
+        // yield put({ 
+        //     type: 'SET_USER_LIST', 
+        //     payload: users.data
+        // });
+
+    } catch (error){
+        console.log('get all error', error);
+    }
+}
 
 function* manageUserSaga() {  
     yield takeLatest('FETCH_USER_LIST', fetchUsers)
-  
+    yield takeLatest('PROMOTE_USER', promoteUser)
 }
 
 export default manageUserSaga;
