@@ -12,6 +12,7 @@ export default function ManagePlayers() {
   const allPlayers = useSelector((store) => store.playersReducer)
   const [ playerToEdit, setPlayerToEdit ] = useState('')
   const [ isFormOpen, setIsFormOpen ] = useState(false)
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
 
   useEffect(() => {
     dispatch({ type: "FETCH_PLAYERS" });
@@ -24,11 +25,12 @@ const handleClick = (player) => {
 
 const handleAddPlayer = () => {
     console.log('Hey you can add!')
-    setIsFormOpen(true)
+    setIsAddFormOpen(true)
 }
 
 const handleCancel = () => {
   setIsFormOpen(false);
+  setIsAddFormOpen(false)
   setPlayerToEdit(null);
 };
   
@@ -37,7 +39,7 @@ const handleCancel = () => {
     return (
       <TableContainer component={Paper}>
         {isFormOpen && <EditPlayerForm player={playerToEdit} onClose={handleCancel} />}
-        {isFormOpen && <AddPlayerForm onClose={handleCancel} />}
+        {isAddFormOpen && <AddPlayerForm onClose={handleCancel} />}
         <Table>
           <TableHead>
           <Button onClick={handleAddPlayer}>ADD PLAYER</Button>

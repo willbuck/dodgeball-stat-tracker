@@ -13,6 +13,18 @@ export default function PlayerEditForm({ player, onClose }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // update DB / challonge
+    const playerId = player.player_id;
+    console.log('Id:', player.player_id);
+    const objectToUpdate = {
+      firstName,
+      lastName,
+      jerseyNumber,
+      phoneNumber,
+      canReferee,
+      isCaptain,
+      playerId,
+    }
+    console.log('Is ObjectToUpdate:', objectToUpdate);
     onClose();
   };
 
