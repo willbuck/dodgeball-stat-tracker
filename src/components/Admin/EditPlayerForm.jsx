@@ -16,7 +16,6 @@ export default function PlayerEditForm({ player, onClose }) {
     event.preventDefault();
     // update DB / challonge
     const playerId = player.id;
-    console.log('Id:', player.player_id);
     const objectToUpdate = {
       firstName,
       lastName,
@@ -26,7 +25,6 @@ export default function PlayerEditForm({ player, onClose }) {
       isCaptain,
       playerId,
     }
-    console.log('Is ObjectToUpdate:', objectToUpdate);
     dispatch({
       type:'UPDATE_PLAYER',
       payload: objectToUpdate

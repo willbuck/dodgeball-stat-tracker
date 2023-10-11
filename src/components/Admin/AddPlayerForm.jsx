@@ -17,7 +17,6 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export default function AddPlayerForm({ onClose }) {
   const teamStore = useSelector((store) => store.teamsReducer);
-  console.log("hey the store:", teamStore);
   const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState("");
@@ -40,7 +39,6 @@ export default function AddPlayerForm({ onClose }) {
       isCaptain,
       selectedTeamId: selectedTeam,
     };
-    console.log("ObjectToSend:", objectToSend);
     dispatch({
         type:'ADD_PLAYER',
         payload: objectToSend

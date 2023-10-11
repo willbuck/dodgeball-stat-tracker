@@ -10,7 +10,6 @@ export default function ManagePlayers() {
 
   const dispatch = useDispatch()
   const allPlayers = useSelector((store) => store.playersReducer)
-  console.log('ALLPLAYER:', allPlayers);
   const [ playerToEdit, setPlayerToEdit ] = useState('')
   const [ isFormOpen, setIsFormOpen ] = useState(false)
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
@@ -41,9 +40,9 @@ const handleCancel = () => {
       <TableContainer component={Paper}>
         {isFormOpen && <EditPlayerForm player={playerToEdit} onClose={handleCancel} />}
         {isAddFormOpen && <AddPlayerForm onClose={handleCancel} />}
+        <Button onClick={handleAddPlayer}>ADD PLAYER</Button>
         <Table>
           <TableHead>
-          {/* <Button onClick={handleAddPlayer}>ADD PLAYER</Button> */}
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Jersey Number</TableCell>
@@ -55,7 +54,7 @@ const handleCancel = () => {
           </TableHead>
           <TableBody>
             {allPlayers.map((player) => (
-              <TableRow key={player.player_id}>
+              <TableRow key={player.id}>
                 <TableCell component="th" scope="row">
                   {player.lastname + ', ' + player.firstname}
                 </TableCell>
