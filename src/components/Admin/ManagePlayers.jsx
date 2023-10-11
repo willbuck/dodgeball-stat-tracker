@@ -16,7 +16,7 @@ export default function ManagePlayers() {
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_PLAYERS' });
+    dispatch({ type: 'GET_PLAYER' });
   }, []);
 
 const handleClick = (player) => {

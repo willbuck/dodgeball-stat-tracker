@@ -15,7 +15,7 @@ export default function PlayerEditForm({ player, onClose }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // update DB / challonge
-    const playerId = player.player_id;
+    const playerId = player.id;
     console.log('Id:', player.player_id);
     const objectToUpdate = {
       firstName,

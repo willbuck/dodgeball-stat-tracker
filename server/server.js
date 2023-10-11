@@ -50,7 +50,7 @@ app.use('/api/allTeams', teamLeaderboardRouter);
 app.use('/api/searchTeam', searchTeamLeaderboardRouter);
 app.use('/api/kill', killRouter);
 app.use('/api/teams', teamsRouter)
-app.use('/api/players', allPlayersRouter);
+app.use('/api/allPlayers', allPlayersRouter);
 app.use('/api/addPlayer', addPlayersRouter);
 app.use('/api/updatePlayer', updatePlayerRouter);
 
