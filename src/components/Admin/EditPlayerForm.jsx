@@ -1,7 +1,9 @@
 import React from 'react';
 import { Button, TextField, FormControlLabel, Switch, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
 export default function PlayerEditForm({ player, onClose }) {
+  const dispatch = useDispatch();
 
   const [firstName, setFirstName] = React.useState(player.firstname);
   const [lastName, setLastName] = React.useState(player.lastname);
@@ -25,6 +27,10 @@ export default function PlayerEditForm({ player, onClose }) {
       playerId,
     }
     console.log('Is ObjectToUpdate:', objectToUpdate);
+    dispatch({
+      type:'UPDATE_PLAYER',
+      payload: objectToUpdate
+    })
     onClose();
   };
 
