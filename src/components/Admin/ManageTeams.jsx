@@ -3,16 +3,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Box, Card, Typography, Grid, Container, Badge } from '@mui/material';
 import { IconTrash } from '@tabler/icons-react';
 import { IconShirtFilled } from '@tabler/icons-react';
+import EditLocationAltIcon from '@mui/icons-material/EditLocationAlt';
+import EditIcon from '@mui/icons-material/Edit';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ManageTeamsModal from './ManageTeamsModal';
 
 export default function ManageTeams() {
 
   const dispatch = useDispatch()
   const allTeams = useSelector((store) => store.teamsReducer)
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+};
+
+  // <Button
+  //                 onClick={() => handleDelete(team.id)}
+  //                 color="secondary">
+  //                 <IconTrash size={24} />
+  //               </Button>
+
   //! Should this function be async?
   const handleDelete = (id) => {
     dispatch({ type: "DELETE_TEAM", payload: id });
     dispatch({ type: 'FETCH_TEAMS' })
+  }
+
+  const handleLocation = (id) => {
+    console.log(id)
+    dispatch({ type: "FETCH_MTEAM", payload: id });
+    //dispatch({ type: 'FETCH_TEAMS' })
   }
 
   return (
@@ -30,10 +56,33 @@ export default function ManageTeams() {
                   {team.team_name}
                 </Typography>
                 <Button
-                  onClick={() => handleDelete(team.id)}
-                  color="secondary">
-                  <IconTrash size={24} />
+                value={team.id}
+                  onClick={handleClick}
+                color="secondary">
+                  <EditIcon size={30} />
                 </Button>
+                <Menu
+                                    id="demo-customized-menu"
+                                    MenuListProps={{
+                                        'aria-labelledby': 'demo-customized-button',
+                                    }}
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                >
+                                    {/* <MenuItem disableRipple>
+                                        <StarOutlineIcon />
+                                        Make Team Captain
+                                    </MenuItem> */}
+                                    <MenuItem  onClick={() => handleLocation(anchorEl.value)} disableRipple>
+                                        <EditLocationAltIcon />
+                                        <ManageTeamsModal onClick={() => handleLocation(anchorEl.value)} />
+                                    </MenuItem>
+                                    <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
+                                        <IconTrash />
+                                        Delete Team
+                                    </MenuItem>
+                                </Menu>
               </Box>
             </Card>
           </Grid>
