@@ -13,22 +13,6 @@ function RegisterPage() {
   const history = useHistory();
 
   return (
-    // <div>
-    //   <RegisterForm />
-
-    //   <center>
-    //     <button
-    //       type="button"
-    //       className="btn btn_asLink"
-    //       onClick={() => {
-    //         history.push('/login');
-    //       }}
-    //     >
-    //       Login
-    //     </button>
-    //   </center>
-    // </div>
-
     <Container component="main" maxWidth="xs">
 
     <Box
@@ -40,7 +24,7 @@ function RegisterPage() {
       }}
     >
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        TODO: ADD NEW ICON
+        <IconUserPlus />
       </Avatar>
       <Typography component="h1" variant="h5">
         Register

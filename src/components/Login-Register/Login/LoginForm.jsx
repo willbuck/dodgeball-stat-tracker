@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom'
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,6 +8,8 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+
 
 function LoginForm() {
   const [username, setUsername] = useState("");
@@ -16,7 +17,14 @@ function LoginForm() {
   const user = useSelector((store) => store.user);
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const [ open, setOpen ] = useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const login = (event) => {
     event.preventDefault();
@@ -32,11 +40,20 @@ function LoginForm() {
       });
     } else {
       dispatch({ type: "LOGIN_INPUT_ERROR" });
+      handleOpen()
     }
   }; // end login
 
   return (
     <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
+      {(
+        <Dialog open={open} onClose={handleClose} className="alert">
+          <DialogTitle>Incorrect Password</DialogTitle>
+          <DialogContent>
+            <p>{errors.loginMessage}</p>
+          </DialogContent>
+        </Dialog>
+      )}
       <TextField
         margin="normal"
         required
