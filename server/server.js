@@ -22,6 +22,7 @@ const teamsRouter = require('./routes/teams.router')
 const allPlayersRouter = require('./routes/allPlayers.router');
 const addPlayersRouter = require('./routes/addPlayers.router');
 const updatePlayerRouter = require('./routes/updatePlayer.router');
+const deletePlayerFormRouter = require('./routes/deletePlayerForm.router');
 
 
 
@@ -53,7 +54,7 @@ app.use('/api/teams', teamsRouter)
 app.use('/api/allPlayers', allPlayersRouter);
 app.use('/api/addPlayer', addPlayersRouter);
 app.use('/api/updatePlayer', updatePlayerRouter);
-
+app.use('/api/deletePlayerForm', deletePlayerFormRouter);
 
 
 
