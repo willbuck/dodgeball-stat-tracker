@@ -35,6 +35,13 @@ export default function PlayerEditForm({ player, onClose }) {
   const handleDelete = (event) => {
     event.preventDefault()
     // delete player from DB / challonge
+    console.log('In the delete:', player.id);
+    const id = player.id;
+    dispatch({
+      type:'DELETE_PLAYER',
+      payload: id
+    });
+    onClose();
   }
 
   return (

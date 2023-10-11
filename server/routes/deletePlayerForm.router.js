@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.delete('/', (req,res) => {
     const playerId = req.body.id;
+    console.log('HEY:', playerId);
 
     const queryText = `DELETE FROM players
     WHERE id = $1;`;
