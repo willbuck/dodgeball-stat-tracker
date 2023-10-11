@@ -69,9 +69,7 @@ function LoginForm() {
       <Grid container>
         <Grid item xs></Grid>
         <Grid item>
-          <Link onClick={() => {
-            history.push('/registration');
-          }} variant="body2">
+          <Link href="/#/registration/" variant="body2">
             {"Don't have an account? Sign Up"}
           </Link>
         </Grid>
