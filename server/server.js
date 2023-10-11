@@ -21,6 +21,7 @@ const killRouter = require('./routes/kill.router')
 const teamsRouter = require('./routes/teams.router')
 const allPlayersRouter = require('./routes/allPlayers.router');
 const addPlayersRouter = require('./routes/addPlayers.router');
+const updatePlayerRouter = require('./routes/updatePlayer.router');
 
 
 
@@ -51,6 +52,7 @@ app.use('/api/kill', killRouter);
 app.use('/api/teams', teamsRouter)
 app.use('/api/players', allPlayersRouter);
 app.use('/api/addPlayer', addPlayersRouter);
+app.use('/api/updatePlayer', updatePlayerRouter);
 
 
 

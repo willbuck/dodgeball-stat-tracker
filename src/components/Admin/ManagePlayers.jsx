@@ -10,12 +10,13 @@ export default function ManagePlayers() {
 
   const dispatch = useDispatch()
   const allPlayers = useSelector((store) => store.playersReducer)
+  console.log('ALLPLAYER:', allPlayers);
   const [ playerToEdit, setPlayerToEdit ] = useState('')
   const [ isFormOpen, setIsFormOpen ] = useState(false)
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: "FETCH_PLAYERS" });
+    dispatch({ type: 'FETCH_PLAYERS' });
   }, []);
 
 const handleClick = (player) => {
@@ -42,7 +43,7 @@ const handleCancel = () => {
         {isAddFormOpen && <AddPlayerForm onClose={handleCancel} />}
         <Table>
           <TableHead>
-          <Button onClick={handleAddPlayer}>ADD PLAYER</Button>
+          {/* <Button onClick={handleAddPlayer}>ADD PLAYER</Button> */}
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Jersey Number</TableCell>
