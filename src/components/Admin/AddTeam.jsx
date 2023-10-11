@@ -7,13 +7,15 @@ export default function AddTeam() {
   const dispatch = useDispatch();
 
   const [teamName, setTeamName] = useState('Unnamed Team')
+  const [teamColor, setTeamColor] = useState('Unnamed Color')
 
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
     // TODO: add jersey color
-    const teamData = { teamName }
+    const teamData = { teamName, teamColor }
+    console.log("adding team", teamData)
     dispatch({ type: 'ADD_TEAM', payload: teamData })
   }
 
@@ -33,6 +35,12 @@ export default function AddTeam() {
           label="Team Name"
           placeholder="Team Name"
           onChange={(event) => setTeamName(event.target.value)}
+        ></TextField>
+
+<TextField
+          label="Team Color"
+          placeholder="Team Color"
+          onChange={(event) => setTeamColor(event.target.value)}
         ></TextField>
 
         <Button

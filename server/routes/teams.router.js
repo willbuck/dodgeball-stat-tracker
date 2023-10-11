@@ -25,13 +25,18 @@ router.post('/', (req, res) => {
     teamName
   } = req.body
 
-  const queryValues = [ teamName ]
+  const {
+    teamColor
+  } = req.body
+
+  const queryValues = [ teamName, teamColor ]
 
   const queryText = `
   INSERT INTO "team" (
-    "team_name"
+    "team_name",
+    "jersey_color"
   )
-  VALUES ($1)
+  VALUES ($1, $2)
   `;
 
   pool.query(queryText, queryValues)
