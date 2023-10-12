@@ -24,14 +24,14 @@ export default function ManageTeamsModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const team = useSelector(store => store.ModalReducer);
+  const team = useSelector(store => store.teamModal);
   const tournament = useSelector(store => store.tournamentsReducer);
 
   const handleAdd = (id) => {
     console.log("tournament", id)
     console.log("teamid", team)
-
     dispatch({ type: 'TEAM_TO_TOURNAMENT', payload: id, team })
+    handleClose()
   }
 
   useEffect(() => {

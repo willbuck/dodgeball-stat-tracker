@@ -2,13 +2,13 @@ import { takeLatest, put } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* modalTeam(action) {
-    //console.log("made it!!!", action.payload)
+    console.log("made it!!!", action.payload)
     try {
-        const players = yield axios.get(`/api/admin/modal/${action.payload}`);
-
+        const tournament = yield axios.get(`/api/admin/modal/${action.payload}`);
+        console.log("payload to be sent", tournament.data)
         yield put({
             type: 'SET_MODAL',
-            payload: players.data
+            payload: tournament.data
         });
 
     } catch (error) {

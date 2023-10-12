@@ -31,7 +31,7 @@ export default function ManageTeams() {
   }
 
   const handleLocation = (id) => {
-    console.log(id)
+    console.log("id from team",id)
     dispatch({ type: "FETCH_MTEAM", payload: id });
     //dispatch({ type: 'FETCH_TEAMS' })
   }
@@ -69,9 +69,9 @@ export default function ManageTeams() {
                                         <StarOutlineIcon />
                                         Make Team Captain
                                     </MenuItem> */}
-                                    <MenuItem  onClick={() => handleLocation(anchorEl.value)} disableRipple>
+                                    <MenuItem onClick={() => handleLocation(anchorEl.value)} disableRipple>
                                         <EditLocationAltIcon />
-                                        <ManageTeamsModal onClick={() => handleLocation(anchorEl.value)} />
+                                        <ManageTeamsModal  />
                                     </MenuItem>
                                     <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
                                         <IconTrash />
