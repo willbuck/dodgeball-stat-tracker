@@ -25,15 +25,18 @@ function GameDetail() {
     // Getting information for current game
     const game = findIDMatch(allGames, gameID, 'game_id', false)
 
+    const [teamOneScore, setTeamOneScore] = useState(0);
+    const [teamTwoScore, setTeamTwoScore] = useState(0);
+
     const [teams, setTeams] = useState({
-        team1: {
+        teamOne: {
             id: game.team1_id,
             name: game.team1_name,
             color: game.team1_jersey_color,
             players: []
         },
 
-        team2: {
+        teamTwo: {
             id: game.team2_id,
             name: game.team2_name,
             color: game.team2_jersey_color,
@@ -44,18 +47,24 @@ function GameDetail() {
     // Helper function to set team rosters
     const setRosters = (currentGame) => {
         const teamsObject = Object.assign({}, teams);
+        console.log('teams object:', teamsObject);
+        console.log('current game:', currentGame);
+        console.log('all players:', allPlayers)
         // Looping over players to find players in this game
         for (let player of allPlayers) {
-            if (player.team_id === currentGame.team1_id && !teamsObject.team1.players.includes(player)) {
+            // Push player to team object's .players array if both:
+                // the player's team_id matches the team ID
+                // the player is not already in the team's .players array
+            if (player.team_id === currentGame.team1_id && findIDMatch(teamsObject.teamOne.players, player.player_id, "player_id").length === 0) {
                 player.kills = 0;
                 player.outs = 0;
                 player.catches = 0;
-                teamsObject.team1.players.push(player);
-            } else if (player.team_id === currentGame.team2_id && !teamsObject.team2.players.includes(player)) {
+                teamsObject.teamOne.players.push(player);
+            } else if (player.team_id === currentGame.team2_id && findIDMatch(teamsObject.teamTwo.players, player.player_id, "player_id").length === 0) {
                 player.kills = 0;
                 player.outs = 0;
                 player.catches = 0;
-                teamsObject.team2.players.push(player);
+                teamsObject.teamTwo.players.push(player);
             }
         }
         return teamsObject
@@ -63,11 +72,10 @@ function GameDetail() {
 
     useEffect(() => {
         setTeams(setRosters(game))
-
     }, [])
 
-    // Function to calculate team scores
-    const countScore = (roster) => {
+    // Function to sum all player stats for a team
+    const getTeamStats = (roster) => {
         // variables to hold total kills, catches, and outs
         let totalKills = 0;
         let totalCatches = 0;
@@ -80,7 +88,18 @@ function GameDetail() {
             totalOuts += player.outs;
         }
 
+        return {kills: totalKills, catches: totalCatches, outs: totalOuts}
     }
+
+    // Function to get each team's score
+    const getScore = (teams) => {
+        const teamOneStats = getTeamStats(teams.teamOne);
+        const teamTwoStats = getTeamStats(teams.teamTwo);
+
+        setTeamOneScore(teamOneStats.kills + teamOneStats.catches - teamOneStats.outs - teamTwoStats.catches);
+        setTeamTwoScore(teamTwoStats.kills + teamTwoStats.catches - teamTwoStats.outs - teamOneStats.catches);
+    }
+
 
     // Handler function for stat tracking
     const handleStat = (stat, player) => {
@@ -89,26 +108,27 @@ function GameDetail() {
 
         // Creating copy of teams state so
         // react will re-render on state change
-        const teamsCopy = Object.assign({}, teams)
+        const teamsCopy = Object.assign({}, teams);
 
         // Loop to find player in teams object
         // This is very inelegant
         let counter = 0;
-        for (let roster of teamsCopy.team1.players) {
+        for (let roster of teamsCopy.teamOne.players) {
             if (player.player_id === roster.player_id) {
-                teamsCopy.team1.players[counter] = player;
+                teamsCopy.teamOne.players[counter] = player;
             }
             counter++
         }
         counter = 0;
-        for (let roster of teamsCopy.team2.players) {
+        for (let roster of teamsCopy.teamTwo.players) {
             if (player.player_id === roster.player_id) {
-                teamsCopy.team2.players[counter] = player;
+                teamsCopy.teamTwo.players[counter] = player;
             }
             counter++;
         }
         // Updating state
         setTeams(teamsCopy);
+        getScore(teams);
     }
 
     //! Make separate team grids into a separate component
@@ -136,7 +156,7 @@ function GameDetail() {
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {teams.team1.players.map((player) => {
+                    {teams.teamOne.players.map((player) => {
                         return (
                             // PLAYER COMPONENT
                             <Card
@@ -206,7 +226,7 @@ function GameDetail() {
                     xs={6}
                     columnGap={6}
                     rowGap={2}>
-                    {teams.team2.players.map((player) => {
+                    {teams.teamTwo.players.map((player) => {
                         return (
                             <Card
                                 key={player.player_id}

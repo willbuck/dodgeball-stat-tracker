@@ -102,8 +102,8 @@ router.get('/tournament/participants', (req, res) => {
 router.post('/tournament/participants', (req, res) => {
 
     const apiKey = process.env.CHALLONGE_API_KEY;
-    const {participants, newTournamentID} = req.body;
-    console.log('in challonge add participants:', participants, newTournamentID);
+    const {participants, newTournamentID: newTournamentURL} = req.body;
+    console.log('in challonge add participants:', participants, newTournamentURL);
 
     const participantsToSend = participants.map( participant => {
         return {
@@ -113,7 +113,7 @@ router.post('/tournament/participants', (req, res) => {
     });
     console.log('participantsToSend:', participantsToSend)
 
-    const endpointURL = `https://api.challonge.com/v1/tournaments/${newTournamentID}/participants/bulk_add.json`;
+    const endpointURL = `https://api.challonge.com/v1/tournaments/${newTournamentURL}/participants/bulk_add.json`;
     
     const createParticipant = async () => {
         try {
