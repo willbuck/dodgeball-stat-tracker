@@ -18,7 +18,7 @@ const leaderboardRouter = require('./routes/leaderboard.router');
 const teamLeaderboardRouter = require('./routes/teamLeaderboard.router');
 const searchTeamLeaderboardRouter = require('./routes/searchTeamLeaderboard.router');
 const killRouter = require('./routes/kill.router')
-const teamsRouter = require('./routes/teams.router')
+const teamsRouter = require('./routes/teams.router');
 const manageUsersRouter = require('./routes/manageUsers.router');
 const allPlayersRouter = require('./routes/allPlayers.router')
 

@@ -39,7 +39,7 @@ function GameDetail() {
             color: game.team2_jersey_color,
             players: []
         }
-    })
+    });
 
     // Helper function to set team rosters
     const setRosters = (currentGame) => {
@@ -65,6 +65,22 @@ function GameDetail() {
         setTeams(setRosters(game))
 
     }, [])
+
+    // Function to calculate team scores
+    const countScore = (roster) => {
+        // variables to hold total kills, catches, and outs
+        let totalKills = 0;
+        let totalCatches = 0;
+        let totalOuts = 0;
+
+        // loop over roster to add stats to team totals
+        for (let player of roster) {
+            totalKills += player.kills;
+            totalCatches += player.catches;
+            totalOuts += player.outs;
+        }
+
+    }
 
     // Handler function for stat tracking
     const handleStat = (stat, player) => {
