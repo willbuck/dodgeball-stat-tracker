@@ -14,6 +14,7 @@ import teamLeaderboardSaga from './teamLeaderboard.sagas';
 import searchTeamLeaderboardSaga from './searchTeamLeaderboard.saga';
 import manageUserSaga from './manageUser.saga';
 import modalSaga from './modal.saga';
+import addTeamTounament from './addTeamTournament.saga';
 
 
 
@@ -40,6 +41,7 @@ export default function* rootSaga() {
     playersSaga(),
     manageUserSaga(),
     modalSaga(),
+    addTeamTounament(),
     
 
   ]);

@@ -29,8 +29,8 @@ export default function ManageTeamsModal() {
 
   const handleAdd = (id) => {
     console.log("tournament", id)
-    console.log("teamid", team)
-    dispatch({ type: 'TEAM_TO_TOURNAMENT', payload: id, team })
+    console.log("team thats sending...", team)
+    dispatch({ type: 'TEAM_TO_TOURNAMENT', payload: id, team: team })
     handleClose()
   }
 
@@ -47,8 +47,7 @@ export default function ManageTeamsModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        
-        <Box sx={style}>
+        <Box sx={style}> 
           <Typography id="modal-modal-title" variant="h6" component="h2">
           {tournament.map((tournament) => {
               return (
