@@ -4,7 +4,7 @@ import axios from 'axios';
 function* deletePlayerForm(action){
     console.log('ACTION:', action.payload);
     const id = action.payload;
-    yield axios.delete('/api/deletePlayerForm', id);
+    yield axios.delete(`/api/deletePlayerForm/${action.payload}`);
 }
 
 function* deletePlayerFormSaga(){

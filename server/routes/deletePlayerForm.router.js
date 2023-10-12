@@ -2,8 +2,8 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-router.delete('/', (req,res) => {
-    const playerId = req.body.id;
+router.delete('/:id', (req,res) => {
+    const playerId = req.params.id;
     console.log('HEY:', playerId);
 
     const queryText = `DELETE FROM players

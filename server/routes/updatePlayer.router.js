@@ -11,6 +11,7 @@ router.put('/', (req,res) => {
     const phoneNumber = req.body.phoneNumber;
     const canReferee = req.body.canReferee;
     const isCaptain = req.body.isCaptain;
+    const teamId = req.body.team_id;
     
     const queryText  = `
     UPDATE players 
@@ -20,11 +21,12 @@ router.put('/', (req,res) => {
         jersey_number = $3,
         phone_number = $4,
         can_referee = $5,
-        captain = $6
-    WHERE id = $7;`;
+        captain = $6,
+        team_id = $7
+    WHERE id = $8;`;
 
     const queryParams = [firstName, lastName, jerseyNumber,
-    phoneNumber,canReferee,isCaptain,id];
+    phoneNumber,canReferee,isCaptain,teamId,id];
 
     pool.query(queryText, queryParams)
         .then((result) => {
