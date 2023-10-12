@@ -23,11 +23,6 @@ export default function ManageTeams() {
     setAnchorEl(null);
 };
 
-  // <Button
-  //                 onClick={() => handleDelete(team.id)}
-  //                 color="secondary">
-  //                 <IconTrash size={24} />
-  //               </Button>
 
   //! Should this function be async?
   const handleDelete = (id) => {

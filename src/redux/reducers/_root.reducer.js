@@ -10,7 +10,8 @@ import searchTeamLeaderboardReducer from './searchTeamLeaderboard.reducer';
 import playersReducer from './players.reducer';
 import teamsReducer from './teams.reducer'
 import manageUsersReducer from './manageUsers.reducer';
-import ModalReducer from './Modal.reducer';
+import teamModal from './teamsModal.reducer';
+
 
 
 // rootReducer is the primary reducer for our entire project
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
   playersReducer,
   teamsReducer,
   manageUsersReducer,
-  ModalReducer,
+  teamModal,
+ 
 
 });
 

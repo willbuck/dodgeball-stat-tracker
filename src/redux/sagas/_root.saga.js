@@ -13,6 +13,7 @@ import fetchLeaderboardSaga from './leaderboard.saga';
 import teamLeaderboardSaga from './teamLeaderboard.sagas';
 import searchTeamLeaderboardSaga from './searchTeamLeaderboard.saga';
 import manageUserSaga from './manageUser.saga';
+import modalSaga from './modal.saga';
 
 
 
@@ -38,6 +39,7 @@ export default function* rootSaga() {
     teamsSaga(),
     playersSaga(),
     manageUserSaga(),
+    modalSaga(),
     
 
   ]);

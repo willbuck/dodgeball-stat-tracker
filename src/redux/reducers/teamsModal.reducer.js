@@ -1,4 +1,4 @@
-const ModalReducer = (state =[], action) => {
+const teamModal = (state =[], action) => {
     switch(action.type){
         case 'SET_MODAL':
             return action.payload
@@ -7,4 +7,4 @@ const ModalReducer = (state =[], action) => {
     }
 }
 
-export default ModalReducer;
+export default teamModal;
