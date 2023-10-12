@@ -30,6 +30,7 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import GroupsIcon from '@mui/icons-material/Groups';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import LogOutButton from '../Login-Register/Login/LogOutButton';
 
@@ -201,16 +202,18 @@ export default function BottomNavbar() {
             {(['']).map((anchor) => (
                 <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
                     <BottomNavigation
-                        showLabels
+
                         value={value}
                         onChange={(event, newValue) => {
                             setValue(newValue);
                         }}
                     >
-                        <BottomNavigationAction label="Notifications" component={Link} to="/" icon={<NotificationsActiveIcon />} />
-                        <BottomNavigationAction label="Home" component={Link} to="/home" icon={<HomeIcon />} />
+                        <BottomNavigationAction 
+                          component="button"  
+                          icon={<ArrowBackIcon />}
+                          onClick={() => history.goBack()} />
+                        <BottomNavigationAction component={Link} to="/home" icon={<HomeIcon />} />
                         <BottomNavigationAction
-                            label="Menu"
                             onClick={toggleDrawer(anchor, true)}
                             icon={<MenuIcon />} />
                     </BottomNavigation>
