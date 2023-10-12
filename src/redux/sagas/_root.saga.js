@@ -14,7 +14,6 @@ import teamLeaderboardSaga from './teamLeaderboard.sagas';
 import searchTeamLeaderboardSaga from './searchTeamLeaderboard.saga';
 import updatePlayerSaga from './updatePlayeer.saga';
 import managePlayersSaga from './managePlayer.saga';
-import deletePlayerFormSaga from './deletePlayerForm.saga';
 
 
 
@@ -41,7 +40,6 @@ export default function* rootSaga() {
     addPlayerSaga(),
     updatePlayerSaga(),
     managePlayersSaga(),
-    deletePlayerFormSaga(),
     
   ]);
 }

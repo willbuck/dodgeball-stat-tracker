@@ -4,14 +4,13 @@ import { useDispatch, useSelector} from 'react-redux';
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 
 
 export default function PlayerEditForm({ player, onClose }) {
-  console.log('Player:',player)
   const dispatch = useDispatch();
   const teamStore = useSelector((store) => store.teamsReducer);
-  console.log('Team Store:', teamStore);
+
   const [firstName, setFirstName] = React.useState(player.firstname);
   const [lastName, setLastName] = React.useState(player.lastname);
   const [jerseyNumber, setJerseyNumber] = React.useState(player.jersey_number);
@@ -41,17 +40,6 @@ export default function PlayerEditForm({ player, onClose }) {
     onClose();
   };
 
-  const handleDelete = (event) => {
-    event.preventDefault()
-    // delete player from DB / challonge
-    console.log('In the delete:', player.id);
-    const id = player.id;
-    dispatch({
-      type:'DELETE_PLAYER',
-      payload: id
-    });
-    onClose();
-  }
 
   const handleChangeTeam = (event) => {
     setSelectedTeam(event.target.value);
@@ -92,7 +80,6 @@ export default function PlayerEditForm({ player, onClose }) {
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
         <Button onClick={handleSubmit} color="primary">Submit</Button>
-        <Button onClick={handleDelete} color='error'>Delete</Button>
       </DialogActions>
     </Dialog>
   )

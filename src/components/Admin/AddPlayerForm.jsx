@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   TextField,
@@ -40,15 +40,10 @@ export default function AddPlayerForm({ onClose }) {
       selectedTeamId: selectedTeam,
     };
     dispatch({
-        type:'ADD_PLAYER',
-        payload: objectToSend
-    })
+      type: "ADD_PLAYER",
+      payload: objectToSend,
+    });
     onClose();
-  };
-
-  const handleDelete = (event) => {
-    event.preventDefault();
-    // delete player from DB / challonge
   };
 
   const handleChangeTeam = (event) => {
@@ -118,9 +113,6 @@ export default function AddPlayerForm({ onClose }) {
         <Button onClick={onClose}>Cancel</Button>
         <Button onClick={handleSubmit} color="primary">
           Submit
-        </Button>
-        <Button onClick={handleDelete} color="error">
-          Delete
         </Button>
       </DialogActions>
     </Dialog>
