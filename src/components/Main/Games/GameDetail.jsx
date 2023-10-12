@@ -28,6 +28,8 @@ function GameDetail() {
     const [teamOneScore, setTeamOneScore] = useState(0);
     const [teamTwoScore, setTeamTwoScore] = useState(0);
 
+    console.log(`Score: ${teamOneScore} - ${teamTwoScore}`);
+
     const [teams, setTeams] = useState({
         teamOne: {
             id: game.team1_id,
@@ -47,9 +49,6 @@ function GameDetail() {
     // Helper function to set team rosters
     const setRosters = (currentGame) => {
         const teamsObject = Object.assign({}, teams);
-        console.log('teams object:', teamsObject);
-        console.log('current game:', currentGame);
-        console.log('all players:', allPlayers)
         // Looping over players to find players in this game
         for (let player of allPlayers) {
             // Push player to team object's .players array if both:
@@ -93,8 +92,8 @@ function GameDetail() {
 
     // Function to get each team's score
     const getScore = (teams) => {
-        const teamOneStats = getTeamStats(teams.teamOne);
-        const teamTwoStats = getTeamStats(teams.teamTwo);
+        const teamOneStats = getTeamStats(teams.teamOne.players);
+        const teamTwoStats = getTeamStats(teams.teamTwo.players);
 
         setTeamOneScore(teamOneStats.kills + teamOneStats.catches - teamOneStats.outs - teamTwoStats.catches);
         setTeamTwoScore(teamTwoStats.kills + teamTwoStats.catches - teamTwoStats.outs - teamOneStats.catches);
