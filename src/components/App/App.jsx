@@ -29,13 +29,9 @@ import ManageTeams from '../Admin/ManageTeams'
 import ManageUsers from "../Admin/ManageUsers";
 import ManagePlayers from '../Admin/ManagePlayers'
 
-
 import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
-
-
-
 
 // Unique identifiers for anonymous users
 import { v5 as uuidv5 } from 'uuid';
