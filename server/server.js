@@ -19,10 +19,13 @@ const teamLeaderboardRouter = require('./routes/teamLeaderboard.router');
 const searchTeamLeaderboardRouter = require('./routes/searchTeamLeaderboard.router');
 const killRouter = require('./routes/kill.router')
 const teamsRouter = require('./routes/teams.router')
+
 const allPlayersRouter = require('./routes/allPlayers.router');
 const addPlayersRouter = require('./routes/addPlayers.router');
 const updatePlayerRouter = require('./routes/updatePlayer.router');
 const deletePlayerFormRouter = require('./routes/deletePlayerForm.router');
+const manageUsersRouter = require('./routes/manageUsers.router');
+const modalRouter = require('./routes/modal.router')
 
 
 
@@ -51,10 +54,16 @@ app.use('/api/allTeams', teamLeaderboardRouter);
 app.use('/api/searchTeam', searchTeamLeaderboardRouter);
 app.use('/api/kill', killRouter);
 app.use('/api/teams', teamsRouter)
+
 app.use('/api/allPlayers', allPlayersRouter);
 app.use('/api/addPlayer', addPlayersRouter);
 app.use('/api/updatePlayer', updatePlayerRouter);
 app.use('/api/deletePlayerForm', deletePlayerFormRouter);
+
+app.use('/api/manageUsers', manageUsersRouter);
+app.use('/api/admin/modal', modalRouter)
+
+
 
 
 
