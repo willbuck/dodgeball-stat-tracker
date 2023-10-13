@@ -35,7 +35,7 @@ function Leaderboard() {
     //This dispatch is to GET all the teams
     //in the tournament
     dispatch({
-      type: "GET_ALL_TEAMS",
+      type: "GET_ALL_TEAMS"
     });
 
     // check if selectedTeam is not Null
