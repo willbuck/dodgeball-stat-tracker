@@ -59,13 +59,8 @@ app.use('/api/allPlayers', allPlayersRouter);
 app.use('/api/addPlayer', addPlayersRouter);
 app.use('/api/updatePlayer', updatePlayerRouter);
 
-
 app.use('/api/manageUsers', manageUsersRouter);
 app.use('/api/admin/modal', modalRouter)
-
-
-
-
 
 // Serve static files
 app.use(express.static('build'));
