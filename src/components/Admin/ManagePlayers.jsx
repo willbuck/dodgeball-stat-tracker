@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { IconEdit } from '@tabler/icons-react';
 
 import EditPlayerForm from './EditPlayerForm'
+import AddPlayerForm from './AddPlayerForm';
 
 export default function ManagePlayers() {
 
@@ -11,9 +12,10 @@ export default function ManagePlayers() {
   const allPlayers = useSelector((store) => store.playersReducer)
   const [ playerToEdit, setPlayerToEdit ] = useState('')
   const [ isFormOpen, setIsFormOpen ] = useState(false)
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: "FETCH_PLAYERS" });
+    dispatch({ type: 'GET_PLAYER' });
   }, []);
 
 const handleClick = (player) => {
@@ -21,8 +23,14 @@ const handleClick = (player) => {
   setPlayerToEdit(player)
 }
 
+const handleAddPlayer = () => {
+    console.log('Hey you can add!')
+    setIsAddFormOpen(true)
+}
+
 const handleCancel = () => {
   setIsFormOpen(false);
+  setIsAddFormOpen(false)
   setPlayerToEdit(null);
 };
   
@@ -31,6 +39,8 @@ const handleCancel = () => {
     return (
       <TableContainer component={Paper}>
         {isFormOpen && <EditPlayerForm player={playerToEdit} onClose={handleCancel} />}
+        {isAddFormOpen && <AddPlayerForm onClose={handleCancel} />}
+        <Button onClick={handleAddPlayer}>ADD PLAYER</Button>
         <Table>
           <TableHead>
             <TableRow>
@@ -44,7 +54,7 @@ const handleCancel = () => {
           </TableHead>
           <TableBody>
             {allPlayers.map((player) => (
-              <TableRow key={player.player_id}>
+              <TableRow key={player.id}>
                 <TableCell component="th" scope="row">
                   {player.lastname + ', ' + player.firstname}
                 </TableCell>

@@ -58,7 +58,7 @@ function App() {
 
   // Fetching global state from database at app load
   useEffect(() => {
-    dispatch({ type: 'FETCH_PLAYERS' });
+    // dispatch({ type: 'FETCH_PLAYERS' });
     dispatch({ type: "FETCH_TEAMS" });
     dispatch({ type: "FETCH_TOURNAMENTS" });
     dispatch({ type: 'FETCH_GAMES' });
