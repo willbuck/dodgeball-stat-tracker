@@ -2,7 +2,9 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+
 import LogOutButton from '../Login-Register/Login/LogOutButton';
+
 
 // MUI Imports
 import Box from '@mui/material/Box';
@@ -158,6 +160,11 @@ export default function Sidebar() {
                         <ListItem key="link5" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/manage-users')}>
                                 <BadgeIcon /><ListItemText primary="Manage Users" />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem key="link5" disablePadding>
+                            <ListItemButton onClick={() => history.push('/admin/manage-players')}>
+                                <ListItemText primary="Manage Players" />
                             </ListItemButton>
                         </ListItem>
                     </List>
