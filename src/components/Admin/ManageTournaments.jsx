@@ -37,7 +37,7 @@ export default function ManageTournaments() {
 
 
   return (
-    <Container>
+    <Container sx={{ marginBottom: 15 }}>
       <Grid container spacing={3}>
         {allTeams.map((tournament) => (
 
@@ -45,7 +45,11 @@ export default function ManageTournaments() {
           <Grid item xs={12} sm={6} md={4} key={tournament.id}>
 
             {/* Renders Card for Tournament*/}
-            <Card sx={{ padding: '20px', margin: '10px', border: '1px solid grey' }}>
+            <Card sx={{
+              padding: '20px',
+              margin: '10px',
+              border: '1px solid grey',
+            }}>
               <Box display="flex" justifyContent="space-between">
                 <Stack>
                   <Typography variant="h5">

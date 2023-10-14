@@ -17,11 +17,11 @@ export default function ManageTeams() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-};
+  };
 
 
   //! Should this function be async?
@@ -31,18 +31,23 @@ export default function ManageTeams() {
   }
 
   const handleLocation = (id) => {
-    console.log("id from team",id)
+    console.log("id from team", id)
     dispatch({ type: "FETCH_MTEAM", payload: id });
     //dispatch({ type: 'FETCH_TEAMS' })
   }
 
   return (
-    <Container>
+    <Container sx={{ marginBottom: 15 }}>
       <Grid container spacing={3}>
         {allTeams.map((team) => (
           <Grid item xs={12} sm={6} md={4} key={team.id}>
 
-            <Card sx={{ padding: '20px', margin: '10px', border: '1px solid grey' }}>
+            <Card sx={{
+              padding: '20px',
+              margin: '10px',
+              border: '1px solid grey',
+              // boxShadow: '0px 1px 2px darkGrey',
+            }}>
               <Badge badgeContent="" sx={{ color: team.jersey_color }}>
                 <IconShirtFilled />
               </Badge>
@@ -51,33 +56,33 @@ export default function ManageTeams() {
                   {team.team_name}
                 </Typography>
                 <Button
-                value={team.id}
-                  onClick={handleClick}
-                color="secondary">
+                  value={team.id}
+                  onClick={handleClick}>
                   <EditIcon size={30} />
+                  Edit
                 </Button>
                 <Menu
-                                    id="demo-customized-menu"
-                                    MenuListProps={{
-                                        'aria-labelledby': 'demo-customized-button',
-                                    }}
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={handleClose}
-                                >
-                                    {/* <MenuItem disableRipple>
+                  id="demo-customized-menu"
+                  MenuListProps={{
+                    'aria-labelledby': 'demo-customized-button',
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                >
+                  {/* <MenuItem disableRipple>
                                         <StarOutlineIcon />
                                         Make Team Captain
                                     </MenuItem> */}
-                                    <MenuItem onClick={() => handleLocation(anchorEl.value)} disableRipple>
-                                        <EditLocationAltIcon />
-                                        <ManageTeamsModal  />
-                                    </MenuItem>
-                                    <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
-                                        <IconTrash />
-                                        Delete Team
-                                    </MenuItem>
-                                </Menu>
+                  <MenuItem onClick={() => handleLocation(anchorEl.value)} disableRipple>
+                    <EditLocationAltIcon />
+                    <ManageTeamsModal />
+                  </MenuItem>
+                  <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
+                    <IconTrash />
+                    Delete Team
+                  </MenuItem>
+                </Menu>
               </Box>
             </Card>
           </Grid>

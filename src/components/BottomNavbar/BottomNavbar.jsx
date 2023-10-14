@@ -7,7 +7,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+// import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 // import RestoreIcon from '@mui/icons-material/Restore';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 // import ArchiveIcon from '@mui/icons-material/Archive';
@@ -208,10 +208,10 @@ export default function BottomNavbar() {
                             setValue(newValue);
                         }}
                     >
-                        <BottomNavigationAction 
-                          component="button"  
-                          icon={<ArrowBackIcon />}
-                          onClick={() => history.goBack()} />
+                        <BottomNavigationAction
+                            component="button"
+                            icon={<ArrowBackIcon />}
+                            onClick={() => history.goBack()} />
                         <BottomNavigationAction component={Link} to="/home" icon={<HomeIcon />} />
                         <BottomNavigationAction
                             onClick={toggleDrawer(anchor, true)}
