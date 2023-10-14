@@ -34,19 +34,6 @@ function GameDetail() {
     const [teamOneScore, setTeamOneScore] = useState(0);
     const [teamTwoScore, setTeamTwoScore] = useState(0);
 
-    const renderTallies = (num) => {
-        let tallyString = ` `
-        for (let i = 0; i < num; i++) {
-            tallyString = tallyString + ` x`;
-        }
-        return tallyString;
-    }
-
-    //! Eventually state should be the number of players in a lineup on a per-tournament basis
-    const [teamOneTally, setTeamOneTally] = useState(() => renderTallies(4));
-    const [teamTwoTally, setTeamTwoTally] = useState(() => renderTallies(4));
-
-
     const [teams, setTeams] = useState({
         teamOne: {
             id: game.team1_id,
@@ -72,14 +59,14 @@ function GameDetail() {
             // the player's team_id matches the team ID
             // the player is not already in the team's .players array
             if (player.team_id === currentGame.team1_id && findIDMatch(teamsObject.teamOne.players, player.player_id, "player_id").length === 0) {
-                player.kills = 0;
-                player.outs = 0;
-                player.catches = 0;
+                player.kills = player.kills || 0;
+                player.outs = player.outs || 0;
+                player.catches = player.catches || 0;
                 teamsObject.teamOne.players.push(player);
             } else if (player.team_id === currentGame.team2_id && findIDMatch(teamsObject.teamTwo.players, player.player_id, "player_id").length === 0) {
-                player.kills = 0;
-                player.outs = 0;
-                player.catches = 0;
+                player.kills = player.kills || 0;
+                player.outs = player.outs || 0;
+                player.catches = player.catches || 0;
                 teamsObject.teamTwo.players.push(player);
             }
         }
@@ -116,31 +103,6 @@ function GameDetail() {
         // setTeamOneScore(teamOneStats.kills + teamOneStats.catches - teamOneStats.outs - teamTwoStats.catches);
         // setTeamTwoScore(teamTwoStats.kills + teamTwoStats.catches - teamTwoStats.outs - teamOneStats.catches);
 
-        //! default 4 should be replaced with lineup size
-        const teamOneTallyCalc = 4 - teamTwoStats.kills - teamTwoStats.catches + teamOneStats.catches - teamOneStats.outs;
-        const teamTwoTallyCalc = 4 - teamOneStats.kills - teamOneStats.catches + teamTwoStats.catches - teamTwoStats.outs;
-
-        // Update team one player tally
-        if (teamOneTallyCalc >= 4) {
-            // If greater than default, setState(default)
-            setTeamOneTally(() => renderTallies(4));
-        } else if (teamOneTallyCalc <= 0) {
-            // if <0, setState(0) and render "Confirm Win" button
-            setTeamOneTally('');
-        } else {
-            setTeamOneTally(() => renderTallies(teamOneTallyCalc));
-        }
-
-        // Update team two player tally
-        if (teamTwoTallyCalc >= 4) {
-            // If greater than default, setState(default)
-            setTeamTwoTally(() => renderTallies(4));
-        } else if (teamTwoTallyCalc <= 0) {
-            // if <0, setState(0) and render "Confirm Win" button
-            setTeamTwoTally('');
-        } else {
-            setTeamTwoTally(() => renderTallies(teamTwoTallyCalc));
-        }
     }
 
     //! User should have decrement option

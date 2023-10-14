@@ -8,12 +8,13 @@ import EditPlayerForm from './EditPlayerForm'
 export default function ManagePlayers() {
 
   const dispatch = useDispatch()
+  const user = useSelector(store => store.user);
   const allPlayers = useSelector((store) => store.playersReducer)
   const [playerToEdit, setPlayerToEdit] = useState('')
   const [isFormOpen, setIsFormOpen] = useState(false)
 
   useEffect(() => {
-    dispatch({ type: "FETCH_PLAYERS" });
+    dispatch({ type: "FETCH_PLAYERS", payload: user });
   }, []);
 
   const handleClick = (player) => {

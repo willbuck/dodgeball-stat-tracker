@@ -49,9 +49,9 @@ router.put('/', async (req, res) => {
         userGetText = `"user_id" = $3`
         userPutText = `"user_id" = $6`
     } else {
-        userValue = user.uuid;
-        userGetText = `"user_uuid" = $3`
-        userPutText = `"user_uuid" = $6`
+        userValue = user.pseudonym;
+        userGetText = `"uuid" = $3`
+        userPutText = `"uuid" = $6`
     }
 
     const existText = `
@@ -75,7 +75,7 @@ router.put('/', async (req, res) => {
         "uuid")
     VALUES ($1, $2, $3, $4, $5, $6, $7);
     `
-    const insertRowValues = [player.kills, player.catches, player.outs, player.player_id, game.game_id, user.id, user.uuid]
+    const insertRowValues = [player.kills, player.catches, player.outs, player.player_id, game.game_id, user.id, user.pseudonym]
 
     //! If row does exist, update it
     const updateRowText = `
@@ -91,7 +91,7 @@ router.put('/', async (req, res) => {
     `
     const updateRowValues = [player.kills, player.catches, player.outs, player.player_id, game.game_id, userValue]
 
-    const queryValues = [player.kills, player.catches, player.outs, player.player_id, game.game_id, userValue, user.id, user.uuid]
+    const queryValues = [player.kills, player.catches, player.outs, player.player_id, game.game_id, userValue, user.id, user.pseudonym]
 
 
     try {
@@ -108,11 +108,15 @@ router.put('/', async (req, res) => {
         }
 
         await connection.query('COMMIT');
+        res.sendStatus(200);
+        
     } catch (error) {
+        await connection.query('ROLLBACK')
         console.log('error in stats transaction:', error);
         res.sendStatus(500);
     } finally {
         connection.release();
+        
     }
     
 

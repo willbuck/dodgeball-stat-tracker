@@ -38,10 +38,8 @@ import Sidebar from "../Sidebar/Sidebar"
 
 
 // Unique identifiers for anonymous users
-import { v5 as uuidv5 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
-
-
 
 function App() {
   const dispatch = useDispatch();
@@ -50,23 +48,17 @@ function App() {
   // Creating unique user ID
   const uniqueID = {
     // Generating UUID from DNS namespace
-    uuid: uuidv5('usa_dodgeball', uuidv5.DNS),
+    uuid: uuidv4('usa_dodgeball', uuidv4.DNS),
 
     // Generating pseudonym for easier readability
     pseudonym: uniqueNamesGenerator({
       dictionaries: [adjectives, colors, animals],
       length: 3,
-      seed: uuidv5('usa_dodgeball', uuidv5.DNS)
+      seed: uuidv4('usa_dodgeball', uuidv4.DNS)
     })
   }
 
-  // Fetching global state from database at app load
-  useEffect(() => {
-    dispatch({ type: 'FETCH_PLAYERS' });
-    dispatch({ type: "FETCH_TEAMS" });
-    dispatch({ type: "FETCH_TOURNAMENTS" });
-    dispatch({ type: 'FETCH_GAMES' });
-  }, [])
+  
 
   // Fetch user
   //! Question: why do we need to do this any time
@@ -75,6 +67,14 @@ function App() {
     dispatch({ type: "FETCH_USER", payload: uniqueID });
 
   }, [dispatch]);
+
+  // Fetching global state from database at app load
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PLAYERS', payload: user });
+    dispatch({ type: "FETCH_TEAMS" });
+    dispatch({ type: "FETCH_TOURNAMENTS" });
+    dispatch({ type: 'FETCH_GAMES' });
+  }, [])
 
   return (
     <Router>
