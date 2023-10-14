@@ -9,6 +9,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { IconTrash } from '@tabler/icons-react';
 // import EditNoteIcon from '@mui/icons-material/EditNote';
 
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+
 export default function ManageTournaments() {
 
   const dispatch = useDispatch()
@@ -35,9 +38,108 @@ export default function ManageTournaments() {
 
 
 
+  const [selectedTourny, setSelectedTourny] = useState(null);
+
+  // This functions handles the selected game
+  const handleSearchbarClick = (newValue) => {
+    setSelectedTourny(newValue);
+  };
+
+
 
   return (
     <Container sx={{ marginBottom: 15 }}>
+
+      {/* Search for specific tournament */}
+      <Stack spacing={2} sx={{ width: 300 }}>
+        <Autocomplete
+          id="free-solo-2-demo"
+          options={allTeams}
+          getOptionLabel={(option) =>
+            `${option.tournament_name}`
+          }
+          onChange={(event, newValue) => {
+            handleSearchbarClick(newValue);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search All Tournaments"
+              InputProps={{
+                ...params.InputProps,
+                type: "search",
+              }}
+            />
+          )}
+        />
+      </Stack>
+
+      {selectedTourny ? (
+
+        <Card sx={{
+          padding: '20px',
+          margin: '10px',
+          border: '1px solid grey',
+        }}>
+          <Box display="flex" justifyContent="space-between">
+            <Stack>
+              <Typography variant="h5">
+                {/* tournament name here */}
+                {selectedTourny.tournament_name}
+              </Typography>
+              <Typography variant='body3'>
+                {selectedTourny.location}
+              </Typography>
+            </Stack>
+
+
+
+            {/* Edit Button and Menu on Each Card*/}
+            <div>
+              <Button
+                id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleEdit}
+
+              >
+                <EditIcon size={24} />
+                Edit
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <MenuItem>
+                  <ManageTournamentsModal tournamentID={selectedTourny.id} />
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Button
+                    onClick={() => handleDelete(selectedTourny.id)}
+                  >
+                    <IconTrash size={20} />
+                    Delete
+                  </Button>
+                </MenuItem>
+              </Menu>
+            </div>
+
+
+          </Box>
+        </Card>
+
+      ) : (
+        <>
+
+        </>
+      )}
+
       <Card sx={{ padding: '20px', margin: '10px', }}>
         <Grid container spacing={3}>
           {allTeams.map((tournament) => (

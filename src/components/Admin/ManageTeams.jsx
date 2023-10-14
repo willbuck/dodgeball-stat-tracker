@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Box, Card, Typography, Grid, Container, Badge } from '@mui/material';
+import { Button, Box, Card, Typography, Grid, Container, Badge, Stack } from '@mui/material';
 import { IconTrash } from '@tabler/icons-react';
 import { IconShirtFilled } from '@tabler/icons-react';
 import EditLocationAltIcon from '@mui/icons-material/EditLocationAlt';
@@ -8,6 +8,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ManageTeamsModal from './ManageTeamsModal';
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
 export default function ManageTeams() {
 
@@ -36,8 +38,93 @@ export default function ManageTeams() {
     //dispatch({ type: 'FETCH_TEAMS' })
   }
 
+
+  const [selectedTeam, setSelectedTeam] = useState(null);
+
+  // This functions handles the selected game
+  const handleSearchbarClick = (newValue) => {
+    setSelectedTeam(newValue);
+  };
+
   return (
     <Container sx={{ marginBottom: 15 }}>
+
+      {/* Search for specific team */}
+      <Stack spacing={2} sx={{ width: 300 }}>
+        <Autocomplete
+          id="free-solo-2-demo"
+          options={allTeams}
+          getOptionLabel={(option) =>
+            `${option.team_name}`
+          }
+          onChange={(event, newValue) => {
+            handleSearchbarClick(newValue);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search All Teams"
+              InputProps={{
+                ...params.InputProps,
+                type: "search",
+              }}
+            />
+          )}
+        />
+      </Stack>
+
+      {selectedTeam ? (
+
+        <Card sx={{
+          padding: '20px',
+          margin: '10px',
+          border: '1px solid grey',
+          // boxShadow: '0px 1px 2px darkGrey',
+        }}>
+          <Badge badgeContent="" sx={{ color: selectedTeam.jersey_color }}>
+            <IconShirtFilled />
+          </Badge>
+          <Box display="flex" justifyContent="space-between">
+            <Typography variant="h5">
+              {selectedTeam.team_name}
+            </Typography>
+            <Button
+              value={selectedTeam.id}
+              onClick={handleClick}>
+              <EditIcon size={30} />
+              Edit
+            </Button>
+            <Menu
+              id="demo-customized-menu"
+              MenuListProps={{
+                'aria-labelledby': 'demo-customized-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              {/* <MenuItem disableRipple>
+                          <StarOutlineIcon />
+                          Make Team Captain
+                      </MenuItem> */}
+              <MenuItem onClick={() => handleLocation(anchorEl.value)} disableRipple>
+                <EditLocationAltIcon />
+                <ManageTeamsModal />
+              </MenuItem>
+              <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
+                <IconTrash />
+                Delete Team
+              </MenuItem>
+            </Menu>
+          </Box>
+        </Card>
+
+      ) : (
+        <>
+
+        </>
+      )}
+
       <Card sx={{ padding: '20px', margin: '10px', }}>
         <Grid container spacing={3}>
           {allTeams.map((team) => (

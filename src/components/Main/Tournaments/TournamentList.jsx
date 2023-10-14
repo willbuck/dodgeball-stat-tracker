@@ -27,7 +27,7 @@ export default function TournamentList() {
 
 
   return (
-    <Container>
+    <Container sx={{ marginBottom: 15 }}>
       <SearchTournament />
 
       {/* Upcoming Tournaments */}
@@ -37,30 +37,41 @@ export default function TournamentList() {
       </Typography>
 
       <Grid container spacing={3}>
-        {upcomingTournaments.map((tournament) => (
-          <Grid item xs={12} sm={6} md={4} key={tournament.id}>
-            <Card
-              sx={{
-                padding: '20px',
-                margin: '10px',
-                border: '1px solid grey',
-              }}
-              onClick={() => handleClick(tournament.id)}>
-              <CardContent>
-                <Typography variant="h5">
-                  {tournament.tournament_name}
-                </Typography>
-                <Typography variant='body1'>
-                  {tournament.location}
-                </Typography>
-                {/* Render the dates, if available */}
-                <Typography variant='body2'>
-                  {tournament.tournament_start_date ? tournament.tournament_start_date : 'Dates : TBD'}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+
+        {/* Conditionally Render None if none upcoming */}
+        {
+          upcomingTournaments.length === 0 ? (
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="h6" sx={{ marginLeft: 2 }}>
+                None
+              </Typography>
+            </Grid>
+
+
+          ) : (upcomingTournaments.map((tournament) => (
+            <Grid item xs={12} sm={6} md={4} key={tournament.id}>
+              <Card
+                sx={{
+                  padding: '20px',
+                  margin: '10px',
+                  border: '1px solid grey',
+                }}
+                onClick={() => handleClick(tournament.id)}>
+                <CardContent>
+                  <Typography variant="h5">
+                    {tournament.tournament_name}
+                  </Typography>
+                  <Typography variant='body1'>
+                    {tournament.location}
+                  </Typography>
+                  {/* Render the dates, if available */}
+                  <Typography variant='body2'>
+                    {tournament.tournament_start_date ? tournament.tournament_start_date : 'Dates : TBD'}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          )))}
       </Grid>
 
       {/* Past Tournaments */}
@@ -70,30 +81,39 @@ export default function TournamentList() {
       </Typography>
 
       <Grid container spacing={3}>
-        {pastTournaments.map((tournament) => (
-          <Grid item xs={12} sm={6} md={4} key={tournament.id}>
-            <Card
-              sx={{
-                padding: '20px',
-                margin: '10px',
-                border: '1px solid grey',
-              }}
-              onClick={() => handleClick(tournament.id)}>
-              <CardContent>
-                <Typography variant="h5">
-                  {tournament.tournament_name}
-                </Typography>
-                <Typography variant='body1'>
-                  {tournament.location}
-                </Typography>
-                {/* Render the dates, if available */}
-                <Typography variant='body2'>
-                  {tournament.tournament_start_date ? tournament.tournament_start_date : 'Dates : TBD'}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+        {/* Conditionally Render None if none past */}
+        {
+          pastTournaments.length === 0 ? (
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="h6" sx={{ marginLeft: 2 }}>
+                None
+              </Typography>
+            </Grid>
+          ) : (
+            pastTournaments.map((tournament) => (
+              <Grid item xs={12} sm={6} md={4} key={tournament.id}>
+                <Card
+                  sx={{
+                    padding: '20px',
+                    margin: '10px',
+                    border: '1px solid grey',
+                  }}
+                  onClick={() => handleClick(tournament.id)}>
+                  <CardContent>
+                    <Typography variant="h5">
+                      {tournament.tournament_name}
+                    </Typography>
+                    <Typography variant='body1'>
+                      {tournament.location}
+                    </Typography>
+                    {/* Render the dates, if available */}
+                    <Typography variant='body2'>
+                      {tournament.tournament_start_date ? tournament.tournament_start_date : 'Dates : TBD'}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )))}
       </Grid>
     </Container>
   );
