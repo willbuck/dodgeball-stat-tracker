@@ -19,10 +19,13 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 function GameDetail() {
+    const dispatch = useDispatch();
+
     const { id, gameID = Number(id) } = useParams();
 
     const allPlayers = useSelector((store) => store.playersReducer);
     const allGames = useSelector((store) => store.gamesReducer);
+    const user = useSelector(store => store.user);
 
     // Getting information for current game
     const game = findIDMatch(allGames, gameID, 'game_id', false)
@@ -142,9 +145,9 @@ function GameDetail() {
 
     //! User should have decrement option
     // Handler function for stat tracking
-    const handleStat = (stat, player) => {
+    const handleStat = async (stat, player) => {
 
-        player[stat]++;
+        await player[stat]++;
 
         // Creating copy of teams state so
         // react will re-render on state change
@@ -157,18 +160,23 @@ function GameDetail() {
             if (player.player_id === roster.player_id) {
                 teamsCopy.teamOne.players[counter] = player;
             }
-            counter++
+            await counter++
         }
         counter = 0;
         for (let roster of teamsCopy.teamTwo.players) {
             if (player.player_id === roster.player_id) {
                 teamsCopy.teamTwo.players[counter] = player;
             }
-            counter++;
+            await counter++;
         }
+
         // Updating state
-        setTeams(teamsCopy);
-        getRemainingPlayers(teams);
+        await setTeams(teamsCopy);
+        await getRemainingPlayers(teams);
+
+        console.log('player:', player);
+        // Send stats to database
+        await dispatch({type: 'SEND_STATS', payload: {game, player, user}})
     }
 
     const handleScore = (team, increment) => {
@@ -270,8 +278,6 @@ function GameDetail() {
                         },
                     }}
                 >
-
-
 
                     {/* Left Grid For Team 1 */}
                     <Grid container item sx={{ minWidth: 100, display: 'flex', justifyContent: 'left', paddingLeft: 1 }}

@@ -6,7 +6,7 @@ import tournamentSaga from './tournaments.saga';
 import teamsSaga from './teams.saga'
 import playersSaga from './players.saga';
 import gamesSaga from './games.saga';
-
+import statsSaga from './stats.saga';
 
 
 import fetchLeaderboardSaga from './leaderboard.saga';
@@ -34,7 +34,7 @@ export default function* rootSaga() {
     fetchLeaderboardSaga(),
     teamLeaderboardSaga(),
     searchTeamLeaderboardSaga(),
-    
+    statsSaga(),
     teamsSaga(),
     playersSaga(),
     manageUserSaga(),

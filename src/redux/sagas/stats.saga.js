@@ -13,7 +13,17 @@ function* fetchStats(action) {
 }
 
 function* sendStats(action) {
+  try {
+    console.log('in send stats:', action.payload);
+
+
   // Post user stat session to the database
+    axios.put('api/stats', action.payload)
+
+  } catch (error) {
+    console.log('error in sendStats:', error)
+  }
+  
 }
 
 function* initializeTracking(action) {
