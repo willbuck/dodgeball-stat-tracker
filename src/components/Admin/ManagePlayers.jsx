@@ -10,12 +10,14 @@ export default function ManagePlayers() {
 
   const dispatch = useDispatch()
   const allPlayers = useSelector((store) => store.playersReducer)
+
   const [playerToEdit, setPlayerToEdit] = useState('')
   const [isFormOpen, setIsFormOpen] = useState(false)
 
   useEffect(() => {
     dispatch({ type: 'GET_PLAYER' });
   }, []);
+
 
   const handleClick = (player) => {
     setIsFormOpen(true)
@@ -72,6 +74,4 @@ export default function ManagePlayers() {
       </Table>
     </TableContainer>
   );
-
 }
-

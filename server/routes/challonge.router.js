@@ -110,8 +110,8 @@ router.post('/tournament/participants', (req, res) => {
     const participantsToSend = participants.map( participant => {
       console.log(participant)
         return {
-            "name": participant.teamName, 
-            "misc": participant.teamID
+            "name": participant.team_name, 
+            "misc": participant.jersey_color
     }
     });
     console.log('participantsToSend:', participantsToSend)
