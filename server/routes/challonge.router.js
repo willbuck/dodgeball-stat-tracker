@@ -102,10 +102,13 @@ router.get('/tournament/participants', (req, res) => {
 router.post('/tournament/participants', (req, res) => {
 
     const apiKey = process.env.CHALLONGE_API_KEY;
+    console.log(`REQ.BODY : ${req.body}`)
     const {participants, newTournamentID: newTournamentURL} = req.body;
+
     console.log('in challonge add participants:', participants, newTournamentURL);
 
     const participantsToSend = participants.map( participant => {
+      console.log(participant)
         return {
             "name": participant.teamName, 
             "misc": participant.teamID
