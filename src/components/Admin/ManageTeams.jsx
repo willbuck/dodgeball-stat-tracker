@@ -38,56 +38,58 @@ export default function ManageTeams() {
 
   return (
     <Container sx={{ marginBottom: 15 }}>
-      <Grid container spacing={3}>
-        {allTeams.map((team) => (
-          <Grid item xs={12} sm={6} md={4} key={team.id}>
+      <Card sx={{ padding: '20px', margin: '10px', }}>
+        <Grid container spacing={3}>
+          {allTeams.map((team) => (
+            <Grid item xs={12} sm={6} md={4} key={team.id}>
 
-            <Card sx={{
-              padding: '20px',
-              margin: '10px',
-              border: '1px solid grey',
-              // boxShadow: '0px 1px 2px darkGrey',
-            }}>
-              <Badge badgeContent="" sx={{ color: team.jersey_color }}>
-                <IconShirtFilled />
-              </Badge>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="h5">
-                  {team.team_name}
-                </Typography>
-                <Button
-                  value={team.id}
-                  onClick={handleClick}>
-                  <EditIcon size={30} />
-                  Edit
-                </Button>
-                <Menu
-                  id="demo-customized-menu"
-                  MenuListProps={{
-                    'aria-labelledby': 'demo-customized-button',
-                  }}
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  {/* <MenuItem disableRipple>
+              <Card sx={{
+                padding: '20px',
+                margin: '10px',
+                border: '1px solid grey',
+                // boxShadow: '0px 1px 2px darkGrey',
+              }}>
+                <Badge badgeContent="" sx={{ color: team.jersey_color }}>
+                  <IconShirtFilled />
+                </Badge>
+                <Box display="flex" justifyContent="space-between">
+                  <Typography variant="h5">
+                    {team.team_name}
+                  </Typography>
+                  <Button
+                    value={team.id}
+                    onClick={handleClick}>
+                    <EditIcon size={30} />
+                    Edit
+                  </Button>
+                  <Menu
+                    id="demo-customized-menu"
+                    MenuListProps={{
+                      'aria-labelledby': 'demo-customized-button',
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                  >
+                    {/* <MenuItem disableRipple>
                                         <StarOutlineIcon />
                                         Make Team Captain
                                     </MenuItem> */}
-                  <MenuItem onClick={() => handleLocation(anchorEl.value)} disableRipple>
-                    <EditLocationAltIcon />
-                    <ManageTeamsModal />
-                  </MenuItem>
-                  <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
-                    <IconTrash />
-                    Delete Team
-                  </MenuItem>
-                </Menu>
-              </Box>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+                    <MenuItem onClick={() => handleLocation(anchorEl.value)} disableRipple>
+                      <EditLocationAltIcon />
+                      <ManageTeamsModal />
+                    </MenuItem>
+                    <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
+                      <IconTrash />
+                      Delete Team
+                    </MenuItem>
+                  </Menu>
+                </Box>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Card>
     </Container>
   )
 }

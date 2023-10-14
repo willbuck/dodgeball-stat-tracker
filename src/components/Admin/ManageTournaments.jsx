@@ -38,73 +38,75 @@ export default function ManageTournaments() {
 
   return (
     <Container sx={{ marginBottom: 15 }}>
-      <Grid container spacing={3}>
-        {allTeams.map((tournament) => (
+      <Card sx={{ padding: '20px', margin: '10px', }}>
+        <Grid container spacing={3}>
+          {allTeams.map((tournament) => (
 
-          // Maps Cards of Tournaments
-          <Grid item xs={12} sm={6} md={4} key={tournament.id}>
+            // Maps Cards of Tournaments
+            <Grid item xs={12} sm={6} md={4} key={tournament.id}>
 
-            {/* Renders Card for Tournament*/}
-            <Card sx={{
-              padding: '20px',
-              margin: '10px',
-              border: '1px solid grey',
-            }}>
-              <Box display="flex" justifyContent="space-between">
-                <Stack>
-                  <Typography variant="h5">
-                    {/* tournament name here */}
-                    {tournament.tournament_name}
-                  </Typography>
-                  <Typography variant='h6'>
-                    {tournament.location}
-                  </Typography>
-                </Stack>
-
-
-
-                {/* Edit Button and Menu on Each Card*/}
-                <div>
-                  <Button
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleEdit}
-
-                  >
-                    <EditIcon size={24} />
-                    Edit
-                  </Button>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      'aria-labelledby': 'basic-button',
-                    }}
-                  >
-                    <MenuItem>
-                      <ManageTournamentsModal tournamentID={tournament.id} />
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                      <Button
-                        onClick={() => handleDelete(tournament.id)}
-                      >
-                        <IconTrash size={20} />
-                        Delete
-                      </Button>
-                    </MenuItem>
-                  </Menu>
-                </div>
+              {/* Renders Card for Tournament*/}
+              <Card sx={{
+                padding: '20px',
+                margin: '10px',
+                border: '1px solid grey',
+              }}>
+                <Box display="flex" justifyContent="space-between">
+                  <Stack>
+                    <Typography variant="h5">
+                      {/* tournament name here */}
+                      {tournament.tournament_name}
+                    </Typography>
+                    <Typography variant='body3'>
+                      {tournament.location}
+                    </Typography>
+                  </Stack>
 
 
-              </Box>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+
+                  {/* Edit Button and Menu on Each Card*/}
+                  <div>
+                    <Button
+                      id="basic-button"
+                      aria-controls={open ? 'basic-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? 'true' : undefined}
+                      onClick={handleEdit}
+
+                    >
+                      <EditIcon size={24} />
+                      Edit
+                    </Button>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                      }}
+                    >
+                      <MenuItem>
+                        <ManageTournamentsModal tournamentID={tournament.id} />
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <Button
+                          onClick={() => handleDelete(tournament.id)}
+                        >
+                          <IconTrash size={20} />
+                          Delete
+                        </Button>
+                      </MenuItem>
+                    </Menu>
+                  </div>
+
+
+                </Box>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Card>
     </Container>
   )
 }
