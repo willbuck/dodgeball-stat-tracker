@@ -6,15 +6,20 @@ import { Container, TextField, Typography, Stack, Button } from '@mui/material'
 export default function AddTeam() {
   const dispatch = useDispatch();
 
-  const [teamName, setTeamName] = useState('Unnamed Team')
+  const [teamName, setTeamName] = useState('')
+  const [teamColor, setTeamColor] = useState('')
 
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
     // TODO: add jersey color
-    const teamData = { teamName }
+    const teamData = { teamName, teamColor }
+    console.log("adding team", teamData)
     dispatch({ type: 'ADD_TEAM', payload: teamData })
+
+    setTeamName('')
+    setTeamColor('')
   }
 
   // mapping a list of teams in the DB
@@ -33,6 +38,14 @@ export default function AddTeam() {
           label="Team Name"
           placeholder="Team Name"
           onChange={(event) => setTeamName(event.target.value)}
+          value={teamName}
+        ></TextField>
+
+<TextField
+          label="Team Color"
+          placeholder="Team Color"
+          onChange={(event) => setTeamColor(event.target.value)}
+          value={teamColor}
         ></TextField>
 
         <Button

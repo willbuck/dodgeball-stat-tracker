@@ -4,17 +4,20 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { IconEdit } from '@tabler/icons-react';
 
 import EditPlayerForm from './EditPlayerForm'
+import AddPlayerForm from './AddPlayerForm';
 
 export default function ManagePlayers() {
 
   const dispatch = useDispatch()
   const allPlayers = useSelector((store) => store.playersReducer)
+
   const [playerToEdit, setPlayerToEdit] = useState('')
   const [isFormOpen, setIsFormOpen] = useState(false)
 
   useEffect(() => {
-    dispatch({ type: "FETCH_PLAYERS" });
+    dispatch({ type: 'GET_PLAYER' });
   }, []);
+
 
   const handleClick = (player) => {
     setIsFormOpen(true)
@@ -71,6 +74,5 @@ export default function ManagePlayers() {
       </Table>
     </TableContainer>
   );
-
 }
 

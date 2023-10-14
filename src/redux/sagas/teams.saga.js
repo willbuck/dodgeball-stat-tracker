@@ -19,20 +19,21 @@ function* fetchTeams() {
 
 // * This function only adds team into DB, and will not update a Challonge tournament
 function* addTeam(action) {
-  console.log(`In *addTeam, new team: ${action.payload}`)
+  console.log(`In *addTeam, new team:`, action.payload)
 
-  const {
-    teamName
-  } = action.payload
+  // const {
+  //   teamName
+  // } = action.payload
 
-  const newTeamData = {
-    teamName
-  }
+  // const newTeamData = {
+  //   teamName
+  // }
 
+  console.log("new team data", action.payload)
   try {
-    const newTeamQuery = yield axios.post('/api/teams', newTeamData)
-    console.log('Connecting to server...')
-    console.log(`Response: ${(newTeamQuery)}`)
+    const newTeamQuery = yield axios.post('/api/teams', action.payload)
+    //console.log('Connecting to server...')
+    //console.log(`Response: ${(newTeamQuery)}`)
   } catch (error) {
     console.error(`Cannot connect to server. ${error}`)
   }

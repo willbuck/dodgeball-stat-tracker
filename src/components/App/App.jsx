@@ -30,10 +30,10 @@ import ManageUsers from "../Admin/ManageUsers";
 import ManagePlayers from '../Admin/ManagePlayers'
 
 
+import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
 
-import Sidebar from "../Sidebar/Sidebar"
 
 
 
@@ -62,7 +62,7 @@ function App() {
 
   // Fetching global state from database at app load
   useEffect(() => {
-    dispatch({ type: 'FETCH_PLAYERS' });
+    // dispatch({ type: 'FETCH_PLAYERS' });
     dispatch({ type: "FETCH_TEAMS" });
     dispatch({ type: "FETCH_TOURNAMENTS" });
     dispatch({ type: 'FETCH_GAMES' });
@@ -80,7 +80,6 @@ function App() {
     <Router>
       <div>
         <Header />
-        <Sidebar />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -162,7 +161,7 @@ function App() {
           </Route>
 
           <Route exact path="/home">
-              <Home />
+            <Home />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
@@ -170,6 +169,7 @@ function App() {
             <h1>404</h1>
           </Route>
         </Switch>
+        <BottomNavbar />
         <Footer />
       </div>
     </Router>
