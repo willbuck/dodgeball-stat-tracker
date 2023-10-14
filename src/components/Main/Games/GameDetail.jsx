@@ -25,16 +25,16 @@ function GameDetail() {
 
     const allPlayers = useSelector((store) => store.playersReducer);
     const allGames = useSelector((store) => store.gamesReducer);
+    console.log('allGames:', allGames)
     const stats = useSelector(store => store.stats);
-    console.log('stats:', stats)
     const user = useSelector(store => store.user);
 
     // Getting information for current game
     const game = findIDMatch(allGames, gameID, 'game_id', false)
 
     // Score state
-    const [teamOneScore, setTeamOneScore] = useState(0);
-    const [teamTwoScore, setTeamTwoScore] = useState(0);
+    const [teamOneScore, setTeamOneScore] = useState(game.team1_score);
+    const [teamTwoScore, setTeamTwoScore] = useState(game.team2_score);
 
     const [teams, setTeams] = useState({
         teamOne: {
@@ -165,25 +165,47 @@ function GameDetail() {
         setTeams(setRosters(game))
     }
 
-    const handleScore = (team, increment) => {
+    const updateScore = async (team, score) => {
+
+        for (let aGame of allGames) {
+            if (game.game_id === aGame.game_id) {
+
+                if (team === 1) {
+                    aGame.team1_score = score;
+
+                }
+                if (team === 2) {
+                    aGame.team2_score = score;
+                }
+            }
+        }
+        dispatch({type: 'UPDATE_GAMES', payload: allGames});
+    }
+
+    const handleScore = async (team, increment) => {
         if (team === "one" && increment === "plus") {
-            setTeamOneScore(teamOneScore + 1);
+            await updateScore(1, teamOneScore + 1);
+            await setTeamOneScore(teamOneScore + 1);
+            
         }
         if (team === "one" && increment === "minus") {
             if (teamOneScore <= 0) {
-                setTeamOneScore(0);
+                await setTeamOneScore(0);
             } else { 
-                setTeamOneScore(teamOneScore - 1)
+                await updateScore(1, teamOneScore - 1);
+                await setTeamOneScore(teamOneScore - 1);
             }
         }
         if (team === "two" && increment === "plus") {
-            setTeamTwoScore(teamTwoScore + 1);
+            await updateScore(2, teamTwoScore + 1);
+            await setTeamTwoScore(teamTwoScore + 1);
         }
         if (team === "two" && increment === "minus") {
             if (teamTwoScore <= 0) {
-                setTeamTwoScore(0);
+                await setTeamTwoScore(0);
             } else { 
-                setTeamTwoScore(teamTwoScore - 1)
+                await updateScore(2, teamTwoScore - 1);
+                await setTeamTwoScore(teamTwoScore - 1);
             }
         }
     }

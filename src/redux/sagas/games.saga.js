@@ -13,8 +13,13 @@ function* fetchGames(action){
     })
 }
 
+function* updateGames(action) {
+    console.log('payload:', action.payload);
+}
+
 function* gamesSaga(){
-    yield takeLatest('FETCH_GAMES', fetchGames)
+    yield takeLatest('FETCH_GAMES', fetchGames);
+    yield takeLatest('UPDATE_GAMES', updateGames);
 }
 
 export default gamesSaga;
