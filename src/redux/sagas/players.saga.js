@@ -3,14 +3,9 @@ import axios from 'axios';
 
 function* fetchPlayers(action) {
     try {
-        const players = yield axios.get(`api/players`);
-        const stats = yield axios.get('api/stats');
-        const user = action.payload;
 
-        yield console.log('players:', players);
-        yield console.log('stats:', stats);
-        yield console.log('user:', user);
-        
+        let players = yield axios.get(`api/players`);
+
         yield put({
             type: 'SET_PLAYERS',
             payload: players.data

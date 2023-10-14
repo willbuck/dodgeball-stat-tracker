@@ -25,6 +25,8 @@ function GameDetail() {
 
     const allPlayers = useSelector((store) => store.playersReducer);
     const allGames = useSelector((store) => store.gamesReducer);
+    const stats = useSelector(store => store.stats);
+    console.log('stats:', stats)
     const user = useSelector(store => store.user);
 
     // Getting information for current game
@@ -58,12 +60,32 @@ function GameDetail() {
             // Push player to team object's .players array if both:
             // the player's team_id matches the team ID
             // the player is not already in the team's .players array
+
             if (player.team_id === currentGame.team1_id && findIDMatch(teamsObject.teamOne.players, player.player_id, "player_id").length === 0) {
+
+                // match existing stats to player
+                for (let statline of stats) {
+                    if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && (statline.user_id === user.id || statline.uuid === user.pseudonym)) {
+                        player.kills = statline.kills;
+                        player.catches = statline.catches;
+                        player.outs = statline.outs;
+                    }
+                }
+
                 player.kills = player.kills || 0;
                 player.outs = player.outs || 0;
                 player.catches = player.catches || 0;
                 teamsObject.teamOne.players.push(player);
             } else if (player.team_id === currentGame.team2_id && findIDMatch(teamsObject.teamTwo.players, player.player_id, "player_id").length === 0) {
+
+                for (let statline of stats) {
+                    if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && (statline.user_id === user.id || statline.uuid === user.pseudonym)) {
+                        player.kills = statline.kills;
+                        player.catches = statline.catches;
+                        player.outs = statline.outs;
+                    }
+                }
+
                 player.kills = player.kills || 0;
                 player.outs = player.outs || 0;
                 player.catches = player.catches || 0;
@@ -139,6 +161,8 @@ function GameDetail() {
         console.log('player:', player);
         // Send stats to database
         await dispatch({type: 'SEND_STATS', payload: {game, player, user}})
+
+        setTeams(setRosters(game))
     }
 
     const handleScore = (team, increment) => {

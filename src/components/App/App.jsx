@@ -74,6 +74,7 @@ function App() {
     dispatch({ type: "FETCH_TEAMS" });
     dispatch({ type: "FETCH_TOURNAMENTS" });
     dispatch({ type: 'FETCH_GAMES' });
+    dispatch({ type: "FETCH_STATS"})
   }, [])
 
   return (
