@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 
 // Style components
 import Box from '@mui/material/Box';
@@ -38,7 +38,7 @@ export default function CreateTournament() {
     {teamName: "Lions", teamID: 1},
     {teamName: "Tigers", teamID: 2},
     {teamName: "Bears", teamID: 3},
-    {teamName: "Falcons", teamID: 4},
+    {teamName: "Falcons", teamID: 4}
   ]
 
   const handleSubmit = (event) => {
