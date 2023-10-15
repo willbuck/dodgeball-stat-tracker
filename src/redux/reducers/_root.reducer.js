@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   tournamentsReducer,
   gamesReducer,
   selectedTournamentReducer,
-
+  stats,
   leaderboardReducer,
   teamLeaderboardReducer,
   searchTeamLeaderboardReducer,

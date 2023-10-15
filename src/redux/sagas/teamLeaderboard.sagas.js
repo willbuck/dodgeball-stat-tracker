@@ -2,7 +2,7 @@ import { takeLatest, put} from "redux-saga/effects";
 import axios from 'axios'
 
 function* teamLeaderboard(){
-    //This variable will store the results 
+    // This variable will store the results 
     // from the axios GET, 
     // all teams from a given tournament 
 

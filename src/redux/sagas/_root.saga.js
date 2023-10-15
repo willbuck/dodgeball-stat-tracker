@@ -42,7 +42,7 @@ export default function* rootSaga() {
     fetchLeaderboardSaga(),
     teamLeaderboardSaga(),
     searchTeamLeaderboardSaga(),
-    
+    statsSaga(),
     teamsSaga(),
     playersSaga(),
 

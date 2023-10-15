@@ -18,10 +18,10 @@ const leaderboardRouter = require('./routes/leaderboard.router');
 const teamLeaderboardRouter = require('./routes/teamLeaderboard.router');
 const searchTeamLeaderboardRouter = require('./routes/searchTeamLeaderboard.router');
 const killRouter = require('./routes/kill.router')
-const teamsRouter = require('./routes/teams.router')
+const teamsRouter = require('./routes/teams.router');
 const manageUsersRouter = require('./routes/manageUsers.router');
 const allPlayersRouter = require('./routes/allPlayers.router')
-
+const statsRouter = require('./routes/stats.router');
 
 
 // do we need these???
@@ -47,7 +47,7 @@ app.use('/api/tournament', tournamentRouter);
 // why is this playersRouter?  is it only for specific games?
 app.use('/api/players', playersRouter);
 app.use('/api/games', gamesRouter);
-
+app.use('/api/stats', statsRouter);
 app.use('/api/leaderboard', leaderboardRouter);
 app.use('/api/allTeams', teamLeaderboardRouter);
 app.use('/api/searchTeam', searchTeamLeaderboardRouter);
