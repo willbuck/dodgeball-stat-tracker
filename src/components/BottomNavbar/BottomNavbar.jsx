@@ -1,12 +1,20 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
+// Bottom Navbar Imports
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Paper from '@mui/material/Paper';
+import MenuIcon from '@mui/icons-material/Menu';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+// import RestoreIcon from '@mui/icons-material/Restore';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
+// import ArchiveIcon from '@mui/icons-material/Archive';
+// import HomeIcon from '@mui/icons-material/Home';
+// import CssBaseline from '@mui/material/CssBaseline';
 
-import LogOutButton from '../Login-Register/Login/LogOutButton';
-
-
-// MUI Imports
+// Sidebar Imports
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -22,20 +30,32 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import GroupsIcon from '@mui/icons-material/Groups';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import MenuIcon from '@mui/icons-material/Menu';
-// import Badge from '@mui/icons-material/Badge';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
-// import Button from '@mui/material/Button';
-// import BasicSpeedDial from './BasicSpeedDial';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+import LogOutButton from '../Login-Register/Login/LogOutButton';
 
 
-export default function Sidebar() {
+
+
+
+export default function BottomNavbar() {
+    const [value, setValue] = useState(0);
+    // const ref = React.useRef < HTMLDivElement > (null);
+    // const [messages, setMessages] = React.useState(() => refreshMessages());
+
+    // React.useEffect(() => {
+    //     (ref.current as HTMLDivElement).ownerDocument.body.scrollTop = 0;
+    //     setMessages(refreshMessages());
+    // }, [value, setMessages]);
+
+
+
+    // Sidebar functions
     const history = useHistory();
 
     const user = useSelector(store => store.user);
 
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         right: false,
     });
 
@@ -98,8 +118,11 @@ export default function Sidebar() {
             </ListItem>
             <List>
 
+
                 {/* Conditionally Renders Admin Links */}
             </List>
+
+            {/* Team Captain Level Privileges */}
             {user.auth_level === 3 && (
                 <>
                     <Divider />
@@ -115,6 +138,8 @@ export default function Sidebar() {
                     </List>
                 </>
             )}
+
+            {/* Tournament Admin Level Privileges */}
             {user.auth_level === 4 && (
                 <>
                     <Divider />
@@ -130,6 +155,8 @@ export default function Sidebar() {
                     </List>
                 </>
             )}
+
+            {/* Full Admin Level Privileges */}
             {user.auth_level === 5 && (
                 <>
                     <Divider />
@@ -162,11 +189,6 @@ export default function Sidebar() {
                                 <BadgeIcon /><ListItemText primary="Manage Users" />
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key="link5" disablePadding>
-                            <ListItemButton onClick={() => history.push('/admin/manage-players')}>
-                                <ListItemText primary="Manage Players" />
-                            </ListItemButton>
-                        </ListItem>
                     </List>
                 </>
             )}
@@ -176,41 +198,41 @@ export default function Sidebar() {
 
 
     return (
-        <div>
+        <>
             {(['']).map((anchor) => (
-                <React.Fragment key={anchor}>
-                    {/* <Box
-                        sx={{
-                            zIndex: 1,
-                            width: 60,
-                            height: 60,
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            position: 'fixed',
-                            bottom: 125,
-                            right: 16,
-                            backgroundColor: 'primary.main',
-                            color: 'common.white',
-                            boxShadow: 3,
-                            '&:active': {
-                                backgroundColor: 'primary.dark',
-                            },
+                <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+                    <BottomNavigation
+
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
                         }}
-                        onClick={toggleDrawer(anchor, true)}
                     >
-                        <MenuIcon />
-                    </Box> */}
-                    <Drawer
-                        anchor='right'
-                        open={state[anchor]}
-                        onClose={toggleDrawer(anchor, false)}
-                    >
-                        {list(anchor)}
-                    </Drawer>
-                </React.Fragment>
+                        <BottomNavigationAction 
+                          component="button"  
+                          icon={<ArrowBackIcon />}
+                          onClick={() => history.goBack()} />
+                        <BottomNavigationAction component={Link} to="/home" icon={<HomeIcon />} />
+                        <BottomNavigationAction
+                            onClick={toggleDrawer(anchor, true)}
+                            icon={<MenuIcon />} />
+                    </BottomNavigation>
+                </Paper>
             ))}
-        </div>
+
+            <div>
+                {(['']).map((anchor) => (
+                    <React.Fragment key={anchor}>
+                        <Drawer
+                            anchor='right'
+                            open={state[anchor]}
+                            onClose={toggleDrawer(anchor, false)}
+                        >
+                            {list(anchor)}
+                        </Drawer>
+                    </React.Fragment>
+                ))}
+            </div>
+        </>
     );
 }

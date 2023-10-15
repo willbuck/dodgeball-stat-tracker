@@ -29,13 +29,9 @@ import ManageTeams from '../Admin/ManageTeams'
 import ManageUsers from "../Admin/ManageUsers";
 import ManagePlayers from '../Admin/ManagePlayers'
 
-
+import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
-
-import Sidebar from "../Sidebar/Sidebar"
-
-
 
 // Unique identifiers for anonymous users
 import { v5 as uuidv5 } from 'uuid';
@@ -80,7 +76,6 @@ function App() {
     <Router>
       <div>
         <Header />
-        <Sidebar />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -162,7 +157,7 @@ function App() {
           </Route>
 
           <Route exact path="/home">
-              <Home />
+            <Home />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
@@ -170,6 +165,7 @@ function App() {
             <h1>404</h1>
           </Route>
         </Switch>
+        <BottomNavbar />
         <Footer />
       </div>
     </Router>

@@ -10,6 +10,9 @@ import ArchiveIcon from '@mui/icons-material/Archive';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
 
 
 export default function ManageUsers() {
@@ -84,15 +87,15 @@ export default function ManageUsers() {
                                     onClose={handleClose}
                                 >
                                     <MenuItem onClick={() => { handleClose(); handleCaptain(anchorEl.value); }} disableRipple>
-                                        <EditIcon />
+                                        <StarOutlineIcon />
                                         Make Team Captain
                                     </MenuItem>
                                     <MenuItem onClick={() => { handleClose(); handleAdmin(anchorEl.value); }} disableRipple>
-                                        <FileCopyIcon />
+                                        <StarHalfIcon />
                                         Make Tournament Admin
                                     </MenuItem>
                                     <MenuItem onClick={() => { handleClose(); handleSiteAdmin(anchorEl.value); }} disableRipple>
-                                        <ArchiveIcon />
+                                        <AdminPanelSettingsIcon />
                                         Make Site Admin
                                     </MenuItem>
                                 </Menu>

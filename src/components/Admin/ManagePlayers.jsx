@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { IconEdit } from '@tabler/icons-react';
 
 import EditPlayerForm from './EditPlayerForm'
+import AddPlayerForm from './AddPlayerForm';
 
 export default function ManagePlayers() {
 

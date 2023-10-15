@@ -24,6 +24,11 @@ const allPlayersRouter = require('./routes/allPlayers.router')
 
 
 
+// do we need these???
+const addPlayersRouter = require('./routes/addPlayers.router')
+const updatePlayerRouter = require('./routes/updatePlayer.router')
+const modalRouter = require('./routes/modal.router')
+
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,8 +53,15 @@ app.use('/api/allTeams', teamLeaderboardRouter);
 app.use('/api/searchTeam', searchTeamLeaderboardRouter);
 app.use('/api/kill', killRouter);
 app.use('/api/teams', teamsRouter)
+
+app.use('/api/allPlayers', allPlayersRouter);
+app.use('/api/addPlayer', addPlayersRouter);
+app.use('/api/updatePlayer', updatePlayerRouter);
+
+
 app.use('/api/manageUsers', manageUsersRouter);
-app.use('/api/players', allPlayersRouter)
+app.use('/api/admin/modal', modalRouter)
+
 
 
 
