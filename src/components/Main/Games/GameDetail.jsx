@@ -6,6 +6,7 @@ import findIDMatch from '../../../utilities/findIDMatch'
 
 // Components
 import PlayerCard from './PlayerCard';
+import Scoreboard from './Scoreboard';
 
 // MUI Imports
 import Box from '@mui/material/Box';
@@ -156,7 +157,6 @@ function GameDetail() {
         }
         //! The current logic has the below dispatch updating the official game score. We would need a new table for user-specific score reports if we want that to work
         // await dispatch({type: 'UPDATE_GAMES', payload: game});
-        console.log('allGames:', allGames);
         await dispatch({ type: "SET_GAMES", payload: allGames });
     }
 
@@ -214,7 +214,8 @@ function GameDetail() {
                 opacity: [0.9, 0.8, 0.7],
             },
         },
-        'container': {},
+        display: "flex",
+        '.container': {},
         '.game-detail .container': {
             display: "flex",
             justifyContent: "center",
@@ -229,7 +230,11 @@ function GameDetail() {
         '.team-one .team-name': {
             paddingLeft: "10px",
         },
-        ".team-one .team-score": {
+        '.team-two .team-name': {
+            alignSelf: "end",
+            justifySelf: "end",
+        },
+        ".team-score": {
             alignSelf: "center",
             justifySelf: "center"
         },
@@ -243,83 +248,18 @@ function GameDetail() {
 
     return (
         // Main Container Box
+
         <ComponentTheme
             className="game-detail container"
             container
             component={Box} >
 
-            {/* SCOREBOARD */}
-            <Grid
-                className="scoreboard container"
-                container
-                item xs={12} component={Card} >
+            <Scoreboard
+                handleScore={handleScore}
+                teams={teams}
+                teamOneScore={teamOneScore}
+                teamTwoScore={teamTwoScore} />
 
-                {/* TEAM ONE SCORE */}
-                <Grid
-                    className="team-one score container"
-                    container
-                    item xs={5} >
-
-                    <Grid
-                        className="team-one team-name"
-                        item
-                        xs={8}
-                        component={CardContent}>
-                        {teams.teamOne.name}
-                    </Grid>
-
-                    <Grid className="team-one team-score"
-                        item xs={4}
-                        component={CardContent}>
-                        {teamOneScore}
-                    </Grid>
-
-                    <Grid
-                        item xs={6}
-                        component={CardActions} >
-                        <IconButton className="team-one score-button decrease"
-                            onClick={() => handleScore("one", "minus")}>
-                            <RemoveCircleIcon />
-                        </IconButton>
-                    </Grid>
-
-                    <Grid item xs={6} component={CardActions}>
-                        <IconButton className="team-one score-button increase"
-                            onClick={() => handleScore("one", "plus")}>
-                            <AddCircleIcon />
-                        </IconButton>
-                    </Grid>
-                </Grid>
-
-                {/* DASH */}
-                <Grid className="dash container" item xs={2}>
-                    <Typography className="dash content">-</Typography>
-                </Grid>
-
-                {/* TEAM TWO SCORE */}
-                <Grid container item xs={5}>
-                    <Grid item xs={4} component={CardContent} className="team-one team-score" sx={{ alignSelf: "center", justifySelf: "center" }}>
-                        {teamTwoScore}
-                    </Grid>
-                    <Grid item xs={8} component={CardContent} className="team-one team-name" sx={{ paddingLeft: "10px", }}>
-                        {teams.teamTwo.name}
-                    </Grid>
-
-                    <Grid item xs={6} component={CardActions} className="team-two score-button decrease">
-                        <IconButton sx={{ color: '#186BCC' }} onClick={() => handleScore("two", "minus")}>
-                            <RemoveCircleIcon />
-                        </IconButton>
-                    </Grid>
-
-                    <Grid item xs={6} component={CardActions} className="team-two score-button increase">
-                        <IconButton sx={{ color: '#186BCC' }} onClick={() => handleScore("two", "plus")}>
-                            <AddCircleIcon />
-                        </IconButton>
-                    </Grid>
-                </Grid>
-            </Grid>
-
-            {/* Main Container Box For Scrolling */}
 
             {/* Player Card Container */}
             <Grid className="scroll-container"
