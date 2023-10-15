@@ -29,13 +29,9 @@ import ManageTeams from '../Admin/ManageTeams'
 import ManageUsers from "../Admin/ManageUsers";
 import ManagePlayers from '../Admin/ManagePlayers'
 
-
 import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
-
-
-
 
 // Unique identifiers for anonymous users
 import { v4 as uuidv4 } from 'uuid';
@@ -59,17 +55,7 @@ function App() {
     })
   }
 
-  // Fetching global state from database at app load
-  useEffect(() => {
-    // dispatch({ type: 'FETCH_PLAYERS' });
-    dispatch({ type: "FETCH_TEAMS" });
-    dispatch({ type: "FETCH_TOURNAMENTS" });
-    dispatch({ type: 'FETCH_GAMES' });
-  }, [])
-
   // Fetch user
-  //! Question: why do we need to do this any time
-  //! there is a dispatch in the app?
   useEffect(() => {
     dispatch({ type: "FETCH_USER", payload: uniqueID });
 
@@ -81,7 +67,7 @@ function App() {
     dispatch({ type: "FETCH_TEAMS" });
     dispatch({ type: "FETCH_TOURNAMENTS" });
     dispatch({ type: 'FETCH_GAMES' });
-    dispatch({ type: "FETCH_STATS"});
+    dispatch({ type: "FETCH_STATS" });
   }, [])
 
   return (
@@ -135,7 +121,6 @@ function App() {
           >
             <GameDetail />
           </ProtectedRoute>
-
 
           <ProtectedRoute path="/games/:id">
             <TournamentDetails />

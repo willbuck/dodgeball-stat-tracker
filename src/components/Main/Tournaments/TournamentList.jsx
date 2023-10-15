@@ -1,114 +1,100 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2';
-import { useEffect, useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import SearchTournament from './SearchTournament';
 
+// MUI
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Sidebar from '../../Sidebar/Sidebar';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid'
+import Divider from '@mui/material/Divider';
+
 
 export default function TournamentList() {
-
-  const dispatch = useDispatch();
-  const history = useHistory();
-
+  const history = useHistory()
   const tournaments = useSelector((store) => store.tournamentsReducer);
-  const selectedTournament = useSelector((store) => store.selectedTournamentReducer);
-  const selectedTournamentFromArray = tournaments.filter((item) => item.tournament_name === selectedTournament)
 
   const handleClick = (id) => {
+    console.log(id)
     history.push(`/games/${id}`)
   }
 
-  if (selectedTournament == "") {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Sidebar />
-        <Box className="scroll-container"
+  const upcomingTournaments = tournaments.filter(tournament => !tournament.tournament_start_date || new Date(tournament.tournament_start_date) > new Date());
+  const pastTournaments = tournaments.filter(tournament => tournament.tournament_start_date && new Date(tournament.tournament_start_date) <= new Date());
 
-          sx={{
-            width: 255,
-            height: 500,
-            overflowY: "auto",
-            backgroundColor: 'primary.dark',
-            '&:hover': {
-              backgroundColor: 'primary.main',
-              opacity: [0.9, 0.8, 0.7],
-            },
-          }}
-        >
-          <Grid container sx={{ minWidth: 200, display: 'flex', justifyContent: 'center' }}
-            xs={12}
-            columnGap={6}
-            rowGap={2}>
-            {tournaments.map((tournament) => {
-              return (
-                <Card
-                  onClick={() => { handleClick(tournament.id) }}
-                  key={tournament.id}
-                  sx={{ minWidth: 200, maxWidth: 250, display: 'flex', justifyContent: 'center' }}
-                >
-                  <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                      {tournament.date}
-                    </Typography>
-                    <Typography variant='body2' color='text.secondary'>
-                      {tournament.tournament_name} - Location: {tournament.location}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              )
-            })}
+
+  return (
+    <Container>
+      <SearchTournament />
+
+      {/* Upcoming Tournaments */}
+      <Divider sx={{ marginTop: 8 }} />
+      <Typography variant="h5" sx={{ marginLeft: 2 }}>
+        Upcoming Tournaments
+      </Typography>
+
+      <Grid container spacing={3}>
+        {upcomingTournaments.map((tournament) => (
+          <Grid item xs={12} sm={6} md={4} key={tournament.id}>
+            <Card
+              sx={{
+                padding: '20px',
+                margin: '10px',
+                border: '1px solid grey',
+              }}
+              onClick={() => handleClick(tournament.id)}>
+              <CardContent>
+                <Typography variant="h5">
+                  {tournament.tournament_name}
+                </Typography>
+                <Typography variant='body1'>
+                  {tournament.location}
+                </Typography>
+                {/* Render the dates, if available */}
+                <Typography variant='body2'>
+                  {tournament.tournament_start_date ? tournament.tournament_start_date : 'Dates : TBD'}
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
-        </Box>
-      </Box>
-    );
-  } else {
+        ))}
+      </Grid>
 
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Box className="scroll-container"
+      {/* Past Tournaments */}
+      <Divider sx={{ marginTop: 8 }} />
+      <Typography variant="h5" sx={{ marginLeft: 2 }}>
+        Past Tournaments
+      </Typography>
 
-          sx={{
-            width: 255,
-            height: 500,
-            overflowY: "auto",
-            backgroundColor: 'primary.dark',
-            '&:hover': {
-              backgroundColor: 'primary.main',
-              opacity: [0.9, 0.8, 0.7],
-            },
-          }}
-        >
-          <Grid container sx={{ minWidth: 200, display: 'flex', justifyContent: 'center' }}
-            xs={12}
-            columnGap={6}
-            rowGap={2}>
-            {selectedTournamentFromArray.map((tournament) => {
-              return (
-                <Card
-                  onClick={() => { handleClick(tournament.id) }}
-                  key={tournament.id}
-                  sx={{ minWidth: 200, maxWidth: 250, display: 'flex', justifyContent: 'center' }}
-                >
-                  <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                      {tournament.date}
-                    </Typography>
-                    <Typography variant='body2' color='text.secondary'>
-                      {tournament.tournament_name} - Location: {tournament.location}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              )
-            })}
+      <Grid container spacing={3}>
+        {pastTournaments.map((tournament) => (
+          <Grid item xs={12} sm={6} md={4} key={tournament.id}>
+            <Card
+              sx={{
+                padding: '20px',
+                margin: '10px',
+                border: '1px solid grey',
+              }}
+              onClick={() => handleClick(tournament.id)}>
+              <CardContent>
+                <Typography variant="h5">
+                  {tournament.tournament_name}
+                </Typography>
+                <Typography variant='body1'>
+                  {tournament.location}
+                </Typography>
+                {/* Render the dates, if available */}
+                <Typography variant='body2'>
+                  {tournament.tournament_start_date ? tournament.tournament_start_date : 'Dates : TBD'}
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
-        </Box>
-      </Box>
-    );
-
-  }
+        ))}
+      </Grid>
+    </Container>
+  );
 }

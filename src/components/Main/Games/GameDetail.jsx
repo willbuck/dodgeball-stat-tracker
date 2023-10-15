@@ -118,16 +118,6 @@ function GameDetail() {
     }
 
 
-    // Function to get each team's score
-    const getRemainingPlayers = (teams) => {
-        const teamOneStats = getTeamStats(teams.teamOne.players);
-        const teamTwoStats = getTeamStats(teams.teamTwo.players);
-
-        // setTeamOneScore(teamOneStats.kills + teamOneStats.catches - teamOneStats.outs - teamTwoStats.catches);
-        // setTeamTwoScore(teamTwoStats.kills + teamTwoStats.catches - teamTwoStats.outs - teamOneStats.catches);
-
-    }
-
     //! User should have decrement option
     // Handler function for stat tracking
     const handleStat = async (stat, player) => {
@@ -157,9 +147,7 @@ function GameDetail() {
 
         // Updating state
         await setTeams(teamsCopy);
-        await getRemainingPlayers(teams);
 
-        console.log('player:', player);
         // Send stats to database
         await dispatch({type: 'SEND_STATS', payload: {game, player, user}})
 
@@ -167,7 +155,6 @@ function GameDetail() {
     }
 
     const updateScore = async (team, score) => {
-
         for (let aGame of allGames) {
             if (game.game_id === aGame.game_id) {
 
@@ -180,7 +167,7 @@ function GameDetail() {
                 }
             }
         }
-        //! The current logic has the below dispatch updating the official game score. We need a new table for user-specific scores if we want that to work
+        //! The current logic has the below dispatch updating the official game score. We would need a new table for user-specific score reports if we want that to work
         // await dispatch({type: 'UPDATE_GAMES', payload: game});
         console.log('allGames:', allGames);
         await dispatch({type: "SET_GAMES", payload: allGames});

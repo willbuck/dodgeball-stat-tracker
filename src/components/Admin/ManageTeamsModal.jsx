@@ -20,7 +20,7 @@ const style = {
 };
 
 export default function ManageTeamsModal() {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,7 +36,7 @@ export default function ManageTeamsModal() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_TOURNAMENTS' })
-}, [])
+  }, [])
 
   return (
     <div>
@@ -47,14 +47,22 @@ export default function ManageTeamsModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}> 
+        <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-          {tournament.map((tournament) => {
+            {tournament.map((tournament) => {
               return (
                 <Card
-                onClick={() => { handleAdd(tournament.id) }}
+                  onClick={() => { handleAdd(tournament.id) }}
                   key={tournament.id}
-                  sx={{ minWidth: 200, maxWidth: 250, display: 'flex', justifyContent: 'center' }}
+                  sx={{
+                    minWidth: 200,
+                    margin: '8px',
+                    border: '1px solid grey',
+                    // boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    maxWidth: 250,
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
                 >
                   <CardContent>
                     <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
