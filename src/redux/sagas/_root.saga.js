@@ -6,13 +6,20 @@ import tournamentSaga from './tournaments.saga';
 import teamsSaga from './teams.saga'
 import playersSaga from './players.saga';
 import gamesSaga from './games.saga';
-import statsSaga from './stats.saga';
+import addPlayerSaga from './addPlayer.saga';import statsSaga from './stats.saga';
 
 
 import fetchLeaderboardSaga from './leaderboard.saga';
 import teamLeaderboardSaga from './teamLeaderboard.sagas';
 import searchTeamLeaderboardSaga from './searchTeamLeaderboard.saga';
+
+import updatePlayerSaga from './updatePlayeer.saga';
+import managePlayersSaga from './managePlayer.saga';
+
 import manageUserSaga from './manageUser.saga';
+import modalSaga from './modal.saga';
+import addTeamTounament from './addTeamTournament.saga';
+
 
 
 
@@ -37,7 +44,14 @@ export default function* rootSaga() {
     statsSaga(),
     teamsSaga(),
     playersSaga(),
+
+    addPlayerSaga(),
+    updatePlayerSaga(),
+    managePlayersSaga(),
+    
     manageUserSaga(),
+    modalSaga(),
+    addTeamTounament(),
     
 
   ]);

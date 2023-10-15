@@ -1,9 +1,9 @@
 import { takeLatest, put } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* fetchPlayers(action) {
+function* getPlayers() {
     try {
-        const players = yield axios.get(`api/players`);
+        const players = yield axios.get('/api/allPlayers');
         yield put({
             type: 'SET_PLAYERS',
             payload: players.data
@@ -13,7 +13,7 @@ function* fetchPlayers(action) {
     }
 }
 
-function* playersSaga() {
-    yield takeLatest('FETCH_PLAYERS', fetchPlayers);
+function* managePlayersSaga() {
+    yield takeLatest('GET_PLAYER', getPlayers);
 }
-export default playersSaga;
+export default managePlayersSaga;

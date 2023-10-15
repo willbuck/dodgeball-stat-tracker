@@ -4,7 +4,7 @@ import axios from 'axios';
 //This saga is to get all the games in the specific tournament 
 // detailsTournaments = the fetch games from specific tournament
 function* fetchGames(action){
-    const gamesResponse = yield axios.get(`/api/games/${action.payload}`);
+    const gamesResponse = yield axios.get(`api/games/`);
 
     // Storing the data in a global store
     yield put({

@@ -30,7 +30,7 @@ function Header() {
             currentTitle = 'Create Tournament';
             break;
         case location.pathname.startsWith('/admin/manage-tournament'):
-            currentTitle = 'Manage Tournament';
+            currentTitle = 'Manage Tournaments';
             break;
         case location.pathname.startsWith('/tournamentDetails'):
             currentTitle = 'Tournament Details';
@@ -40,6 +40,9 @@ function Header() {
             break;
         case location.pathname.startsWith('/admin/manage-teams'):
             currentTitle = 'Manage Teams';
+            break;
+        case location.pathname.startsWith('/admin/manage-users'):
+            currentTitle = 'Manage Users';
             break;
         case location.pathname.startsWith('/home'):
             currentTitle = 'Home';
