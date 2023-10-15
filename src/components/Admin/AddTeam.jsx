@@ -132,6 +132,8 @@ export default function AddTeam() {
 
       <Container sx={{ marginTop: 7 }}>
 
+        <Typography variant="h5">Teams:</Typography>
+
         {/* Search for specific team */}
         <Stack spacing={2} sx={{ width: 300 }}>
           <Autocomplete

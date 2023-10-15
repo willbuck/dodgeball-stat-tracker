@@ -179,17 +179,15 @@ export default function ManageTournaments() {
           {allTournaments.map((tournament) => (
 
             // Maps Cards of Tournaments
-            <Grid item xs={12} sm={6} md={4} >
+            <Grid item xs={12} sm={6} md={4} key={tournament.id}>
 
               {/* Renders Card for Tournament*/}
-              <Card
-                key={tournament.id}
-                sx={{
-                  padding: '20px',
-                  margin: '10px',
-                  border: '1px solid grey',
-                  marginBottom: 2,
-                }}>
+              <Card sx={{
+                padding: '20px',
+                margin: '10px',
+                border: '1px solid grey',
+                marginBottom: 2,
+              }}>
                 <Box display="flex" justifyContent="space-between">
                   <CardContent>
                     <Typography variant="h5">{tournament.tournament_name}</Typography>
