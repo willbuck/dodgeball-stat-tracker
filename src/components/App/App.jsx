@@ -46,14 +46,15 @@ function App() {
   const user = useSelector((store) => store.user);
 
   // Creating unique user ID
+  //! check for existing uuid before creating this?
   const uniqueID = {
     // Generating UUID from DNS namespace
     uuid: uuidv4('usa_dodgeball', uuidv4.DNS),
 
     // Generating pseudonym for easier readability
     pseudonym: uniqueNamesGenerator({
-      dictionaries: [adjectives, colors, animals],
-      length: 3,
+      dictionaries: [colors, animals],
+      length: 2,
       seed: uuidv4('usa_dodgeball', uuidv4.DNS)
     })
   }
@@ -74,7 +75,7 @@ function App() {
     dispatch({ type: "FETCH_TEAMS" });
     dispatch({ type: "FETCH_TOURNAMENTS" });
     dispatch({ type: 'FETCH_GAMES' });
-    dispatch({ type: "FETCH_STATS"})
+    dispatch({ type: "FETCH_STATS"});
   }, [])
 
   return (

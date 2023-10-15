@@ -28,7 +28,8 @@ function GameDetail() {
     console.log('allGames:', allGames)
     const stats = useSelector(store => store.stats);
     const user = useSelector(store => store.user);
-
+    console.log('user:', user);
+    
     // Getting information for current game
     const game = findIDMatch(allGames, gameID, 'game_id', false)
 
@@ -179,7 +180,10 @@ function GameDetail() {
                 }
             }
         }
-        dispatch({type: 'UPDATE_GAMES', payload: allGames});
+        //! The current logic has the below dispatch updating the official game score. We need a new table for user-specific scores if we want that to work
+        // await dispatch({type: 'UPDATE_GAMES', payload: game});
+        console.log('allGames:', allGames);
+        await dispatch({type: "SET_GAMES", payload: allGames});
     }
 
     const handleScore = async (team, increment) => {
