@@ -46,7 +46,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/challonge', challongeRouter);
 app.use('/api/tournament', tournamentRouter);
-// why is this playersRouter?  is it only for specific games?
+
 app.use('/api/players', playersRouter);
 app.use('/api/games', gamesRouter);
 app.use('/api/stats', statsRouter);
