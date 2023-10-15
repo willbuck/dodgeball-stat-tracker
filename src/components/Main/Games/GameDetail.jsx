@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";
-import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import findIDMatch from '../../../utilities/findIDMatch'
 
 // MUI Imports
@@ -25,11 +25,10 @@ function GameDetail() {
 
     const allPlayers = useSelector((store) => store.playersReducer);
     const allGames = useSelector((store) => store.gamesReducer);
-    console.log('allGames:', allGames)
+
     const stats = useSelector(store => store.stats);
     const user = useSelector(store => store.user);
-    console.log('user:', user);
-    
+
     // Getting information for current game
     const game = findIDMatch(allGames, gameID, 'game_id', false)
 
@@ -125,7 +124,6 @@ function GameDetail() {
 
         // setTeamOneScore(teamOneStats.kills + teamOneStats.catches - teamOneStats.outs - teamTwoStats.catches);
         // setTeamTwoScore(teamTwoStats.kills + teamTwoStats.catches - teamTwoStats.outs - teamOneStats.catches);
-
     }
 
     //! User should have decrement option
