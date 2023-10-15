@@ -228,50 +228,61 @@ export default function AddTeam() {
           <Divider sx={{ marginTop: 4 }} />
           <Typography variant="h5" sx={{ marginLeft: 3 }}>Unassigned Teams:</Typography>
           <Grid container spacing={3} sx={{ marginBottom: 8 }}>
-            {unassignedTeams.map((team) => (
-              <Grid item xs={12} sm={6} md={4} key={team.id}>
-                <Card sx={{
-                  padding: '20px',
-                  margin: '10px',
-                  border: '1px solid grey',
-                }}>
-                  <Badge badgeContent="" sx={{ color: team.jersey_color }}>
-                    <IconShirtFilled />
-                  </Badge>
-                  <Box display="flex" justifyContent="space-between">
-                    <Typography variant="h5">
-                      {team.team_name}
-                    </Typography>
-                    <Button
-                      value={team.id}
-                      onClick={handleClick}>
-                      <Box display="flex" gap={1}>
-                        <EditIcon size={30} />
-                        <Typography>Edit</Typography>
+            {/* Conditionally Render None if none upcoming */}
+            {
+              unassignedTeams.length === 0 ? (
+                <Grid item xs={12} sm={6} md={4}>
+                  <Typography color='primary' variant="h5" sx={{ marginLeft: 9 }} fontWeight={600}>
+                    None
+                  </Typography>
+                </Grid>
+
+
+              ) : (
+                unassignedTeams.map((team) => (
+                  <Grid item xs={12} sm={6} md={4} key={team.id}>
+                    <Card sx={{
+                      padding: '20px',
+                      margin: '10px',
+                      border: '1px solid grey',
+                    }}>
+                      <Badge badgeContent="" sx={{ color: team.jersey_color }}>
+                        <IconShirtFilled />
+                      </Badge>
+                      <Box display="flex" justifyContent="space-between">
+                        <Typography variant="h5">
+                          {team.team_name}
+                        </Typography>
+                        <Button
+                          value={team.id}
+                          onClick={handleClick}>
+                          <Box display="flex" gap={1}>
+                            <EditIcon size={30} />
+                            <Typography>Edit</Typography>
+                          </Box>
+                        </Button>
+                        <Menu
+                          id="demo-customized-menu"
+                          MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                          }}
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                        >
+                          <MenuItem onClick={() => handleLocation(anchorEl.value)} disableRipple>
+                            <EditLocationAltIcon />
+                            <ManageTeamsModal />
+                          </MenuItem>
+                          <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
+                            <IconTrash />
+                            Delete Team
+                          </MenuItem>
+                        </Menu>
                       </Box>
-                    </Button>
-                    <Menu
-                      id="demo-customized-menu"
-                      MenuListProps={{
-                        'aria-labelledby': 'demo-customized-button',
-                      }}
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                    >
-                      <MenuItem onClick={() => handleLocation(anchorEl.value)} disableRipple>
-                        <EditLocationAltIcon />
-                        <ManageTeamsModal />
-                      </MenuItem>
-                      <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
-                        <IconTrash />
-                        Delete Team
-                      </MenuItem>
-                    </Menu>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
+                    </Card>
+                  </Grid>
+                )))}
           </Grid>
 
 
