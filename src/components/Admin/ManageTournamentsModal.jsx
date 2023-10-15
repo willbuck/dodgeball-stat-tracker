@@ -26,10 +26,12 @@ const style = {
     p: 4,
 };
 
-export default function ManageTournamentsModal(tournamentID) {
+export default function ManageTournamentsModal(tournamentId) {
     const dispatch = useDispatch()
 
     const allUsers = useSelector((store) => store.manageUsersReducer)
+    const allTournaments = useSelector((store) => store.tournamentsReducer)
+
     const organizerCandidates = allUsers.filter(user => user.auth_level === 4 || user.auth_level === 5);
     // console.log('all users:', allUsers);
 
@@ -43,15 +45,20 @@ export default function ManageTournamentsModal(tournamentID) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const tournamentSelected = allTournaments.find((tournament) => tournament.id === tournamentId.tournamentId);
+    console.log('tournamentID:', tournamentId);
+
+
     // Input Fields' States
-    const [name, setName] = useState('');
-    const [startDate, setStartDate] = useState(null);
-    const [ballType, setBallType] = useState('');
-    const [location, setLocation] = useState('');
-    const [courts, setCourts] = useState('');
-    const [organizer, setOrganizer] = useState('')
-    const [description, setDescription] = useState('')
-    const id = tournamentID.tournamentID;
+    const [name, setName] = useState(tournamentSelected.tournament_name);
+    const [startDate, setStartDate] = useState(tournamentSelected.start_date);
+    const [ballType, setBallType] = useState(tournamentSelected.ball_type);
+    const [location, setLocation] = useState(tournamentSelected.location);
+    const [courts, setCourts] = useState(tournamentSelected.courts);
+    const [organizer, setOrganizer] = useState(tournamentSelected.tournament_organizer)
+    const [description, setDescription] = useState(tournamentSelected.description)
+    const id = tournamentSelected.id;
+    console.log('id is', id, 'tournament name is', name);
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -72,6 +79,7 @@ export default function ManageTournamentsModal(tournamentID) {
 
         // Dispatching info to Tournament saga
         dispatch({ type: 'EDIT_TOURNAMENT', payload: tournamentEditData })
+        handleClose();
     }
 
 
@@ -92,6 +100,7 @@ export default function ManageTournamentsModal(tournamentID) {
                             <TextField
                                 required
                                 placeholder="Tournament Name"
+                                value={name}
                                 onChange={(event) => setName(event.target.value)}
                             />
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Box, Card, Typography, Grid, Container, Badge, } from '@mui/material';
+import { Button, Box, Card, Typography, Grid, CardHeader, Container, Badge, } from '@mui/material';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,6 +12,10 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
+import EditIcon from '@mui/icons-material/Edit';
+import Avatar from '@mui/material/Avatar';
+
+
 // import EditIcon from '@mui/icons-material/Edit';
 // import ArchiveIcon from '@mui/icons-material/Archive';
 // import FileCopyIcon from '@mui/icons-material/FileCopy';
@@ -94,33 +98,27 @@ export default function ManageUsers() {
 
             {selectedUser ? (
                 // Display selected user
-                <Card sx={{ padding: '20px', margin: '10px', border: '1px solid grey' }}>
+                <Card sx={{ width: '40%', padding: '20px', margin: '10px', border: '1px solid grey' }}>
                     <Box>
-                        <Box>
-                            <Typography variant="h5">
-                                {selectedUser.username}
-                            </Typography>
-                        </Box>
-
-                        <Box>
-                            <Typography variant="body3">
-                                Email: {selectedUser.email}
-                            </Typography>
-                        </Box>
-
+                        <CardHeader
+                            avatar={<Avatar src={selectedUser.avatarUrl} />}
+                            title={selectedUser.username}
+                            subheader={`Email: ${selectedUser.email}`}
+                            sx={{ '& .MuiTypography-root': { fontSize: '1rem' } }}
+                        />
+                        <Divider />
                         <Button
-                            id="demo-customized-button"
-                            value={selectedUser.id}
-                            aria-controls={open ? 'demo-customized-menu' : undefined}
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
-                            variant="contained"
-                            disableElevation
                             onClick={handleClick}
-                            endIcon={<KeyboardArrowDownIcon />}
+                            value={selectedUser.id}
                         >
-                            <MilitaryTechIcon sx={{ fontSize: 30 }} />
-                            Promote
+                            <Box display="flex" gap={1}>
+                                <EditIcon size={24} />
+                                <Typography>Edit Privileges</Typography>
+                            </Box>
                         </Button>
                         <Menu
                             id="demo-customized-menu"
@@ -190,31 +188,27 @@ export default function ManageUsers() {
                                 <Grid item xs={12} sm={6} md={4} key={user.id}>
                                     <Card sx={{ padding: '20px', margin: '10px', border: '1px solid grey' }}>
                                         <Box>
-                                            <Box>
-                                                <Typography variant="h5">
-                                                    {user.username}
-                                                </Typography>
-                                            </Box>
-
-                                            <Box>
-                                                <Typography variant="body3">
-                                                    Email: {user.email}
-                                                </Typography>
-                                            </Box>
+                                            <CardHeader
+                                                avatar={<Avatar src={user.avatarUrl} />}
+                                                title={user.username}
+                                                subheader={`Email: ${user.email}`}
+                                                sx={{ '& .MuiTypography-root': { fontSize: '1rem' } }}
+                                            />
+                                            <Divider />
                                             <Button
-                                                id="demo-customized-button"
-                                                value={user.id}
-                                                aria-controls={open ? 'demo-customized-menu' : undefined}
+                                                id="basic-button"
+                                                aria-controls={open ? 'basic-menu' : undefined}
                                                 aria-haspopup="true"
                                                 aria-expanded={open ? 'true' : undefined}
-                                                variant="contained"
-                                                disableElevation
                                                 onClick={handleClick}
-                                                endIcon={<KeyboardArrowDownIcon />}
+                                                value={user.id}
                                             >
-                                                <MilitaryTechIcon sx={{ fontSize: 30 }} />
-                                                Promote
+                                                <Box display="flex" gap={1}>
+                                                    <EditIcon size={24} />
+                                                    <Typography>Edit Privileges</Typography>
+                                                </Box>
                                             </Button>
+
                                             <Menu
                                                 id="demo-customized-menu"
                                                 MenuListProps={{
@@ -270,8 +264,9 @@ export default function ManageUsers() {
                         )}
                     </Grid>
                 </Box>
-            ))}
+            ))
+            }
 
-        </Container>
+        </Container >
     )
 }
