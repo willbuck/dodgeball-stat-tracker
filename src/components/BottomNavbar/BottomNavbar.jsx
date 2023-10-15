@@ -199,7 +199,7 @@ export default function BottomNavbar() {
     return (
         <>
             {(['']).map((anchor) => (
-                <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+                <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3} key={anchor}>
                     <BottomNavigation
                         showLabels
                         value={value}
