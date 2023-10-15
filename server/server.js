@@ -18,18 +18,16 @@ const leaderboardRouter = require('./routes/leaderboard.router');
 const teamLeaderboardRouter = require('./routes/teamLeaderboard.router');
 const searchTeamLeaderboardRouter = require('./routes/searchTeamLeaderboard.router');
 const killRouter = require('./routes/kill.router')
-const statsRouter = require('./routes/stats.router');
 const teamsRouter = require('./routes/teams.router');
-
-const allPlayersRouter = require('./routes/allPlayers.router');
-const addPlayersRouter = require('./routes/addPlayers.router');
-const updatePlayerRouter = require('./routes/updatePlayer.router');
-
 const manageUsersRouter = require('./routes/manageUsers.router');
+const allPlayersRouter = require('./routes/allPlayers.router')
+const statsRouter = require('./routes/stats.router');
+
+
+// do we need these???
+const addPlayersRouter = require('./routes/addPlayers.router')
+const updatePlayerRouter = require('./routes/updatePlayer.router')
 const modalRouter = require('./routes/modal.router')
-
-
-
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -46,7 +44,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/challonge', challongeRouter);
 app.use('/api/tournament', tournamentRouter);
-
+// why is this playersRouter?  is it only for specific games?
 app.use('/api/players', playersRouter);
 app.use('/api/games', gamesRouter);
 app.use('/api/stats', statsRouter);
@@ -59,6 +57,7 @@ app.use('/api/teams', teamsRouter)
 app.use('/api/allPlayers', allPlayersRouter);
 app.use('/api/addPlayer', addPlayersRouter);
 app.use('/api/updatePlayer', updatePlayerRouter);
+
 
 app.use('/api/manageUsers', manageUsersRouter);
 app.use('/api/admin/modal', modalRouter)

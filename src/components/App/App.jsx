@@ -55,6 +55,8 @@ function App() {
     })
   }
 
+  
+
   // Fetch user
   useEffect(() => {
     dispatch({ type: "FETCH_USER", payload: uniqueID });
