@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 // import LogOutButton from '../LogOutButton/LogOutButton';
 
 // MUI Components
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import IconButton from '@mui/material/IconButton';
+// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+// import IconButton from '@mui/material/IconButton';
 // import { Height } from '@mui/icons-material';
 
 function Header() {
@@ -62,6 +62,9 @@ function Header() {
         case location.pathname.startsWith('/about'):
             currentTitle = 'About';
             break;
+        case location.pathname.startsWith('/leaderboard'):
+            currentTitle = 'Leaderboard';
+            break;
         default:
             currentTitle = 'Page Not Found';
     }
@@ -76,11 +79,12 @@ function Header() {
                 />
             </Link>
 
-            {location.pathname !== '/home' && (
+            {/* Depracated And Moved to Bottom Navbar */}
+            {/* {location.pathname !== '/home' && (
                 <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
                     <ArrowBackIcon />
                 </IconButton>
-            )}
+            )} */}
 
             <div>
                 <h2 className="header-title">{currentTitle}</h2>

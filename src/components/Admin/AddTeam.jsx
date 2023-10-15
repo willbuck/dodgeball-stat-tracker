@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Container, TextField, Typography, Stack, Button } from '@mui/material'
+import { Container, TextField, Typography, Stack, Button, Card } from '@mui/material'
 
 export default function AddTeam() {
   const dispatch = useDispatch();
@@ -29,30 +29,32 @@ export default function AddTeam() {
   // send selected teams and bundle up a participants array
 
   return (
-    <Container component='form' onSubmit={handleSubmit}>
-      <Stack spacing={2}>
-        <Typography variant="h4">{teamName}</Typography>
+    <Card sx={{ padding: '20px', margin: '10px', }}>
+      <Container component='form' onSubmit={handleSubmit}>
+        <Stack spacing={2}>
+          <Typography variant="h4">{teamName}</Typography>
 
-        <TextField
-          required
-          label="Team Name"
-          placeholder="Team Name"
-          onChange={(event) => setTeamName(event.target.value)}
-          value={teamName}
-        ></TextField>
+          <TextField
+            required
+            label="Team Name"
+            placeholder="Team Name"
+            onChange={(event) => setTeamName(event.target.value)}
+            value={teamName}
+          ></TextField>
 
-<TextField
-          label="Team Color"
-          placeholder="Team Color"
-          onChange={(event) => setTeamColor(event.target.value)}
-          value={teamColor}
-        ></TextField>
+          <TextField
+            label="Team Color"
+            placeholder="Team Color"
+            onChange={(event) => setTeamColor(event.target.value)}
+            value={teamColor}
+          ></TextField>
 
-        <Button
-          type="submit"
-          variant="contained"
-        >Submit</Button>
-      </Stack>
-    </Container>
+          <Button
+            type="submit"
+            variant="contained"
+          >Submit</Button>
+        </Stack>
+      </Container>
+    </Card>
   );
 }

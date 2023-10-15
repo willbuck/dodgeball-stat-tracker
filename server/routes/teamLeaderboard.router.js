@@ -8,7 +8,7 @@ router.get('/:id', (req,res) => {
     console.log('params:', req.params)
     
     const queryText = `SELECT * FROM participants
-    WHERE tournament_id = $1;`
+    WHERE tournament_url = $1;`
 
     const queryParams = [tournamentId]
 

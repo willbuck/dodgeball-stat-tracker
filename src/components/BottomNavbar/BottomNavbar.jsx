@@ -7,7 +7,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+// import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 // import RestoreIcon from '@mui/icons-material/Restore';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 // import ArchiveIcon from '@mui/icons-material/Archive';
@@ -31,6 +31,8 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import GroupsIcon from '@mui/icons-material/Groups';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 
 import LogOutButton from '../Login-Register/Login/LogOutButton';
 
@@ -99,11 +101,12 @@ export default function BottomNavbar() {
                 </ListItem>
             )}
 
+
             {/* If a user is logged in, show these links */}
             {user.id && (
                 <ListItem key="logout" >
-                    <ListItemButton>
-                        <LogOutButton
+                    <ListItemButton sx={{ marginLeft: 3 }}>
+                        <LogoutIcon /><LogOutButton
                             className="navLink"
                             onClick={() => history.push('/home')}
                         />
@@ -113,7 +116,7 @@ export default function BottomNavbar() {
             <Divider />
             <ListItem key="Home" >
                 <ListItemButton onClick={() => history.push('/home')}>
-                    <HomeIcon /><ListItemText primary="Home" />
+                    <HomeIcon sx={{ marginRight: 1, marginLeft: 3 }} /><ListItemText primary="Home" />
                 </ListItemButton>
             </ListItem>
             <List>
@@ -122,17 +125,17 @@ export default function BottomNavbar() {
                 {/* Conditionally Renders Admin Links */}
             </List>
 
+            <Divider />
             {/* Team Captain Level Privileges */}
             {user.auth_level === 3 && (
                 <>
-                    <Divider />
                     <ListItem disablePadding>
-                        <ListItemText primary="Team Captain" />
+                        <ListItemText sx={{ marginLeft: 1.5 }} primary="Team Captain" />
                     </ListItem>
                     <List>
                         <ListItem key="link1" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin//admin/manage-teams')}>
-                                <GroupsIcon /><ListItemText primary="Manage Team" />
+                                <GroupsIcon sx={{ marginRight: 1 }} /><ListItemText primary="Manage Team" />
                             </ListItemButton>
                         </ListItem>
                     </List>
@@ -142,14 +145,13 @@ export default function BottomNavbar() {
             {/* Tournament Admin Level Privileges */}
             {user.auth_level === 4 && (
                 <>
-                    <Divider />
                     <ListItem disablePadding>
-                        <ListItemText primary="Tournament Admin" />
+                        <ListItemText sx={{ marginLeft: 1.5 }} primary="Tournament Admin" />
                     </ListItem>
                     <List>
                         <ListItem key="link1" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/manage-tournaments')}>
-                                <EditNoteIcon /><ListItemText primary="Manage Tournaments" />
+                                <EditNoteIcon sx={{ marginRight: 1 }} /><ListItemText primary="Manage Tournaments" />
                             </ListItemButton>
                         </ListItem>
                     </List>
@@ -159,34 +161,33 @@ export default function BottomNavbar() {
             {/* Full Admin Level Privileges */}
             {user.auth_level === 5 && (
                 <>
-                    <Divider />
                     <ListItem disablePadding>
-                        <ListItemText primary="Admin" />
+                        <ListItemText sx={{ marginLeft: 1.5 }} primary="Admin" />
                     </ListItem>
                     <List>
                         <ListItem key="link1" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/create-tournament')}>
-                                <PlaylistAddIcon /><ListItemText primary="Create Tournament" />
+                                <PlaylistAddIcon sx={{ marginRight: 1 }} /><ListItemText primary="Create Tournament" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem key="link2" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/manage-tournaments')}>
-                                <EditNoteIcon /><ListItemText primary="Manage Tournaments" />
+                                <EditNoteIcon sx={{ marginRight: 1 }} /><ListItemText primary="Manage Tournaments" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem key="link3" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/add-team')}>
-                                <GroupAddIcon /><ListItemText primary="Add Team" />
+                                <GroupAddIcon sx={{ marginRight: 1 }} /><ListItemText primary="Add Team" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem key="link4" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/manage-teams')}>
-                                <GroupsIcon /><ListItemText primary="Manage Teams" />
+                                <GroupsIcon sx={{ marginRight: 1 }} /><ListItemText primary="Manage Teams" />
                             </ListItemButton>
                         </ListItem>
                         <ListItem key="link5" disablePadding>
                             <ListItemButton onClick={() => history.push('/admin/manage-users')}>
-                                <BadgeIcon /><ListItemText primary="Manage Users" />
+                                <BadgeIcon sx={{ marginRight: 1 }} /><ListItemText primary="Manage Users" />
                             </ListItemButton>
                         </ListItem>
                     </List>
@@ -208,10 +209,10 @@ export default function BottomNavbar() {
                             setValue(newValue);
                         }}
                     >
-                        <BottomNavigationAction 
-                          component="button"  
-                          icon={<ArrowBackIcon />}
-                          onClick={() => history.goBack()} />
+                        <BottomNavigationAction
+                            component="button"
+                            icon={<ArrowBackIcon />}
+                            onClick={() => history.goBack()} />
                         <BottomNavigationAction component={Link} to="/home" icon={<HomeIcon />} />
                         <BottomNavigationAction
                             onClick={toggleDrawer(anchor, true)}

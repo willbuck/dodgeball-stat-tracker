@@ -126,7 +126,6 @@ function App() {
             <GameDetail />
           </ProtectedRoute>
 
-
           <ProtectedRoute path="/games/:id">
             <TournamentDetails />
           </ProtectedRoute>
