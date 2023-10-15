@@ -75,7 +75,7 @@ export default function TournamentList() {
       </Grid>
 
       {/* Past Tournaments */}
-      <Divider sx={{ marginTop: 8 }} />
+      <Divider sx={{ marginTop: 6 }} />
       <Typography variant="h5" sx={{ marginLeft: 2 }}>
         Past Tournaments
       </Typography>
@@ -85,7 +85,7 @@ export default function TournamentList() {
         {
           pastTournaments.length === 0 ? (
             <Grid item xs={12} sm={6} md={4}>
-              <Typography variant="h6" sx={{ marginLeft: 2 }}>
+              <Typography variant="h6" sx={{ marginLeft: 5 }}>
                 None
               </Typography>
             </Grid>
