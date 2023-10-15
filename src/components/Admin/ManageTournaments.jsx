@@ -116,7 +116,7 @@ export default function ManageTournaments() {
               <Typography variant="body2" color="textSecondary">
                 {selectedTourny.location}
               </Typography>
-              <Divider />
+              <Divider sx={{ borderWidth: 1 }} />
               <Typography variant="body2" color="textSecondary">
                 {selectedTourny.start_date || 'Start Date: TBD'}
               </Typography>
@@ -137,8 +137,10 @@ export default function ManageTournaments() {
                 onClick={handleEdit}
 
               >
-                <EditIcon size={24} />
-                Edit
+                <Box display="flex" gap={1}>
+                  <EditIcon size={30} />
+                  <Typography>Edit</Typography>
+                </Box>
               </Button>
               <Menu
                 id="basic-menu"
@@ -194,7 +196,7 @@ export default function ManageTournaments() {
                     <Typography variant="body2" color="textSecondary">
                       {tournament.location}
                     </Typography>
-                    <Divider />
+                    <Divider sx={{ borderWidth: 1 }} />
                     <Typography variant="body2" color="textSecondary">
                       {tournament.start_date || 'Start Date: TBD'}
                     </Typography>
@@ -214,8 +216,10 @@ export default function ManageTournaments() {
                       onClick={handleEdit}
 
                     >
-                      <EditIcon size={24} />
-                      Edit
+                      <Box display="flex" gap={1}>
+                        <EditIcon size={30} />
+                        <Typography>Edit</Typography>
+                      </Box>
                     </Button>
                     <Menu
                       id="basic-menu"

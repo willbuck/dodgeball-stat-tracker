@@ -157,8 +157,8 @@ export default function ManageTeams() {
         {Object.entries(teamsByTournament).map(([tournamentName, teams]) => (
           <div key={tournamentName}>
             <Divider sx={{ marginTop: 8 }} />
-            <Typography variant="h5" sx={{ marginLeft: 2 }}>Tournament: </Typography><Typography variant="h6" sx={{ marginLeft: 7 }}>{tournamentName}</Typography>
-            <Grid container spacing={3}>
+            <Typography variant="h5" sx={{ marginLeft: 3 }}>Tournament: </Typography>
+            <Typography variant="h5" sx={{ marginLeft: 9 }} color='primary' fontWeight={600}>{tournamentName}</Typography>            <Grid container spacing={3}>
               {teams.map((team) => (
                 <Grid item xs={12} sm={6} md={4} key={team.id}>
                   <Card sx={{
@@ -176,8 +176,10 @@ export default function ManageTeams() {
                       <Button
                         value={team.id}
                         onClick={handleClick}>
-                        <EditIcon size={30} />
-                        Edit
+                        <Box display="flex" gap={1}>
+                          <EditIcon size={30} />
+                          <Typography>Edit</Typography>
+                        </Box>
                       </Button>
                       <Menu
                         id="demo-customized-menu"

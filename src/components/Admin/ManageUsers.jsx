@@ -98,20 +98,15 @@ export default function ManageUsers() {
 
             {selectedUser ? (
                 // Display selected user
-                <Card sx={{ padding: '20px', margin: '10px', border: '1px solid grey' }}>
+                <Card sx={{ width: '40%', padding: '20px', margin: '10px', border: '1px solid grey' }}>
                     <Box>
-                        <Box>
-                            <Typography variant="h5">
-                                {selectedUser.username}
-                            </Typography>
-                        </Box>
-
-                        <Box>
-                            <Typography variant="body3">
-                                Email: {selectedUser.email}
-                            </Typography>
-                        </Box>
-
+                        <CardHeader
+                            avatar={<Avatar src={selectedUser.avatarUrl} />}
+                            title={selectedUser.username}
+                            subheader={`Email: ${selectedUser.email}`}
+                            sx={{ '& .MuiTypography-root': { fontSize: '1rem' } }}
+                        />
+                        <Divider />
                         <Button
                             id="basic-button"
                             aria-controls={open ? 'basic-menu' : undefined}
@@ -120,8 +115,10 @@ export default function ManageUsers() {
                             onClick={handleClick}
                             value={selectedUser.id}
                         >
-                            <EditIcon size={24} />
-                            Edit Privileges
+                            <Box display="flex" gap={1}>
+                                <EditIcon size={24} />
+                                <Typography>Edit Privileges</Typography>
+                            </Box>
                         </Button>
                         <Menu
                             id="demo-customized-menu"
@@ -195,6 +192,7 @@ export default function ManageUsers() {
                                                 avatar={<Avatar src={user.avatarUrl} />}
                                                 title={user.username}
                                                 subheader={`Email: ${user.email}`}
+                                                sx={{ '& .MuiTypography-root': { fontSize: '1rem' } }}
                                             />
                                             <Divider />
                                             <Button
@@ -205,8 +203,10 @@ export default function ManageUsers() {
                                                 onClick={handleClick}
                                                 value={user.id}
                                             >
-                                                <EditIcon size={24} />
-                                                Edit Privileges
+                                                <Box display="flex" gap={1}>
+                                                    <EditIcon size={24} />
+                                                    <Typography>Edit Privileges</Typography>
+                                                </Box>
                                             </Button>
 
                                             <Menu

@@ -86,7 +86,8 @@ export default function CreateTournament() {
       </Stack>
     </FormContainer> */}
     </div>
-    <Card sx={{ padding: '20px', margin: '10px', border: '1px solid grey' }}>
+
+    <Card sx={{ padding: '20px', margin: '10px', }}>
 
       <Box component="form" onSubmit={handleSubmit}>
         <Stack>
@@ -109,10 +110,11 @@ export default function CreateTournament() {
           <InputLabel id="ball-type-label">Ball Type</InputLabel>
           <Select
             required
-            labelId="ball-type-label"
             label="Ball Type"
-            value={ballType}
+            labelId="ball-type-label"
+            placeholder="Ball Type"
             onChange={(event) => setBallType(event.target.value)}
+            value={ballType}
           >
             <MenuItem value="cloth">Cloth</MenuItem>
             <MenuItem value="foam">Foam</MenuItem>

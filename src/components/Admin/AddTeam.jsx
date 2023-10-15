@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Container, TextField, Typography, Stack, Button, Box, Grid, Card, Badge } from '@mui/material'
@@ -43,7 +43,17 @@ export default function AddTeam() {
   // send selected teams and bundle up a participants array
 
 
-  // MANAGE TEAMS CONTENT START
+  // MANAGE TEAMS CONTENT START --------------------------
+
+  const [unassignedTeams, setUnassignedTeams] = useState([]);
+
+  useEffect(() => {
+    const unassigned = allTeams.filter(team => team.tournament_id === null || team.tournament_id === undefined);
+    setUnassignedTeams(unassigned);
+  }, [allTeams]);
+
+
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -92,14 +102,14 @@ export default function AddTeam() {
       teamsByTournament[tournamentName].push(team);
     }
   });
-  // MANAGE TEAM CONTENT END
+  // MANAGE TEAM CONTENT END -------------------------------
 
 
 
   return (
     <Container sx={{ marginBottom: 15 }}>
 
-      <Typography variant="h5">Add Team:</Typography>
+      <Typography variant="h5" sx={{ marginLeft: 5 }} >Add Team:</Typography>
 
       <Card sx={{ padding: '20px', margin: '10px', }}>
         <Container component='form' onSubmit={handleSubmit}>
@@ -130,9 +140,9 @@ export default function AddTeam() {
       </Card>
 
 
-      <Container sx={{ marginTop: 7 }}>
+      <Container sx={{ marginTop: 8 }}>
 
-        <Typography variant="h5">Teams:</Typography>
+        <Typography variant="h5" sx={{ marginLeft: 3 }}>Teams:</Typography>
 
         {/* Search for specific team */}
         <Stack spacing={2} sx={{ width: 300 }}>
@@ -213,10 +223,64 @@ export default function AddTeam() {
 
 
         <div>
+
+          {/* Unassigned Teams Section */}
+          <Divider sx={{ marginTop: 4 }} />
+          <Typography variant="h5" sx={{ marginLeft: 3 }}>Unassigned Teams:</Typography>
+          <Grid container spacing={3} sx={{ marginBottom: 8 }}>
+            {unassignedTeams.map((team) => (
+              <Grid item xs={12} sm={6} md={4} key={team.id}>
+                <Card sx={{
+                  padding: '20px',
+                  margin: '10px',
+                  border: '1px solid grey',
+                }}>
+                  <Badge badgeContent="" sx={{ color: team.jersey_color }}>
+                    <IconShirtFilled />
+                  </Badge>
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography variant="h5">
+                      {team.team_name}
+                    </Typography>
+                    <Button
+                      value={team.id}
+                      onClick={handleClick}>
+                      <Box display="flex" gap={1}>
+                        <EditIcon size={30} />
+                        <Typography>Edit</Typography>
+                      </Box>
+                    </Button>
+                    <Menu
+                      id="demo-customized-menu"
+                      MenuListProps={{
+                        'aria-labelledby': 'demo-customized-button',
+                      }}
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={() => handleLocation(anchorEl.value)} disableRipple>
+                        <EditLocationAltIcon />
+                        <ManageTeamsModal />
+                      </MenuItem>
+                      <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
+                        <IconTrash />
+                        Delete Team
+                      </MenuItem>
+                    </Menu>
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+
+
+          {/* Teams Listed By Tournaments Section */}
           {Object.entries(teamsByTournament).map(([tournamentName, teams]) => (
             <div key={tournamentName}>
               <Divider sx={{ marginTop: 4 }} />
-              <Typography variant="h5" sx={{ marginLeft: 2 }}>Tournament: </Typography><Typography variant="h6" sx={{ marginLeft: 7 }}>{tournamentName}</Typography>
+              <Typography variant="h5" sx={{ marginLeft: 3 }}>Tournament: </Typography>
+              <Typography variant="h5" sx={{ marginLeft: 9 }} color='primary' fontWeight={600}>{tournamentName}</Typography>
               <Grid container spacing={3}>
                 {teams.map((team) => (
                   <Grid item xs={12} sm={6} md={4} key={team.id}>
@@ -235,8 +299,10 @@ export default function AddTeam() {
                         <Button
                           value={team.id}
                           onClick={handleClick}>
-                          <EditIcon size={30} />
-                          Edit
+                          <Box display="flex" gap={1}>
+                            <EditIcon size={30} />
+                            <Typography>Edit</Typography>
+                          </Box>
                         </Button>
                         <Menu
                           id="demo-customized-menu"
