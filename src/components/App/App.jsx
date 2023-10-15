@@ -58,8 +58,6 @@ function App() {
   
 
   // Fetch user
-  //! Question: why do we need to do this any time
-  //! there is a dispatch in the app?
   useEffect(() => {
     dispatch({ type: "FETCH_USER", payload: uniqueID });
 
@@ -71,7 +69,7 @@ function App() {
     dispatch({ type: "FETCH_TEAMS" });
     dispatch({ type: "FETCH_TOURNAMENTS" });
     dispatch({ type: 'FETCH_GAMES' });
-    dispatch({ type: "FETCH_STATS"});
+    dispatch({ type: "FETCH_STATS" });
   }, [])
 
   return (
