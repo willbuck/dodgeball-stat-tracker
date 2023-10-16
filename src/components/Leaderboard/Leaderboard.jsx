@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -48,14 +48,8 @@ function Leaderboard() {
     sortLeaderboard(sortStat);
   }, [sortStat])
 
-  
-
-  
-
-
   const teamLeaderboardStore = useSelector((store) => store.teamLeaderboardReducer);
  
-
   const searchTeamLeaderboardStore = useSelector(
     (store) => store.searchTeamLeaderboardReducer
   );
