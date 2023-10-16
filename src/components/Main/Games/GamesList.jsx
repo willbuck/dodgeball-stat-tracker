@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { Box, Container, Card, Typography } from "@mui/material";
+import { Container, Card, CardContent, Typography } from "@mui/material";
 
 // This component is for the Tournament details page
 // It talks to the database to get all the games
@@ -50,7 +50,7 @@ function TournamentDetails() {
     setSelectedGame(newValue);
   };
 
-  const handleClickLearderboard = () => {
+  const handleClickLeaderboard = () => {
     console.log('In here',  tournamentID);
     dispatch({
       type: "GET_STATISTICS",
@@ -62,66 +62,23 @@ function TournamentDetails() {
   }
 
   return (
-    <>
-    <button onClick={handleClickLearderboard}>Leaderboard</button>
-      {/* Search for a specific game */}
-      <Stack spacing={2} sx={{ width: 300 }}>
-        <Autocomplete
-          id="tournament-games-searchbar"
-          options={allGames}
-          getOptionLabel={(option) =>
-            `${option.team1_name} VS ${option.team2_name} ${option.game_id}`
-          }
-          onChange={(event, newValue) => {
-            handleSearchbarClick(newValue);
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search For A Game"
-              InputProps={{
-                ...params.InputProps,
-                type: "search",
-              }}
-            />
-          )}
-        />
-      </Stack>
-
-      {/* If a game was selected I want the selected
-      game to show more details */}
-
-      {selectedGame ? (
-        // Display selected game details
-        <div>
-          <h2>Selected Game:</h2>
-          <p>Team 1: {selectedGame.team1_name}</p>
-          <p>Team 2: {selectedGame.team2_name}</p>
-          <p>Game ID: {selectedGame.game_id}</p>
-          <p>Start Time: {selectedGame.start_time}</p>
-          <p>End Time: {selectedGame.end_time}</p>
-          {/* Add more details as needed */}
-        </div>
-      ) : (
-        // Render tournament details when selectedGame is empty
-        <>
-          {/* The list of all the games in that tournament */}
+    <Container>
+    <button onClick={handleClickLeaderboard}>Leaderboard</button>
           {tournamentGames.map((details, index) => (
-            <div key={index} onClick={() => { handleGameClick(details) }}>
-          <Container>
-              <Card>
-                <Typography>
-                  {details.team1_name}
-                </Typography>
-                Game {index + 1}: {details.team1_name} VS {details.team2_name}
-                Time {details.start_time} - {details.end_time}
+            
+              <Card key={index} onClick={() => { handleGameClick(details) }}>
+                <CardContent>
+                  <Typography>
+                    {details.team1_name}
+                  </Typography>
+                  <Typography>
+                    {details.team2_name}
+                  </Typography>
+                </CardContent>
               </Card>
-          </Container>
-            </div>
+
           ))}
-        </>
-      )}
-    </>
+          </Container>
   );
 }
 export default TournamentDetails;
