@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 // Style components
-import { Box, Button, Card, Stack, Select, TextField, InputLabel, MenuItem } from "@mui/material";
+import { Box, Button, Card, Stack, Select, TextField, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent} from "@mui/material";
 
 export default function CreateTournament() {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ export default function CreateTournament() {
   const [location, setLocation] = useState("");
   const [courts, setCourts] = useState("");
   const [description, setDescription] = useState("");
+  const [ open, setOpen ] = useState(false);
 
   //! Dummy participant info
   //! Exact implementation may change when create-teams / create-participants components are live
@@ -32,9 +33,19 @@ export default function CreateTournament() {
     // {teamName: "Falcons", teamID: 4}
   ]
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
+  
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    
+    handleOpen()
     // Tournament info to send
     const tournamentData = {
       name,
@@ -59,7 +70,7 @@ export default function CreateTournament() {
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      <Card sx={{ padding: "20px", margin: "10px" }}>
+
         <Stack spacing={3}>
           {/* Name input*/}
           <TextField
@@ -67,60 +78,56 @@ export default function CreateTournament() {
             placeholder="Name"
             value={name}
             onChange={(event) => setName(event.target.value)}
+            sx={{ padding: 2 }}
           />
 
-          {/* Start Date input */}
-          <DatePicker
-            required
-            value={startDate}
-            onChange={(newDate) => setStartDate(newDate)}
-          />
+        {/* Start Date input */}
+        <DatePicker sx={{ padding: 2 }}
+          required
+          value={startDate}
+          onChange={(newDate) => setStartDate(newDate)}
+        />
 
-          {/* Ball Type input */}
-          {/* <InputLabel id="ball-type-label">Ball Type</InputLabel>
-          <Select
-            required
-            labelId="ball-type-label"
-            placeholder="Ball Type"
-            onChange={(event) => setBallType(event.target.value)}
-            value={ballType}
-          >
-            <MenuItem value="cloth">Cloth</MenuItem>
-            <MenuItem value="foam">Foam</MenuItem>
-          </Select> */}
 
-          {/* Location input */}
-          <TextField
-            required
-            placeholder="Location"
-            value={location}
-            onChange={(event) => setLocation(event.target.value)}
-          />
+        {/* Location input */}
+        <TextField sx={{ padding: 2 }}
+          required
+          placeholder="Location"
+          value={location}
+          onChange={(event) => setLocation(event.target.value)}
+        />
 
-          {/* Courts input */}
-          <TextField
-            required
-            placeholder="Courts"
-            type="number"
-            InputProps={{
-              inputProps: { min: 2, max: 25 },
-            }}
-            value={courts}
-            onChange={(event) => setCourts(event.target.value)}
-          />
+        {/* Courts input */}
+        <TextField sx={{ padding: 2 }}
+          required
+          placeholder="Courts"
+          type="number"
+          InputProps={{
+            inputProps: { min: 2, max: 25 }
+          }}
+          value={courts}
+          onChange={(event) => setCourts(event.target.value)}
+        />
 
-          {/* Description input */}
-          <TextField
-            placeholder="Description"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-          />
+        {/* Description input */}
+        <TextField sx={{ padding: 2 }}
+          placeholder="Description"
+          value={description}
+          onChange={(event) => setDescription(event.target.value)}
+        />
 
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
-        </Stack>
-      </Card>
+        <Button sx={{ padding: 2 }} type="submit">Submit</Button>
+
+        <Box component="form"  noValidate sx={{ mt: 1, width: 1, height: 1 }}>
+        {(
+          <Dialog open={open} onClose={handleClose} >
+            <DialogTitle>Tournament Added!</DialogTitle>
+          </Dialog>
+        )}
+        </Box>
+
+      </Stack>
     </Box>
+
   );
 }

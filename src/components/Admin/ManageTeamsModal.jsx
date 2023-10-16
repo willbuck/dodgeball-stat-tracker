@@ -6,6 +6,14 @@ import Modal from '@mui/material/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+
+{/* <Dialog open={open} onClose={handleClose} className="alert">
+          <DialogTitle>Incorrect Password</DialogTitle>
+          <DialogContent>
+            <p>{errors.loginMessage}</p>
+          </DialogContent>
+        </Dialog> */}
 
 const style = {
   position: 'absolute',
@@ -26,6 +34,7 @@ export default function ManageTeamsModal() {
   const handleClose = () => setOpen(false);
   const team = useSelector(store => store.teamModal);
   const tournament = useSelector(store => store.tournamentsReducer);
+  
 
   const handleAdd = (id) => {
     console.log("tournament", id)
@@ -52,7 +61,7 @@ export default function ManageTeamsModal() {
             {tournament.map((tournament) => {
               return (
                 <Card
-                  onClick={() => { handleAdd(tournament.id) }}
+                onClick={() => { handleAdd(tournament.url) }}
                   key={tournament.id}
                   sx={{
                     minWidth: 200,
