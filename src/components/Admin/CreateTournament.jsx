@@ -42,7 +42,7 @@ export default function CreateTournament() {
 
   const handlePresentation = () => {
     console.log('in click handler');
-    setName("Maple Syrup Invitational");
+    setName("Maple Grove Invitational");
     const mapleDate = dayjs().set('year', 2023).set('month', 9).set('date', 21)
     setStartDate(mapleDate);
     setLocation("Maple Grove Arena");
