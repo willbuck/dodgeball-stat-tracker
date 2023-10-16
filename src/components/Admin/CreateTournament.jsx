@@ -45,7 +45,7 @@ export default function CreateTournament() {
     setName("Maple Grove Invitational");
     const mapleDate = dayjs().set('year', 2023).set('month', 9).set('date', 21)
     setStartDate(mapleDate);
-    setLocation("Maple Grove Arena");
+    setLocation("Maple Grove HighSchool");
     setCourts(6);
     setDescription("n/a");
   }
