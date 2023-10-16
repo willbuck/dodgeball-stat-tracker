@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
     description, 
     url } = req.body
     
-    const queryValues = [name, organizer, location, ballType, description, startDate, courts, url]
+    const queryValues = [name, organizer, location, "foam", description, startDate, courts, url]
 
     const queryText = `
       INSERT INTO "tournament" (

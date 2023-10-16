@@ -19,6 +19,8 @@ import MenuItem from '@mui/material/MenuItem';
 import NativeSelect from '@mui/material/NativeSelect';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+
 
 export default function CreateTournament() {
   const dispatch = useDispatch();
@@ -31,6 +33,9 @@ export default function CreateTournament() {
   const [location, setLocation] = useState('');
   const [courts, setCourts] = useState('');
   const [description, setDescription] = useState('')
+  const [ open, setOpen ] = useState(false)
+
+  
 
   //! Dummy participant info
   //! Exact implementation may change when create-teams / create-participants components are live
@@ -41,16 +46,33 @@ export default function CreateTournament() {
     {teamName: "Falcons", teamID: 4}
   ]
 
+  const handleOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  
+
   const handleSubmit = (event) => {
     event.preventDefault()
-
+    
+    handleOpen()
     // Tournament info to send
     const tournamentData = { name, startDate, ballType, location, courts, description, user, participants }
 
     // console.log('tournamentData:', tournamentData)
 
     // Dispatching info to Tournament saga
-    dispatch({type: 'CREATE_TOURNAMENT', payload: tournamentData})
+    dispatch({type: 'CREATE_TOURNAMENT', payload: tournamentData});
+
+    setName('');
+    setStartDate(null);
+    setLocation('');
+    setCourts('');
+    setDescription('');
+    
   }
 
   return (<>
@@ -87,38 +109,27 @@ export default function CreateTournament() {
     </FormContainer> */}
     </div>
 
-    <Box component="form" onSubmit={handleSubmit}>
+    <Box sx={{ padding: 2 }} component="form" onSubmit={handleSubmit}>
       <Stack>
 
         {/* Name input*/}
-        <TextField
+        <TextField sx={{ padding: 2 }}
           required
+          value={name}
           placeholder="Name"
           onChange={(event) => setName(event.target.value)}
         />
 
         {/* Start Date input */}
-        <DatePicker
+        <DatePicker sx={{ padding: 2 }}
           required
           value={startDate}
           onChange={(newDate) => setStartDate(newDate)}
         />
 
-        {/* Ball Type input */}
-        <InputLabel id="ball-type-label">Ball Type</InputLabel>
-        <Select
-          required
-          labelId="ball-type-label"
-          label="Ball Type"
-          value={ballType}
-          onChange={(event) => setBallType(event.target.value)}
-        >
-          <MenuItem value="cloth">Cloth</MenuItem>
-          <MenuItem value="foam">Foam</MenuItem>
-        </Select>
 
         {/* Location input */}
-        <TextField
+        <TextField sx={{ padding: 2 }}
           required
           placeholder="Location"
           value={location}
@@ -126,7 +137,7 @@ export default function CreateTournament() {
         />
 
         {/* Courts input */}
-        <TextField
+        <TextField sx={{ padding: 2 }}
           required
           placeholder="Courts"
           type="number"
@@ -138,13 +149,21 @@ export default function CreateTournament() {
         />
 
         {/* Description input */}
-        <TextField 
+        <TextField sx={{ padding: 2 }}
           placeholder="Description"
           value={description}
           onChange={(event) => setDescription(event.target.value)}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button sx={{ padding: 2 }} type="submit">Submit</Button>
+
+        <Box component="form"  noValidate sx={{ mt: 1, width: 1, height: 1 }}>
+        {(
+          <Dialog open={open} onClose={handleClose} >
+            <DialogTitle>Tournament Added!</DialogTitle>
+          </Dialog>
+        )}
+        </Box>
 
       </Stack>
     </Box>
