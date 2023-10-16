@@ -51,10 +51,10 @@ app.use('/api/searchTeam', searchTeamLeaderboardRouter);
 app.use('/api/kill', killRouter);
 app.use('/api/teams', teamsRouter)
 
-// app.use('/api/allPlayers', allPlayersRouter);
-// app.use('/api/addPlayer', addPlayersRouter);
-// app.use('/api/updatePlayer', updatePlayerRouter);
-// app.use('/api/deletePlayerForm', deletePlayerFormRouter);
+app.use('/api/allPlayers', allPlayersRouter);
+app.use('/api/addPlayer', addPlayersRouter);
+app.use('/api/updatePlayer', updatePlayerRouter);
+app.use('/api/deletePlayerForm', deletePlayerFormRouter);
 
 app.use('/api/manageUsers', manageUsersRouter);
 app.use('/api/admin/modal', modalRouter)
