@@ -85,7 +85,7 @@ CREATE TABLE statistics (
   is_official BOOLEAN NOT NULL,
   game_id INT REFERENCES "game" NOT NULL,
   player_id INT REFERENCES "players" NOT NULL,
-  user_id INT REFERENCES "user" NOT NULL,
+  user_id INT REFERENCES "user",
   kills integer,
   outs integer,
   catches integer,
