@@ -48,6 +48,12 @@ export default function CreateTournament() {
 
     // Dispatching info to Tournament saga
     dispatch({ type: "CREATE_TOURNAMENT", payload: tournamentData });
+
+    setName("");
+    setStartDate(null);
+    setLocation("");
+    setCourts("");
+    setDescription("");
   };
 
   return (
@@ -58,6 +64,7 @@ export default function CreateTournament() {
           <TextField
             required
             placeholder="Name"
+            value={name}
             onChange={(event) => setName(event.target.value)}
           />
 
