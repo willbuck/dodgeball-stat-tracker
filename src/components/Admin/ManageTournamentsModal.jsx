@@ -10,6 +10,7 @@ import { Select } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 // import Card from '@mui/material/Card';
 // import CardContent from '@mui/material/CardContent';
 // import Typography from '@mui/material/Typography';
@@ -46,19 +47,19 @@ export default function ManageTournamentsModal(tournamentId) {
     const handleClose = () => setOpen(false);
 
     const tournamentSelected = allTournaments.find((tournament) => tournament.id === tournamentId.tournamentId);
-    console.log('tournamentID:', tournamentId);
 
+    const defaultDate = dayjs(tournamentSelected.start_date);
 
     // Input Fields' States
     const [name, setName] = useState(tournamentSelected.tournament_name);
-    const [startDate, setStartDate] = useState(tournamentSelected.start_date);
+    const [startDate, setStartDate] = useState(defaultDate);
     const [ballType, setBallType] = useState(tournamentSelected.ball_type);
     const [location, setLocation] = useState(tournamentSelected.location);
     const [courts, setCourts] = useState(tournamentSelected.courts);
     const [organizer, setOrganizer] = useState(tournamentSelected.tournament_organizer)
     const [description, setDescription] = useState(tournamentSelected.description)
     const id = tournamentSelected.id;
-    console.log('id is', id, 'tournament name is', name);
+    
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -75,7 +76,7 @@ export default function ManageTournamentsModal(tournamentId) {
             id
         }
 
-        console.log('tournamentEditData:', tournamentEditData)
+        
 
         // Dispatching info to Tournament saga
         dispatch({ type: 'EDIT_TOURNAMENT', payload: tournamentEditData })
@@ -108,21 +109,9 @@ export default function ManageTournamentsModal(tournamentId) {
                             <DatePicker
                                 required
                                 value={startDate}
+                                placeholder={tournamentSelected.startDate}
                                 onChange={(newDate) => setStartDate(newDate)}
                             />
-
-                            {/* Ball Type input */}
-                            <InputLabel id="ball-type-label">Ball Type</InputLabel>
-                            <Select
-                                required
-                                labelId="ball-type-label"
-                                label="Ball Type"
-                                value={ballType}
-                                onChange={(event) => setBallType(event.target.value)}
-                            >
-                                <MenuItem value="cloth">Cloth</MenuItem>
-                                <MenuItem value="foam">Foam</MenuItem>
-                            </Select>
 
                             {/* Location input */}
                             <TextField
@@ -145,7 +134,8 @@ export default function ManageTournamentsModal(tournamentId) {
                             />
 
                             {/* Organizer Identity input */}
-                            <InputLabel id="tournament-organizer-label">Tournament Organizer</InputLabel>
+
+                            {/* <InputLabel id="tournament-organizer-label">Tournament Organizer</InputLabel>
                             <Select
                                 required
                                 labelId="tournament-organizer"
@@ -157,7 +147,7 @@ export default function ManageTournamentsModal(tournamentId) {
                                     <MenuItem value={user.id}>{user.username}</MenuItem>
                                 ))}
 
-                            </Select>
+                            </Select> */}
 
                             {/* Description input */}
                             <TextField
