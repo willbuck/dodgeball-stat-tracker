@@ -1,29 +1,21 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";
-import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom';
+import { useParams } from 'react-router-dom/cjs/react-router-dom';
 import findIDMatch from '../../../utilities/findIDMatch'
+
 
 // Components
 import PlayerCard from './PlayerCard';
 import Scoreboard from './Scoreboard';
 
+
 // MUI Imports
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import BackHandIcon from '@mui/icons-material/BackHand';
-import DoNotStepIcon from '@mui/icons-material/DoNotStep';
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 
 // Style Tools
-import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
 
 
@@ -36,6 +28,9 @@ function GameDetail() {
     const allGames = useSelector((store) => store.gamesReducer);
     const stats = useSelector(store => store.stats);
     const user = useSelector(store => store.user);
+
+    console.log('stats:', stats[0]);
+    console.log('players:', allPlayers[0]);
 
     // Getting information for current game
     const game = findIDMatch(allGames, gameID, 'game_id', false)
@@ -62,6 +57,7 @@ function GameDetail() {
 
     // Helper function to set team rosters
     const setRosters = (currentGame) => {
+        console.log('current game:', currentGame);
         const teamsObject = Object.assign({}, teams);
         // Looping over players to find players in this game
         for (let player of allPlayers) {
@@ -73,7 +69,13 @@ function GameDetail() {
 
                 // match existing stats to player
                 for (let statline of stats) {
-                    if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && (statline.user_id === user.id || statline.uuid === user.pseudonym)) {
+                    //! THIS SHOULD REPLACE THE IF STATEMENT FOR ACTUAL USE
+                    // if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && (statline.user_id === user.id || statline.uuid === user.uuid)) {
+
+                    //! THIS IF STATEMENT IS FOR PRESENTATION PURPOSES ONLY
+                    if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && statline.user_id === 1) {
+                        console.log('MATCH:', player);
+
                         player.kills = statline.kills;
                         player.catches = statline.catches;
                         player.outs = statline.outs;
@@ -84,10 +86,18 @@ function GameDetail() {
                 player.outs = player.outs || 0;
                 player.catches = player.catches || 0;
                 teamsObject.teamOne.players.push(player);
-            } else if (player.team_id === currentGame.team2_id && findIDMatch(teamsObject.teamTwo.players, player.player_id, "player_id").length === 0) {
 
+
+
+
+            } else if (player.team_id === currentGame.team2_id && findIDMatch(teamsObject.teamTwo.players, player.player_id, "player_id").length === 0) {
                 for (let statline of stats) {
-                    if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && (statline.user_id === user.id || statline.uuid === user.pseudonym)) {
+
+                    //! USE THIS IF STATEMENT IN ACTUAL APP
+                    // if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && (statline.user_id === user.id || statline.uuid === user.pseudonym)) {
+
+                    //! THIS IF STATEMENT IS FOR PRESENTATION USE ONLY
+                    if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && statline.user_id === 1) {
                         player.kills = statline.kills;
                         player.catches = statline.catches;
                         player.outs = statline.outs;

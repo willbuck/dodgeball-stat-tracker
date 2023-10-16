@@ -36,7 +36,7 @@ function* createTournament(action) {
         const newTournamentData = yield axios.post('/api/challonge/tournament', action.payload);
 
         const newTournamentURL = newTournamentData.data.url;
-
+        console.log('new tournament url:', newTournamentURL)
         const queryData = {
             name,
             organizer: user.id,
@@ -57,13 +57,17 @@ function* createTournament(action) {
                 index.tournamentURL = url;
             }
         }
-        yield addTournamentID(participants, newTournamentURL);
+        if (participants.length !== 0) {
+            yield addTournamentID(participants, newTournamentURL);
 
+        
         // Post participants to database
         yield axios.post('/api/tournament/participants', participants);
 
         // Send participants to Challonge
         yield axios.post('/api/challonge/tournament/participants', { participants, newTournamentURL });
+        }
+        
 
     } catch (error) {
         console.log('error in create tournament saga:', error)

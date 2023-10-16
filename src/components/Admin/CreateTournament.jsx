@@ -34,11 +34,12 @@ export default function CreateTournament() {
 
   //! Dummy participant info
   //! Exact implementation may change when create-teams / create-participants components are live
+    // Not sure why I'm hardcoding teamID. There is other info to add, but not that.
   const participants = [
-    {teamName: "Lions", teamID: 1},
-    {teamName: "Tigers", teamID: 2},
-    {teamName: "Bears", teamID: 3},
-    {teamName: "Falcons", teamID: 4}
+    // {teamName: "Lions", teamID: 1},
+    // {teamName: "Tigers", teamID: 2},
+    // {teamName: "Bears", teamID: 3},
+    // {teamName: "Falcons", teamID: 4}
   ]
 
   const handleSubmit = (event) => {
