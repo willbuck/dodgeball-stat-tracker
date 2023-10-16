@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import {
   Box,
+  Button,
   Divider,
   Container,
   Card,
@@ -12,8 +12,6 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
-
-import SearchGames from '../Games/SearchGames'
 
 // This component is for the Tournament details page
 // It talks to the database to get all the games
@@ -69,9 +67,21 @@ function TournamentDetails() {
 
   return (
     <Container>
-      <Box sx={{margin: '10px'}}>
-        <SearchGames />
-      </Box>
+      <Stack>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: "5px",
+          }}
+        >
+
+          <Button variant='contained' onClick={handleClickLeaderboard}>Leaderboard</Button>
+        </Box>
+          <Typography variant="h5">Round One</Typography>
+      </Stack>
+
       <Stack spacing={1}>
         {tournamentGames.map((details, index) => (
           <Card

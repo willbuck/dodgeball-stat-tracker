@@ -16,7 +16,7 @@ export default function CreateTournament() {
 
   const [name, setName] = useState("");
   const [startDate, setStartDate] = useState(null);
-  const [ballType, setBallType] = useState("");
+  const [ballType, setBallType] = useState("Cloth");
   const [location, setLocation] = useState("");
   const [courts, setCourts] = useState("");
   const [description, setDescription] = useState("");
@@ -68,7 +68,7 @@ export default function CreateTournament() {
           />
 
           {/* Ball Type input */}
-          <InputLabel id="ball-type-label">Ball Type</InputLabel>
+          {/* <InputLabel id="ball-type-label">Ball Type</InputLabel>
           <Select
             required
             labelId="ball-type-label"
@@ -78,7 +78,7 @@ export default function CreateTournament() {
           >
             <MenuItem value="cloth">Cloth</MenuItem>
             <MenuItem value="foam">Foam</MenuItem>
-          </Select>
+          </Select> */}
 
           {/* Location input */}
           <TextField
