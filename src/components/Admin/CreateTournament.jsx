@@ -40,6 +40,15 @@ export default function CreateTournament() {
     setOpen(false);
   };
 
+  const handlePresentation = () => {
+    console.log('in click handler');
+    setName("Maple Syrup Invitational");
+    const mapleDate = dayjs().set('year', 2023).set('month', 9).set('date', 21)
+    setStartDate(mapleDate);
+    setLocation("Maple Grove Arena");
+    setCourts(6);
+    setDescription("n/a");
+  }
   
 
   const handleSubmit = (event) => {
@@ -77,6 +86,7 @@ export default function CreateTournament() {
             required
             placeholder="Name"
             value={name}
+            onClick={handlePresentation}
             onChange={(event) => setName(event.target.value)}
             sx={{ padding: 2 }}
           />

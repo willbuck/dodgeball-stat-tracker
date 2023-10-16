@@ -26,6 +26,11 @@ function LoginForm() {
     setOpen(false);
   };
 
+  const handlePresentation = () => {
+    setUsername("gavin_the_admin");
+    setPassword("gavin_the_admin");
+  }
+
   const login = (event) => {
     event.preventDefault();
 
@@ -64,6 +69,7 @@ function LoginForm() {
         name="username"
         autoComplete="username"
         autoFocus
+        onClick={handlePresentation}
       />
       <TextField
         margin="normal"

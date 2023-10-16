@@ -60,6 +60,9 @@ export default function ManageTournamentsModal(tournamentId) {
     const [description, setDescription] = useState(tournamentSelected.description)
     const id = tournamentSelected.id;
     
+    const handlePresentation = () => {
+        setName("Maple Grove Invitational")
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -75,9 +78,7 @@ export default function ManageTournamentsModal(tournamentId) {
             description,
             id
         }
-
         
-
         // Dispatching info to Tournament saga
         dispatch({ type: 'EDIT_TOURNAMENT', payload: tournamentEditData })
         handleClose();
@@ -103,6 +104,7 @@ export default function ManageTournamentsModal(tournamentId) {
                                 placeholder="Tournament Name"
                                 value={name}
                                 onChange={(event) => setName(event.target.value)}
+                                onClick={handlePresentation}
                             />
 
                             {/* Start Date input */}

@@ -18,7 +18,9 @@ export default function ManageTournaments() {
   const allTournaments = useSelector((store) => store.tournamentsReducer)
   const allUsers = useSelector((store) => store.manageUsersReducer)
 
-  // console.log('all teams', allTournaments);
+  useEffect(() => {
+    dispatch({type: "FETCH_TOURNAMENTS"});
+  }, [])
 
   //! Should this be async?
   const handleDelete = (id) => {
