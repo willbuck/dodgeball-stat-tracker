@@ -15,7 +15,7 @@ export default function SearchTournament() {
       options={tournaments}
       getOptionLabel={(option) => option.tournament_name}
       onChange={(event, tournament) => history.push(`/games/${tournament.id}`)}
-      renderInput={(params) => <TextField {...params} label="Tournaments" />}
+      renderInput={(params) => <TextField {...params} label="Past Tournaments" />}
     ></Autocomplete>
   );
 }

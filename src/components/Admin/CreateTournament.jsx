@@ -1,36 +1,25 @@
-import * as React from 'react';
-import { FormContainer, TextFieldElement, DatePickerElement, TimePickerElement, AutocompleteElement } from 'react-hook-form-mui'
+import React from "react";
 
 // Hooks
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import dayjs from 'dayjs';
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+// *** Need this for calendar to function ***
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 // Style components
-import Box from '@mui/material/Box';
-import { Button, Stack } from '@mui/material'
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import { Select } from '@mui/material';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import NativeSelect from '@mui/material/NativeSelect';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Box, Button, Card, Stack, Select, TextField, InputLabel, MenuItem } from "@mui/material";
 
 export default function CreateTournament() {
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
 
-  const user = useSelector(store => store.user);
-
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [startDate, setStartDate] = useState(null);
-  const [ballType, setBallType] = useState('');
-  const [location, setLocation] = useState('');
-  const [courts, setCourts] = useState('');
-  const [description, setDescription] = useState('')
+  const [ballType, setBallType] = useState("Cloth");
+  const [location, setLocation] = useState("");
+  const [courts, setCourts] = useState("");
+  const [description, setDescription] = useState("");
 
   //! Dummy participant info
   //! Exact implementation may change when create-teams / create-participants components are live
@@ -43,112 +32,87 @@ export default function CreateTournament() {
   ]
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     // Tournament info to send
-    const tournamentData = { name, startDate, ballType, location, courts, description, user, participants }
-
-    // console.log('tournamentData:', tournamentData)
+    const tournamentData = {
+      name,
+      startDate,
+      ballType,
+      location,
+      courts,
+      description,
+      user,
+      participants,
+    };
 
     // Dispatching info to Tournament saga
-    dispatch({type: 'CREATE_TOURNAMENT', payload: tournamentData})
-  }
+    dispatch({ type: "CREATE_TOURNAMENT", payload: tournamentData });
+  };
 
-  return (<>
-    <div>
-      {/* <FormContainer defaultValues={{ name: '' 
-    }}>
-      <Stack>
-
-      <TextFieldElement name="name" label="Name" required />
-      <DatePickerElement name='date' label="Date" required />
-      <TimePickerElement name="start" label="Start Time" />
-      <TimePickerElement name="end" label="End Time" />
-      <TextFieldElement name='court' label="Court" />
-      <TextFieldElement name='location' label='Location' />
-      <AutocompleteElement 
-        name='ball'
-        label='Ball Type'
-        options={[
-          {
-            id: 1,
-            label: 'Rubber'
-          },
-          {
-            id: 2,
-            label: 'Cloth'
-          },
-          {
-            id: 3,
-            label: 'Other'
-          },
-        ]}
-      />
-      </Stack>
-    </FormContainer> */}
-    </div>
-
+  return (
     <Box component="form" onSubmit={handleSubmit}>
-      <Stack>
+      <Card sx={{ padding: "20px", margin: "10px" }}>
+        <Stack spacing={3}>
+          {/* Name input*/}
+          <TextField
+            required
+            placeholder="Name"
+            onChange={(event) => setName(event.target.value)}
+          />
 
-        {/* Name input*/}
-        <TextField
-          required
-          placeholder="Name"
-          onChange={(event) => setName(event.target.value)}
-        />
+          {/* Start Date input */}
+          <DatePicker
+            required
+            value={startDate}
+            onChange={(newDate) => setStartDate(newDate)}
+          />
 
-        {/* Start Date input */}
-        <DatePicker
-          required
-          value={startDate}
-          onChange={(newDate) => setStartDate(newDate)}
-        />
+          {/* Ball Type input */}
+          {/* <InputLabel id="ball-type-label">Ball Type</InputLabel>
+          <Select
+            required
+            labelId="ball-type-label"
+            placeholder="Ball Type"
+            onChange={(event) => setBallType(event.target.value)}
+            value={ballType}
+          >
+            <MenuItem value="cloth">Cloth</MenuItem>
+            <MenuItem value="foam">Foam</MenuItem>
+          </Select> */}
 
-        {/* Ball Type input */}
-        <InputLabel id="ball-type-label">Ball Type</InputLabel>
-        <Select
-          required
-          labelId="ball-type-label"
-          label="Ball Type"
-          value={ballType}
-          onChange={(event) => setBallType(event.target.value)}
-        >
-          <MenuItem value="cloth">Cloth</MenuItem>
-          <MenuItem value="foam">Foam</MenuItem>
-        </Select>
+          {/* Location input */}
+          <TextField
+            required
+            placeholder="Location"
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
+          />
 
-        {/* Location input */}
-        <TextField
-          required
-          placeholder="Location"
-          value={location}
-          onChange={(event) => setLocation(event.target.value)}
-        />
+          {/* Courts input */}
+          <TextField
+            required
+            placeholder="Courts"
+            type="number"
+            InputProps={{
+              inputProps: { min: 2, max: 25 },
+            }}
+            value={courts}
+            onChange={(event) => setCourts(event.target.value)}
+          />
 
-        {/* Courts input */}
-        <TextField
-          required
-          placeholder="Courts"
-          type="number"
-          InputProps={{
-            inputProps: { min: 2, max: 25 }
-          }}
-          value={courts}
-          onChange={(event) => setCourts(event.target.value)}
-        />
+          {/* Description input */}
+          <TextField
+            placeholder="Description"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
 
-        {/* Description input */}
-        <TextField 
-          placeholder="Description"
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-        />
-
-        <Button type="submit">Submit</Button>
-
-      </Stack>
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
+        </Stack>
+      </Card>
     </Box>
-  </>
   );
 }
