@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import SearchTournament from "./SearchTournament";
-import nationals from './nationals.jpeg'
+import nationals from "./nationals.jpeg";
 
 // MUI
 import Card from "@mui/material/Card";
-import CardMedia from '@mui/material/CardMedia'
+import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
@@ -21,7 +21,9 @@ export default function TournamentList() {
   const dispatch = useDispatch();
   const history = useHistory();
   const tournaments = useSelector((store) => store.tournamentsReducer);
-  const upcomingTournament = useSelector((store) => store.tournamentsReducer[0]);
+  const upcomingTournament = useSelector(
+    (store) => store.tournamentsReducer[0]
+  );
 
   const handleClick = (id) => {
     console.log(id);
@@ -33,8 +35,8 @@ export default function TournamentList() {
   }, []);
 
   return (
-    <Container sx={{marginBottom: '15px'}}>
-      <Stack sx={{marginBottom: '15px'}}>
+    <Container sx={{ marginBottom: "15px" }}>
+      <Stack sx={{ marginBottom: "15px" }}>
         <Typography variant="h4">Upcoming</Typography>
       </Stack>
       <Card
@@ -42,18 +44,16 @@ export default function TournamentList() {
           margin: "5px",
         }}
       >
-        <CardMedia
-        component="img"
-        image={nationals}
-        >
-        </CardMedia>
+        <CardMedia component="img" image={nationals}></CardMedia>
         <CardContent>
           {upcomingTournament && (
             <>
               <Typography variant="h5">
                 {upcomingTournament.tournament_name}
               </Typography>
-              <Typography variant='h6'>{upcomingTournament.location}</Typography>
+              <Typography variant="h6">
+                {upcomingTournament.location}
+              </Typography>
               <Typography variant="body1">September 1-4</Typography>
             </>
           )}
@@ -71,18 +71,22 @@ export default function TournamentList() {
       <Divider sx={{ marginTop: "20px", marginBottom: "20px" }} />
       <SearchTournament />
       <Grid container spacing={0}>
-        {tournaments.map((tournament) => (
+        {tournaments.slice(1).map((tournament) => (
           <Grid item xs={12} sm={6} md={4} key={tournament.id}>
             <Card
               sx={{
                 padding: "2px",
-                margin: "5px",
+                margin: "10px",
+                border: "1px solid grey",
               }}
               onClick={() => handleClick(tournament.id)}
             >
               <CardContent>
                 <Typography variant="body1">
                   {tournament.tournament_name}{" "}
+                  {/* {tournament.start_date
+      ? tournament.start_date
+      : "Dates : TBD"} */}
                 </Typography>
                 <Typography variant="body2">{tournament.location}</Typography>
 

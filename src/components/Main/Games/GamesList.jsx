@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Autocomplete from "@mui/material/Autocomplete";
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { Container, Card, CardContent, Typography } from "@mui/material";
+
+
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import {
+  Box,
+  Divider,
+  Container,
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+} from "@mui/material";
+
+import SearchGames from '../Games/SearchGames'
 
 // This component is for the Tournament details page
 // It talks to the database to get all the games
@@ -14,10 +23,10 @@ function TournamentDetails() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // Getting tournament ID from 
-  // react-router url params and  
+  // Getting tournament ID from
+  // react-router url params and
   // changing data type back to number
-  const {id, tournamentID = Number(id)} = useParams();
+  const { id, tournamentID = Number(id) } = useParams();
 
   // Getting games from store
   const allGames = useSelector((store) => store.gamesReducer);
@@ -25,23 +34,22 @@ function TournamentDetails() {
   // Creating array for games in current tournament
   const tournamentGames = [];
   for (let game of allGames) {
-    if(game.tournament_id === tournamentID) {
+    if (game.tournament_id === tournamentID) {
       tournamentGames.push(game);
     }
   }
-  
+
   // Handler function for selected game
   const handleGameClick = (game) => {
-
     // using location object to add state to next page in history
     const location = {
       pathname: `/gameview/${game.game_id}`,
-      state: game
-    }
+      state: game,
+    };
 
     // Navigating to next page using location object
-    history.push(location)
-  }
+    history.push(location);
+  };
 
   const [selectedGame, setSelectedGame] = useState(null);
 
@@ -51,34 +59,48 @@ function TournamentDetails() {
   };
 
   const handleClickLeaderboard = () => {
-    console.log('In here',  tournamentID);
+    console.log("In here", tournamentID);
     dispatch({
       type: "GET_STATISTICS",
-      payload: tournamentID
+      payload: tournamentID,
     });
-    history.push(`/leaderboard/${tournamentID}`)
-
-
-  }
+    history.push(`/leaderboard/${tournamentID}`);
+  };
 
   return (
     <Container>
-    <button onClick={handleClickLeaderboard}>Leaderboard</button>
-          {tournamentGames.map((details, index) => (
-            
-              <Card key={index} onClick={() => { handleGameClick(details) }}>
-                <CardContent>
-                  <Typography>
-                    {details.team1_name}
-                  </Typography>
-                  <Typography>
-                    {details.team2_name}
-                  </Typography>
-                </CardContent>
-              </Card>
+      <Box sx={{margin: '10px'}}>
+        <SearchGames />
+      </Box>
+      <Stack spacing={1}>
+        {tournamentGames.map((details, index) => (
+          <Card
+            key={index}
+            onClick={() => {
+              handleGameClick(details);
+            }}
+          >
+            {/* Team 1 */}
+            <CardContent
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <Typography variant="h6">{details.team1_name}</Typography>
+              <Divider />
+              <Typography variant="h6">{details.team1_score}</Typography>
+            </CardContent>
 
-          ))}
-          </Container>
+            <Divider />
+            {/* Team 2 */}
+            <CardContent
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <Typography variant="h6">{details.team2_name}</Typography>
+              <Typography variant="h6">{details.team2_score}</Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Stack>
+    </Container>
   );
 }
 export default TournamentDetails;
