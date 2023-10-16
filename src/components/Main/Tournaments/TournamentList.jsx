@@ -44,7 +44,7 @@ export default function TournamentList() {
           margin: "5px",
         }}
       >
-        <CardMedia component="img" image={nationals}></CardMedia>
+        {/* <CardMedia component="img" image={nationals}></CardMedia> */}
         <CardContent>
           {upcomingTournament && (
             <>
