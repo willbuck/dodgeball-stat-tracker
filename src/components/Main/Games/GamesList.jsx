@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { Box, Container, Card, Typography } from "@mui/material";
 
 // This component is for the Tournament details page
 // It talks to the database to get all the games
@@ -66,7 +67,7 @@ function TournamentDetails() {
       {/* Search for a specific game */}
       <Stack spacing={2} sx={{ width: 300 }}>
         <Autocomplete
-          id="free-solo-2-demo"
+          id="tournament-games-searchbar"
           options={allGames}
           getOptionLabel={(option) =>
             `${option.team1_name} VS ${option.team2_name} ${option.game_id}`
@@ -107,10 +108,15 @@ function TournamentDetails() {
           {/* The list of all the games in that tournament */}
           {tournamentGames.map((details, index) => (
             <div key={index} onClick={() => { handleGameClick(details) }}>
-              <h2>
+          <Container>
+              <Card>
+                <Typography>
+                  {details.team1_name}
+                </Typography>
                 Game {index + 1}: {details.team1_name} VS {details.team2_name}
                 Time {details.start_time} - {details.end_time}
-              </h2>
+              </Card>
+          </Container>
             </div>
           ))}
         </>

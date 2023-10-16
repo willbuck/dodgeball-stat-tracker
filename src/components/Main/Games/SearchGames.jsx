@@ -14,7 +14,7 @@ export default function SearchGames() {
     <Autocomplete
       options={games}
       getOptionLabel={(option) =>
-        `${option.team1_name} VS ${option.team2_name} ${option.game_id}`
+        `${option.team1_name} VS ${option.team2_name}`
       }
       onChange={(event, game) => history.push(`/games/${tournament.id}`)}
       renderInput={(params) => <TextField {...params} label="Tournaments" />}
