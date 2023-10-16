@@ -75,7 +75,7 @@ function PlayerName(props) {
         alignItems: "center",
 
         ".text": {
-            fontSize: "24px",
+            fontSize: "18px",
             justifySelf: "center",
             alignSelf: "center",
         }
@@ -103,11 +103,12 @@ function PlayerStats(props) {
             margin: "0px",
             alignItems: "center",
             justifyContent: "center",
+            paddingTop: "6px",
         },
         ".value": {
             alignSelf: "center",
             justifySelf: "center",
-            fontSize: "20px",
+            fontSize: "18px",
         },
         ".icon-button": {
             alignSelf: "center",

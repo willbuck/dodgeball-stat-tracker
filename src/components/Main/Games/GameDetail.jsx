@@ -13,7 +13,12 @@ import Scoreboard from './Scoreboard';
 // MUI Imports
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
-
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import IconButton from '@mui/material/IconButton';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
 
 // Style Tools
 import { styled } from '@mui/system';
@@ -294,6 +299,7 @@ function GameDetail() {
                     ))}
                 </Grid>
 
+                
 
             </Grid>
         </ComponentTheme>

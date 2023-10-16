@@ -37,7 +37,9 @@ function Scoreboard(props) {
             },
         },
         display: "flex",
-        '.container': {},
+        '.container': {
+            marginLeft: "10px",
+        },
         '.game-detail .container': {
             display: "flex",
             justifyContent: "center",
@@ -47,24 +49,43 @@ function Scoreboard(props) {
             fontSize: "24px"
         },
         '.team-one .score .container': {
-            alignItems: "end"
+            
+        },
+        'team-two .score .container': {
+
         },
         '.team-one .team-name': {
             paddingLeft: "10px",
         },
         '.team-two .team-name': {
             alignSelf: "end",
-            justifySelf: "end",
+            
         },
-        ".team-score": {
+        ".team-one .team-score": {
+            display: "flex",
             alignSelf: "center",
-            justifySelf: "center"
+            justifyContent: "flex-end"
+            
+        },
+        ".team-two .team-score": {
+            display: "flex",
+            alignSelf: "center",
+            
         },
         ".team-one .score-button": {
             color: '#186BCC'
         },
-        ".dash .content": {
-            color: "text.primary", fontSize: "24px", alignSelf: "center"
+        ".team-two .score-button": {
+            justifyContent: "flex-end",
+        },
+        ".dash": {
+            display: "flex",
+            color: "text.primary", 
+            fontSize: "24px",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "-35px",
+            width: "20px"
         }
     }));
 
@@ -120,7 +141,7 @@ function Scoreboard(props) {
             </Grid>
 
             {/* TEAM TWO SCORE */}
-            <Grid container item xs={5}>
+            <Grid container item xs={5} className="team-two score container">
                 <Grid item xs={4} component={CardContent} className="team-two team-score" >
                     {teamTwoScore}
                 </Grid>

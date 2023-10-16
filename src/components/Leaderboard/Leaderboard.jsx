@@ -21,19 +21,15 @@ function Leaderboard() {
 
   const dispatch = useDispatch();
   const leaderboardStore = useSelector((store) => store.leaderboardReducer);
-
+  const tournaments = useSelector(store => store.tournamentsReducer);
 
   const [leaderboard, setLeaderboard] = useState(leaderboardStore);
-  
-
   const [sortStat, setSortStat] = useState('kills');
 
+  const [currentTournament] = findIDMatch(tournaments, Number(params.id), "id")
+
   const sortLeaderboard = (stat) => {
-    console.log('leaderboard:', leaderboard)
-    console.log('leaderboardStore:', leaderboardStore)
     const leaderboardCopy = leaderboardStore.slice();
-    console.log('leadeboardCopy:', leaderboardCopy)
-    console.log('stat:', stat)
 
       leaderboardCopy.sort((a, b) => {
 
@@ -44,10 +40,7 @@ function Leaderboard() {
         }
         return 0
       })
-    
-    console.log('sorted leaderboard:', leaderboardCopy);
     setLeaderboard(leaderboardCopy);
-    console.log('leadeboard:', leaderboard)
   }
 
   // reorder leaderboard whenever the sort stat is updated
@@ -55,15 +48,12 @@ function Leaderboard() {
     sortLeaderboard(sortStat);
   }, [sortStat])
 
-  const tournaments = useSelector(store => store.tournamentsReducer);
+  
+
+  
 
 
-  const [currentTournament] = findIDMatch(tournaments, Number(params.id), "id")
-
-
-  const teamLeaderboardStore = useSelector(
-    (store) => store.teamLeaderboardReducer
-  );
+  const teamLeaderboardStore = useSelector((store) => store.teamLeaderboardReducer);
  
 
   const searchTeamLeaderboardStore = useSelector(

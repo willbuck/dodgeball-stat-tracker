@@ -71,9 +71,7 @@ router.post('/uuid', async (req, res) => {
       const response = await pool.query(getQueryText, [userUUID]);
 
       const uuidResponse = response.rows
-      console.log('uuid response:', uuidResponse)
     
-
       // Post unique credentials to database if not already present
       if (uuidResponse.length === 0) {
         await pool.query(postQueryText, [userUUID, userPseudonym]);
@@ -83,9 +81,6 @@ router.post('/uuid', async (req, res) => {
       } else {
         await res.send(uuidResponse);
       }
-
-      
-
     } catch (error) {
       console.log('error in GET UUID', error);
       res.sendStatus(500);
