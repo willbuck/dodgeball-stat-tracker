@@ -12,6 +12,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { Box } from "@mui/material";
 
 //this component is for the Leaderboard page
 //the leaderboard page is all the statistics
@@ -64,12 +65,8 @@ function Leaderboard() {
   //as the page loads
   //it will GET statistics from DB
   useEffect(() => {
-    //This dispatch is to GET all the teams
-    //in the tournament
-    dispatch({
-      type: "GET_ALL_TEAMS"
-    });
-
+    dispatch({ type: "GET_ALL_TEAMS"}, [dispatch]);
+    
     // check if selectedTeam is not Null
     // Run the effect whenever selectedTeam changes
     if (selectedTeam) {
@@ -81,93 +78,12 @@ function Leaderboard() {
   }, [selectedTeam]);
 
   return (
-    <>
-      <h1>Leaderboard: </h1>
-      <h1>{currentTournament.tournament_name}</h1>
-
-      {/* Search for a specific player leaderboard to 
-         get players stat */}
-
-      {/* <Stack spacing={2} sx={{ width: 300 }}>
-        <Autocomplete
-          id="free-solo-2-demo"
-          options={leaderboardStore}
-          getOptionLabel={(option) => `${option.firstname} ${option.lastname} `}
-          onChange={(event, newValue) => {
-            handleClickPlayer(newValue);
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search For A Player"
-              InputProps={{
-                ...params.InputProps,
-                type: "search",
-              }}
-            />
-          )}
-        />
-      </Stack> */}
-
-      {/* The Search for a Teams to see 
-        all players stats in that team*/}
-      {/* <Stack spacing={2} sx={{ width: 300 }}>
-        <Autocomplete
-          id="free-solo-2-demo"
-          options={teamLeaderboardStore}
-          getOptionLabel={(option) => `${option.team_name} `}
-          onChange={(event, newValue) => {
-            setSelectedTeam(newValue);
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search For A Team"
-              InputProps={{
-                ...params.InputProps,
-                type: "search",
-              }}
-            />
-          )}
-        />
-      </Stack> */}
-
-      {selectedPlayer ? (
-        // Display selected players stat details
-        <div>
-          <h2>Selected Player</h2>
-          <p>
-            {" "}
-            Name: {selectedPlayer.firstname} {selectedPlayer.lastname}
-          </p>
-          <p> kill:{selectedPlayer.kills}</p>
-          <p> Out: {selectedPlayer.outs}</p>
-          <p> Catch: {selectedPlayer.catches}</p>
-        </div>
-      ) : selectedTeam ? (
-        //Display selected Team, a list of all
-        // their players and stats
-        <div>
-          {searchTeamLeaderboardStore.map((member) => {
-            return (
-              <>
-                <p>
-                  {" "}
-                  Name: {member.firstname} {member.lastname}{" "}
-                </p>
-                <p> Kill: {member.kills} </p>
-                <p> Outs: {member.outs} </p>
-                <p> Catches: {member.catches} </p>
-              </>
-            );
-          })}
-        </div>
-      ) : (
-        // Render all stats for each players in that tournament
-        //  when no search has happened
-        <>
+    <Box>
+      <h1>Leaderboard</h1>
+      <h1>Maple Grove Invitational</h1>
           {/* The list of all the player in that tournament and their stats*/}
           <TableContainer >
+            <Table>
             <TableHead>
               <TableRow >
                 <TableCell >Player</TableCell>
@@ -186,17 +102,13 @@ function Leaderboard() {
                 <TableCell>{player.kills}</TableCell>
                 <TableCell>{player.catches}</TableCell>
                 <TableCell>{player.outs}</TableCell>
-              </TableRow>
-              
-                
+              </TableRow>  
             );
           })}
           </TableBody>
+          </Table>
           </TableContainer>
-        </>
+        </Box>
       )}
-    </>
-  );
-}
 
 export default Leaderboard;
