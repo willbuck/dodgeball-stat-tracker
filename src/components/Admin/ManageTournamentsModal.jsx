@@ -62,6 +62,7 @@ export default function ManageTournamentsModal(tournamentId) {
     
     const handlePresentation = () => {
         setName("Maple Grove Invitational")
+        setLocation("Maple Grove Arena")
     }
 
     const handleSubmit = (event) => {
