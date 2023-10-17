@@ -69,9 +69,6 @@ export default function ManageTeams() {
     }
   });
 
-
-
-
   return (
     <Container sx={{ marginBottom: 15 }}>
 
