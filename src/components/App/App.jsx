@@ -55,12 +55,9 @@ function App() {
     })
   }
 
-  
-
   // Fetch user
   useEffect(() => {
     dispatch({ type: "FETCH_USER", payload: uniqueID });
-
   }, [dispatch]);
 
   // Fetching global state from database at app load
