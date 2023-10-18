@@ -199,11 +199,9 @@ export default function ManageTournaments() {
                       {tournament.location}
                     </Typography>
                     <Divider sx={{ borderWidth: 1 }} />
+
                     <Typography variant="body2" color="textSecondary">
-                      {tournament.start_date || 'Start Date: TBD'}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      Organizer: {getOrganizerName(tournament.tournament_organizer)}
+                      USA Dodgeball
                     </Typography>
                   </CardContent>
 

@@ -67,19 +67,20 @@ function TournamentDetails() {
 
   return (
     <Container>
-      <Stack>
+      <Stack sx={{ padding: "20px"}}>
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            margin: "5px",
+            margin: "20px",
+            padding: "10px",
           }}
         >
 
-          <Button variant='contained' onClick={handleClickLeaderboard}>Leaderboard</Button>
+          <Button variant='contained' fullWidth onClick={handleClickLeaderboard}>Leaderboard</Button>
         </Box>
-          <Typography variant="h5">Round One</Typography>
+          <Typography variant="h5">Golden Valley Classic</Typography>
       </Stack>
 
       <Stack spacing={1}>

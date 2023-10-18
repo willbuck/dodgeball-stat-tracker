@@ -12,7 +12,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 //this component is for the Leaderboard page
 //the leaderboard page is all the statistics
@@ -49,12 +49,6 @@ function Leaderboard() {
     sortLeaderboard(sortStat);
   }, [sortStat])
 
-  const teamLeaderboardStore = useSelector((store) => store.teamLeaderboardReducer);
- 
-  const searchTeamLeaderboardStore = useSelector(
-    (store) => store.searchTeamLeaderboardReducer
-  );
-
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
 
@@ -79,8 +73,8 @@ function Leaderboard() {
 
   return (
     <Box>
-      <h1>Leaderboard</h1>
-      <h1>Maple Grove Invitational</h1>
+      <Typography sx={{ marginLeft: '10px' }} variant='h4'>Leaderboard</Typography>
+      <Typography sx={{ marginLeft: '10px' }} variant='h5'>Golden Valley Classic</Typography>
           {/* The list of all the player in that tournament and their stats*/}
           <TableContainer >
             <Table>
