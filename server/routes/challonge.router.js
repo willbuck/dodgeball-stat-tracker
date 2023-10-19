@@ -25,7 +25,6 @@ router.get("/tournament", (req, res) => {
       const tournamentData = response.data;
       res.send(tournamentData);
     } catch (error) {
-      console.error(error);
       res.sendStatus(500);
     }
   };
@@ -55,7 +54,6 @@ router.post("/tournament", (req, res) => {
 
       res.send(newTournamentData);
     } catch (error) {
-      console.error("error in tournament post:", error);
       res.sendStatus(500);
     }
   };
@@ -79,7 +77,7 @@ router.get("/tournament/participants", (req, res) => {
       console.log("fetchParticipants response:", response.data);
       res.send(response.data);
     } catch (error) {
-      console.log("error in fetchParticipants:", error);
+      res.sendStatus(500)
     }
   };
   fetchParticipants();
@@ -96,7 +94,6 @@ router.post("/tournament/participants", (req, res) => {
       misc: participant.jersey_color,
     };
   });
-  console.log("participantsToSend:", participantsToSend);
 
   const endpointURL = `https://api.challonge.com/v1/tournaments/${newTournamentURL}/participants/bulk_add.json`;
 
@@ -106,10 +103,8 @@ router.post("/tournament/participants", (req, res) => {
         api_key: apiKey,
         participants: participantsToSend,
       });
-      console.log("response from Challonge:", response.data);
       res.sendStatus(200);
     } catch (error) {
-      console.error("error in challonge participants post:", error);
       res.sendStatus(500);
     }
   };

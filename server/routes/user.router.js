@@ -25,7 +25,6 @@ router.post('/register', (req, res, next) => {
     .query(queryText, [username, password])
     .then(() => res.sendStatus(201))
     .catch((err) => {
-      console.log('User registration failed: ', err);
       res.sendStatus(500);
     });
 });
@@ -80,7 +79,6 @@ router.post('/uuid', async (req, res) => {
         await res.send(uuidResponse);
       }
     } catch (error) {
-      console.log('error in GET UUID', error);
       res.sendStatus(500);
     }
   }

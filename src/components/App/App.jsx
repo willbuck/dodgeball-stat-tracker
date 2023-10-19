@@ -34,7 +34,7 @@ import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
 
 // Unique identifiers for anonymous users
-import { v4 as uuidv4 } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
 import { uniqueNamesGenerator, colors, animals } from "unique-names-generator";
 
 export default function App() {
@@ -47,13 +47,13 @@ export default function App() {
   //! PWA functionality
   const uniqueID = {
     // Generating UUID from DNS namespace
-    uuid: uuidv4('usa_dodgeball', uuidv4.DNS),
+    uuid: uuidv5('usa_dodgeball', uuidv5.DNS),
 
     // Generating pseudonym for easier readability
     pseudonym: uniqueNamesGenerator({
       dictionaries: [colors, animals],
       length: 2,
-      seed: uuidv4('usa_dodgeball', uuidv4.DNS)
+      seed: uuidv5('usa_dodgeball', uuidv5.DNS)
     })
   }
 

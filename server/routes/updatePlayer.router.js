@@ -33,7 +33,6 @@ router.put('/', (req,res) => {
             res.sendStatus(200)
         }).catch((error) => {
             res.sendStatus(500);
-            console.log('Error with the PUT /api/updatePlayers', error);
         })
 })
 

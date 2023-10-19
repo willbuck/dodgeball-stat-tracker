@@ -38,8 +38,4 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.put("/", (req, res) => {
-  console.log("req.body:", req.body);
-});
-
 module.exports = router;
