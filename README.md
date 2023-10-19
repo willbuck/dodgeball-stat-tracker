@@ -107,7 +107,7 @@ Welcome to our dodgeball stat tracker, progressive web application.  This applic
 
 
 ## Screenshots
-![Add Teams](./attachments/add-teams.png)![Game Detail](./attachments/game-detail.png)![Manage Teams](./attachments/manage-teams.png)![Manage Tournaments](./attachments/manage-tournaments.png)![Manage Users](./attachments/manage-users.png)
+![Add Teams](./attachments/add-teams.png =140x300)![Game Detail](./attachments/game-detail.png =140x300)![Manage Teams](./attachments/manage-teams.png =140x300)![Manage Tournaments](./attachments/manage-tournaments.png =140x300)![Manage Users](./attachments/manage-users.png =140x300)
 
 ## Scope Document
 Document [here][https://docs.google.com/document/d/1JGShjeD8cyOBLEfNXD_bK4BGUrSsnE_2Y5ZJUUYNcm4/edit#heading=h.lhguc6hte2r4].
