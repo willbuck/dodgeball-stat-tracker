@@ -1,49 +1,43 @@
-import React from 'react';
+//! Refactor goal: import helper functions
+
+// Hooks
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";
-import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom';
+import { useParams } from 'react-router-dom'
+
+// Helper function
 import findIDMatch from '../../../utilities/findIDMatch'
 
-// MUI Imports
+// Custom component imports
+import PlayerCard from './PlayerCard';
+import Scoreboard from './Scoreboard';
+
+// MUI component imports
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import BackHandIcon from '@mui/icons-material/BackHand';
-import DoNotStepIcon from '@mui/icons-material/DoNotStep';
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 
-function GameDetail() {
-    const { id, gameID = Number(id) } = useParams();
+// Style tools
+import { styled } from '@mui/system';
 
+// Component function
+export default function GameDetail() {
+    const dispatch = useDispatch();
+
+    // Global state variables
     const allPlayers = useSelector((store) => store.playersReducer);
     const allGames = useSelector((store) => store.gamesReducer);
+    const stats = useSelector(store => store.stats);
+    const user = useSelector(store => store.user);
 
-    // Getting information for current game
+    // Get game id from route params & format as number
+    const { id, gameID = Number(id) } = useParams();
+
+    // Get current game object from global state
     const game = findIDMatch(allGames, gameID, 'game_id', false)
 
-    // Score state
-    const [teamOneScore, setTeamOneScore] = useState(0);
-    const [teamTwoScore, setTeamTwoScore] = useState(0);
-
-    const renderTallies = (num) => {
-        let tallyString = ` `
-        for (let i = 0; i < num; i++) {
-            tallyString = tallyString + ` x`;
-        }
-        return tallyString;
-    }
-
-    //! Eventually state should be the number of players in a lineup on a per-tournament basis
-    const [teamOneTally, setTeamOneTally] = useState(() => renderTallies(4));
-    const [teamTwoTally, setTeamTwoTally] = useState(() => renderTallies(4));
-
-
+    // Local state
+    const [teamOneScore, setTeamOneScore] = useState(game.team1_score);
+    const [teamTwoScore, setTeamTwoScore] = useState(game.team2_score);
     const [teams, setTeams] = useState({
         teamOne: {
             id: game.team1_id,
@@ -60,357 +54,257 @@ function GameDetail() {
         }
     });
 
-    // Helper function to set team rosters
+    // Helper function to add players to each team and statlines to each player
     const setRosters = (currentGame) => {
+
+        // Shallow copy of local teams state
         const teamsObject = Object.assign({}, teams);
-        // Looping over players to find players in this game
+
+        // Loop through all players
+        //! refactor goal: make it DRY
         for (let player of allPlayers) {
-            // Push player to team object's .players array if both:
-            // the player's team_id matches the team ID
-            // the player is not already in the team's .players array
+            // If player is on team 1 AND is not already in the team one object
             if (player.team_id === currentGame.team1_id && findIDMatch(teamsObject.teamOne.players, player.player_id, "player_id").length === 0) {
-                player.kills = 0;
-                player.outs = 0;
-                player.catches = 0;
+                // match existing stats to player
+                for (let statline of stats) {
+                    // If the statline matches the current player, game, and user
+                    if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && (statline.user_id === user.id || statline.uuid === user.uuid)) {
+                        // Assign the statline to the player object
+                        player.kills = statline.kills;
+                        player.catches = statline.catches;
+                        player.outs = statline.outs;
+                    }
+                }
+                // Set playery stats to 0 if no matches were found
+                //? Why didn't I do this as an else statement? Review
+                player.kills = player.kills || 0;
+                player.outs = player.outs || 0;
+                player.catches = player.catches || 0;
                 teamsObject.teamOne.players.push(player);
+
+                // Same logic as IF statement, but for team 2
             } else if (player.team_id === currentGame.team2_id && findIDMatch(teamsObject.teamTwo.players, player.player_id, "player_id").length === 0) {
-                player.kills = 0;
-                player.outs = 0;
-                player.catches = 0;
+                for (let statline of stats) {
+                    if (statline.player_id === player.player_id && statline.game_id === currentGame.game_id && (statline.user_id === user.id || statline.uuid === user.pseudonym)) {
+                        player.kills = statline.kills;
+                        player.catches = statline.catches;
+                        player.outs = statline.outs;
+                    }
+                }
+                player.kills = player.kills || 0;
+                player.outs = player.outs || 0;
+                player.catches = player.catches || 0;
                 teamsObject.teamTwo.players.push(player);
             }
         }
         return teamsObject
     }
 
+    // Assign players and stats to teams object on page load
     useEffect(() => {
         setTeams(setRosters(game))
     }, [])
 
-    // Function to sum all player stats for a team
-    const getTeamStats = (roster) => {
-        // variables to hold total kills, catches, and outs
-        let totalKills = 0;
-        let totalCatches = 0;
-        let totalOuts = 0;
-
-        // loop over roster to add stats to team totals
-        for (let player of roster) {
-            totalKills += player.kills;
-            totalCatches += player.catches;
-            totalOuts += player.outs;
-        }
-
-        return { kills: totalKills, catches: totalCatches, outs: totalOuts }
-    }
-
-
-    // Function to get each team's score
-    const getRemainingPlayers = (teams) => {
-        const teamOneStats = getTeamStats(teams.teamOne.players);
-        const teamTwoStats = getTeamStats(teams.teamTwo.players);
-
-        // setTeamOneScore(teamOneStats.kills + teamOneStats.catches - teamOneStats.outs - teamTwoStats.catches);
-        // setTeamTwoScore(teamTwoStats.kills + teamTwoStats.catches - teamTwoStats.outs - teamOneStats.catches);
-
-        //! default 4 should be replaced with lineup size
-        const teamOneTallyCalc = 4 - teamTwoStats.kills - teamTwoStats.catches + teamOneStats.catches - teamOneStats.outs;
-        const teamTwoTallyCalc = 4 - teamOneStats.kills - teamOneStats.catches + teamTwoStats.catches - teamTwoStats.outs;
-
-        // Update team one player tally
-        if (teamOneTallyCalc >= 4) {
-            // If greater than default, setState(default)
-            setTeamOneTally(() => renderTallies(4));
-        } else if (teamOneTallyCalc <= 0) {
-            // if <0, setState(0) and render "Confirm Win" button
-            setTeamOneTally('');
-        } else {
-            setTeamOneTally(() => renderTallies(teamOneTallyCalc));
-        }
-
-        // Update team two player tally
-        if (teamTwoTallyCalc >= 4) {
-            // If greater than default, setState(default)
-            setTeamTwoTally(() => renderTallies(4));
-        } else if (teamTwoTallyCalc <= 0) {
-            // if <0, setState(0) and render "Confirm Win" button
-            setTeamTwoTally('');
-        } else {
-            setTeamTwoTally(() => renderTallies(teamTwoTallyCalc));
-        }
-    }
-
-    //! User should have decrement option
+    //! refactor goal: decrement option
     // Handler function for stat tracking
-    const handleStat = (stat, player) => {
+    const handleStat = async (stat, player) => {
+        // stat: string matching a key in player.stats
 
-        player[stat]++;
+        // Increment the selected stat on player object 
+        await player[stat]++;
 
-        // Creating copy of teams state so
-        // react will re-render on state change
+        // Shallow copy of teams object
         const teamsCopy = Object.assign({}, teams);
 
+        //! refactor goal: make it DRY
         // Loop to find player in teams object
-        //! This is very inelegant
         let counter = 0;
+        // Loop through team one players
         for (let roster of teamsCopy.teamOne.players) {
+            // Find the player passed in as an argument
             if (player.player_id === roster.player_id) {
+                // Replace the player to include the updated stat
                 teamsCopy.teamOne.players[counter] = player;
             }
-            counter++
+            await counter++
         }
+        // same logic as above, but for team two
         counter = 0;
         for (let roster of teamsCopy.teamTwo.players) {
             if (player.player_id === roster.player_id) {
                 teamsCopy.teamTwo.players[counter] = player;
             }
-            counter++;
+            await counter++;
         }
-        // Updating state
-        setTeams(teamsCopy);
-        getRemainingPlayers(teams);
+
+        // Updating local state
+        await setTeams(teamsCopy);
+
+        // Send stats to database
+        await dispatch({ type: 'SEND_STATS', payload: { game, player, user } })
     }
 
-    const handleScore = (team, increment) => {
-        if (team === "one" && increment === "plus") {
-            setTeamOneScore(teamOneScore + 1);
-        }
-        if (team === "one" && increment === "minus") {
-            if (teamOneScore <= 0) {
-                setTeamOneScore(0);
-            } else { 
-                setTeamOneScore(teamOneScore - 1)
+    // Helper function to 
+    const updateScore = async (team, score) => {
+        // Loop through all games
+        for (let aGame of allGames) {
+            // Find current game
+            if (game.game_id === aGame.game_id) {
+                // Find selected team and update score
+                if (team === 1) {
+                    aGame.team1_score = score;
+                }
+                if (team === 2) {
+                    aGame.team2_score = score;
+                }
             }
         }
+        //! Refactor goal: the below route would update the
+        //! official game score. A random user shouldn't have 
+        //! that power. We could have a table similar to the
+        //! statistics table for user score reports.
+        // await dispatch({type: 'UPDATE_GAMES', payload: game});
+
+        // For now, keep score updates in global state
+        await dispatch({ type: "SET_GAMES", payload: allGames });
+    }
+
+    // Helper function to update state for game score
+    const handleScore = async (team, increment) => {
+        // team one +1
+        if (team === "one" && increment === "plus") {
+            // Set global state
+            await updateScore(1, teamOneScore + 1);
+            // Set local state
+            await setTeamOneScore(teamOneScore + 1);
+
+        }// team one -1
+        if (team === "one" && increment === "minus") {
+            // Prevent score below 0
+            if (teamOneScore <= 0) {
+                await setTeamOneScore(0);
+            } else {
+                await updateScore(1, teamOneScore - 1);
+                await setTeamOneScore(teamOneScore - 1);
+            }
+        } // team two +1
         if (team === "two" && increment === "plus") {
-            setTeamTwoScore(teamTwoScore + 1);
-        }
+            await updateScore(2, teamTwoScore + 1);
+            await setTeamTwoScore(teamTwoScore + 1);
+        } // team two -1
         if (team === "two" && increment === "minus") {
             if (teamTwoScore <= 0) {
-                setTeamTwoScore(0);
-            } else { 
-                setTeamTwoScore(teamTwoScore - 1)
+                await setTeamTwoScore(0);
+            } else {
+                await updateScore(2, teamTwoScore - 1);
+                await setTeamTwoScore(teamTwoScore - 1);
             }
         }
     }
 
-    //! Make individual team grids into a separate component
+    // Create array to loop through for rendering player cards
+    //! Refactor goal: as far as I can tell, this only exists
+    //! to add colors. Would be easier to do this in the database query
+    const createPlayersArray = () => {
+        const teamArrays = {
+            teamOne: [],
+            teamTwo: []
+        }
+        // Add each player to the appropriate array, with team color
+        for (let player of teams.teamOne.players) {
+            teamArrays.teamOne.push({ ...player, color: teams.teamOne.color })
+        }
+        for (let player of teams.teamTwo.players) {
+            teamArrays.teamTwo.push({ ...player, color: teams.teamTwo.color })
+        }
+        return teamArrays;
+    }
+    // Variable to hold above array
+    const cardsToRender = createPlayersArray();
+
+    // Component-level styling
+    //! Refactor goal: put this in a css file
+    const ComponentTheme = styled(Grid)(({ theme }) => ({
+        '.scroll-container': {
+            backgroundColor: 'primary.dark',
+            '&:hover': {
+                backgroundColor: 'primary.main',
+                opacity: [0.9, 0.8, 0.7],
+            },
+        },
+        display: "flex",
+        '.container': {},
+        '.game-detail .container': {
+            display: "flex",
+            justifyContent: "center",
+        },
+        '.scoreboard .container': {
+            color: "text.primary",
+            fontSize: "24px"
+        },
+        '.team-one .score .container': {
+            alignItems: "end"
+        },
+        '.team-one .team-name': {
+            paddingLeft: "10px",
+        },
+        '.team-two .team-name': {
+            alignSelf: "end",
+            justifySelf: "end",
+        },
+        ".team-score": {
+            alignSelf: "center",
+            justifySelf: "center"
+        },
+        ".team-one .score-button": {
+            color: '#186BCC'
+        },
+        ".dash .content": {
+            color: "text.primary", fontSize: "24px", alignSelf: "center"
+        }
+    }));
+
+    // JSX to render
     return (
-        // Main Container Box
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Grid container >
-                {/* SCOREBOARD */}
-                <Grid container item xs={12} component={Card} sx={{ color: "text.primary", fontSize: "24px" }}>
+        <ComponentTheme
+            className="game-detail container"
+            container
+            component={Box} >
 
-                    {/* TEAM ONE SCORE */}
-                    <Grid container item xs={5} sx={{ alignItems: "end" }}>
-                        <Grid item xs={8} component={CardContent} className="team-one team-name" sx={{ paddingLeft: "10px", }}>
-                            {teams.teamOne.name}
-                        </Grid>
-
-                        <Grid item xs={4} component={CardContent} className="team-one team-score" sx={{ alignSelf: "center", justifySelf: "center" }}>
-                            {teamOneScore}
-                        </Grid>
-
-                        <Grid item xs={6} component={CardActions} className="team-one score-button decrease">
-                            <IconButton sx={{ color: '#186BCC' }} onClick={() => handleScore("one", "minus")}>
-                                <RemoveCircleIcon />
-                            </IconButton>
-                        </Grid>
-
-                        <Grid item xs={6} component={CardActions} className="team-one score-button increase">
-                            <IconButton sx={{ color: '#186BCC' }} onClick={() => handleScore("one", "plus")}>
-                                <AddCircleIcon />
-                            </IconButton>
-                        </Grid>
-                    </Grid>
-
-                    {/* DASH */}
-                    <Grid item xs={2}>
-                        <Typography sx={{ color: "text.primary", fontSize: "24px", alignSelf: "center" }}>-</Typography>
-                    </Grid>
-
-                    {/* TEAM TWO SCORE */}
-                    <Grid container item xs={5}>
-                        <Grid item xs={4} component={CardContent} className="team-one team-score" sx={{ alignSelf: "center", justifySelf: "center" }}>
-                            {teamTwoScore}
-                        </Grid>
-                        <Grid item xs={8} component={CardContent} className="team-one team-name" sx={{ paddingLeft: "10px", }}>
-                            {teams.teamTwo.name}
-                        </Grid>
-
-                        <Grid item xs={6} component={CardActions} className="team-two score-button decrease">
-                            <IconButton sx={{ color: '#186BCC' }} onClick={() => handleScore("two", "minus")}>
-                                <RemoveCircleIcon />
-                            </IconButton>
-                        </Grid>
-
-                        <Grid item xs={6} component={CardActions} className="team-two score-button increase">
-                            <IconButton sx={{ color: '#186BCC' }} onClick={() => handleScore("two", "plus")}>
-                                <AddCircleIcon />
-                            </IconButton>
-                        </Grid>
-                    </Grid>
+            {/* SCOREBOARD COMPONENT */}
+            <Scoreboard
+                handleScore={handleScore}
+                teams={teams}
+                teamOneScore={teamOneScore}
+                teamTwoScore={teamTwoScore} />
 
 
+            {/* PLAYER CARD CONTAINER */}
+            <Grid className="scroll-container"
+                container item xs={12}
+                component={Box}>
 
+                {/* TEAM ONE CONTAINER */}
+                <Grid className="team-one player container" container item xs={6} rowGap={2}>
+                    {cardsToRender.teamOne.map(player => (
+                        <PlayerCard
+                            key={player.player_id}
+                            player={player}
+                            handleStat={handleStat} />
+                    ))}
                 </Grid>
 
-                {/* Main Container Box For Scrolling */}
-                <Box className="scroll-container"
-                    sx={{
-                        display: 'flex',
-                        width: 350,
-                        height: 600,
-                        overflowY: "auto",
-                        backgroundColor: 'primary.dark',
-                        '&:hover': {
-                            backgroundColor: 'primary.main',
-                            opacity: [0.9, 0.8, 0.7],
-                        },
-                    }}
-                >
+                {/* TEAM TWO CONTAINER */}
+                <Grid className="team-two player container" container item xs={6} rowGap={2} >
+                    {cardsToRender.teamTwo.map(player => (
+                        <PlayerCard
+                            key={player.player_id}
+                            player={player}
+                            handleStat={handleStat} />
+                    ))}
+                </Grid>
 
-
-
-                    {/* Left Grid For Team 1 */}
-                    <Grid container item sx={{ minWidth: 100, display: 'flex', justifyContent: 'left', paddingLeft: 1 }}
-                        xs={6}
-                        columnGap={6}
-                        rowGap={2}>
-
-                        {teams.teamOne.players.map((player) => {
-                            return (
-                                // PLAYER COMPONENT
-                                <Card
-                                    key={player.player_id}
-                                    sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
-                                >
-                                    <CardContent>
-                                        {/* PLAYER NAME */}
-                                        <Typography variant='body2' color='text.secondary'>
-                                            #{player.jersey_number} {player.firstname} {player.lastname}
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions sx={{ justifyContent: 'spaceBetween' }}>
-
-                                        {/* STAT ROW */}
-                                        <Grid container direction="column" alignItems="center">
-                                            {/* Kills value */}
-                                            <Grid item >
-                                                <Typography variant="body2" color='text.secondary'>
-                                                    {player.kills}
-                                                </Typography>
-                                            </Grid >
-                                            {/* Kill icon */}
-                                            <Grid item >
-                                                <IconButton onClick={() => { handleStat('kills', player) }} sx={{ color: '#186BCC', }}>
-                                                    <GpsFixedIcon />
-                                                </IconButton>
-                                            </Grid>
-                                        </Grid>
-
-                                        <Grid container direction="column" alignItems="center">
-                                            <Grid >
-                                                <Typography variant="body2" color='text.secondary'>
-                                                    {player.catches}
-                                                </Typography>
-                                            </Grid>
-                                            <Grid >
-                                                <IconButton onClick={() => { handleStat('catches', player) }} sx={{ color: '#186BCC', }}>
-                                                    <BackHandIcon />
-                                                </IconButton>
-                                            </Grid>
-                                        </Grid>
-
-                                        <Grid container direction="column" alignItems="center">
-                                            <Grid >
-                                                <Typography variant="body2" color='text.secondary'>
-                                                    {player.outs}
-                                                </Typography>
-                                            </Grid>
-                                            <Grid >
-                                                <IconButton onClick={() => { handleStat('outs', player) }} sx={{ color: '#186BCC', }}>
-                                                    <DoNotStepIcon />
-                                                </IconButton>
-                                            </Grid>
-                                        </Grid>
-
-                                    </CardActions>
-                                </Card>
-                            )
-                        })}
-                    </Grid>
-
-
-                    {/* Right Grid For Team 2 */}
-                    <Grid container item sx={{ minWidth: 100, display: 'flex', justifyContent: 'right', paddingRight: 1 }}
-                        xs={6}
-                        columnGap={6}
-                        rowGap={2}>
-                        {teams.teamTwo.players.map((player) => {
-                            return (
-                                <Card
-                                    key={player.player_id}
-                                    sx={{ minWidth: 160, maxWidth: 125, justifyContent: 'center' }}
-                                >
-                                    <CardContent>
-                                        <Typography variant='body2' color='text.secondary'>
-                                            #{player.jersey_number} {player.firstname} {player.lastname}
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions sx={{ justifyContent: 'spaceBetween' }}>
-
-                                        <Grid container direction="column" alignItems="center">
-                                            <Grid >
-                                                <Typography variant="body2" color='text.secondary'>
-                                                    {player.kills}
-                                                </Typography>
-                                            </Grid>
-                                            <Grid >
-                                                <IconButton onClick={() => { handleStat("kills", player) }} sx={{ color: '#186BCC', }}>
-                                                    <GpsFixedIcon />
-                                                </IconButton>
-                                            </Grid>
-                                        </Grid>
-
-                                        <Grid container direction="column" alignItems="center">
-                                            <Grid >
-                                                <Typography variant="body2" color='text.secondary'>
-                                                    {player.catches}
-                                                </Typography>
-                                            </Grid>
-                                            <Grid >
-                                                <IconButton onClick={() => { handleStat("catches", player) }} sx={{ color: '#186BCC', }}>
-                                                    <BackHandIcon />
-                                                </IconButton>
-                                            </Grid>
-                                        </Grid>
-
-                                        <Grid container direction="column" alignItems="center">
-                                            <Grid >
-                                                <Typography variant="body2" color='text.secondary'>
-                                                    {player.outs}
-                                                </Typography>
-                                            </Grid>
-                                            <Grid >
-                                                <IconButton onClick={() => { handleStat("outs", player) }} sx={{ color: '#186BCC', }}>
-                                                    <DoNotStepIcon />
-                                                </IconButton>
-                                            </Grid>
-                                        </Grid>
-
-                                    </CardActions>
-                                </Card>
-                            )
-                        })}
-                    </Grid>
-
-                </Box>
             </Grid>
-
-        </Box>
+        </ComponentTheme>
     );
 }
-
-export default GameDetail;

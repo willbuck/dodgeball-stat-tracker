@@ -27,8 +27,8 @@ root.render(
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <ThemeProvider 
           theme={theme}>
-            <CssBaseline />
-            <App />
+          <CssBaseline />
+          <App />
         </ThemeProvider>
       </LocalizationProvider>
     </Provider>

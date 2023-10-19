@@ -1,121 +1,129 @@
-import { useEffect, useState } from "react";
+// Hooks
 import { useDispatch, useSelector } from "react-redux";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Autocomplete from "@mui/material/Autocomplete";
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from "react-router-dom";
 
-// This component is for the Tournament details page
-// It talks to the database to get all the games
-// in a specific tournment
+// Custom components
+import SearchGames from "./SearchGames";
 
-function TournamentDetails() {
+// Style components
+import {
+  Box,
+  Button,
+  Divider,
+  Container,
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+} from "@mui/material";
+
+// List of all games in a given tournament
+export default function GamesList() {
+  // Hook variables
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // Getting tournament ID from 
-  // react-router url params and  
-  // changing data type back to number
-  const {id, tournamentID = Number(id)} = useParams();
-
-  // Getting games from store
+  // Global state
   const allGames = useSelector((store) => store.gamesReducer);
+  const allTournaments = useSelector(store => store.tournamentsReducer);
+
+  // Get tournament id from route params & format as number
+  const { id, tournamentID = Number(id) } = useParams();
+
+  // Get selected tournament object
+  let selectedTournament;
+  for (let tournament of allTournaments) {
+    if (tournament.id === tournamentID) {
+      selectedTournament = tournament;
+    }
+  }
 
   // Creating array for games in current tournament
   const tournamentGames = [];
+  // loop through games & push tournament games to array
   for (let game of allGames) {
-    if(game.tournament_id === tournamentID) {
+    if (game.tournament_id === tournamentID) {
       tournamentGames.push(game);
     }
   }
-  
+
   // Handler function for selected game
   const handleGameClick = (game) => {
-
     // using location object to add state to next page in history
     const location = {
       pathname: `/gameview/${game.game_id}`,
-      state: game
-    }
+      state: game,
+    };
 
     // Navigating to next page using location object
-    history.push(location)
-  }
-
-  const [selectedGame, setSelectedGame] = useState(null);
-
-  // This functions handles the selected game
-  const handleSearchbarClick = (newValue) => {
-    setSelectedGame(newValue);
+    history.push(location);
   };
 
-  const handleClickLearderboard = () => {
-    console.log('In here',  tournamentID);
+  const handleClickLeaderboard = () => {
     dispatch({
       type: "GET_STATISTICS",
-      payload: tournamentID
+      payload: tournamentID,
     });
-    history.push(`/leaderboard/${tournamentID}`)
+    history.push(`/leaderboard/${tournamentID}`);
+  };
 
+  return (<>
+    {/* Conditional to prevent app crash on reload */}
+    {selectedTournament &&
 
-  }
+      <Container>
+        {/* SEARCHBAR */}
+        <SearchGames games={tournamentGames} />
 
-  return (
-    <>
-    <button onClick={handleClickLearderboard}>Leaderboard</button>
-      {/* Search for a specific game */}
-      <Stack spacing={2} sx={{ width: 300 }}>
-        <Autocomplete
-          id="free-solo-2-demo"
-          options={allGames}
-          getOptionLabel={(option) =>
-            `${option.team1_name} VS ${option.team2_name} ${option.game_id}`
-          }
-          onChange={(event, newValue) => {
-            handleSearchbarClick(newValue);
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search For A Game"
-              InputProps={{
-                ...params.InputProps,
-                type: "search",
-              }}
-            />
-          )}
-        />
-      </Stack>
+        {/* LEADERBOARD BUTTON */}
+        <Stack sx={{ padding: "20px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              margin: "20px",
+              padding: "10px",
+            }}
+          >
+            <Button variant='contained' fullWidth onClick={handleClickLeaderboard}>Leaderboard</Button>
+          </Box>
+          <Typography variant="h5">{selectedTournament.tournament_name}
+          </Typography>
+        </Stack>
 
-      {/* If a game was selected I want the selected
-      game to show more details */}
-
-      {selectedGame ? (
-        // Display selected game details
-        <div>
-          <h2>Selected Game:</h2>
-          <p>Team 1: {selectedGame.team1_name}</p>
-          <p>Team 2: {selectedGame.team2_name}</p>
-          <p>Game ID: {selectedGame.game_id}</p>
-          <p>Start Time: {selectedGame.start_time}</p>
-          <p>End Time: {selectedGame.end_time}</p>
-          {/* Add more details as needed */}
-        </div>
-      ) : (
-        // Render tournament details when selectedGame is empty
-        <>
-          {/* The list of all the games in that tournament */}
+        {/* GAME LIST */}
+        {/* refactor goal: move to separate component */}
+        <Stack spacing={1}>
           {tournamentGames.map((details, index) => (
-            <div key={index} onClick={() => { handleGameClick(details) }}>
-              <h2>
-                Game {index + 1}: {details.team1_name} VS {details.team2_name}
-                Time {details.start_time} - {details.end_time}
-              </h2>
-            </div>
+            <Card
+              key={index}
+              onClick={() => {
+                handleGameClick(details);
+              }}
+            >
+              {/* Team 1 */}
+              <CardContent
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <Typography variant="h6">{details.team1_name}</Typography>
+                <Divider />
+                <Typography variant="h6">{details.team1_score}</Typography>
+              </CardContent>
+
+              <Divider />
+              {/* Team 2 */}
+              <CardContent
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <Typography variant="h6">{details.team2_name}</Typography>
+                <Typography variant="h6">{details.team2_score}</Typography>
+              </CardContent>
+            </Card>
           ))}
-        </>
-      )}
-    </>
-  );
+        </Stack>
+      </Container>
+    }
+
+  </>);
 }
-export default TournamentDetails;

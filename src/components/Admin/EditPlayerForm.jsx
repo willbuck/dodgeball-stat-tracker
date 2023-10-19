@@ -43,7 +43,6 @@ export default function PlayerEditForm({ player, onClose }) {
 
   const handleChangeTeam = (event) => {
     setSelectedTeam(event.target.value);
-    console.log(event.target.value);
   };
 
   return (

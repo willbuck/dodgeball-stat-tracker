@@ -4,7 +4,6 @@ const router = express.Router();
 
 // GET - ALL teams in DB
 router.get('/', (req, res) => {
-  console.log("Getting all teams", req.body)
 
   let queryText = `SELECT * FROM "team" ORDER BY "id" ASC`
   pool.query(queryText)

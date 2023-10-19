@@ -37,6 +37,11 @@ router.get('/:id', (req, res) => {
             res.sendStatus(500);
             console.log('Error with the games router GET', error);
         })
+});
+
+router.put('/', (req, res) => {
+    console.log('req.body:', req.body);
+    
 })
 
 module.exports = router;

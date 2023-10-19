@@ -3,7 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/', (req, res) => {
- 
+
   let queryText = `SELECT * FROM "tournament"`
   pool.query(queryText)
     .then((response) => {
@@ -17,19 +17,19 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   // console.log('in tournament POST', req.body);
 
-  const { 
-    name, 
-    organizer, 
-    location, 
-    startDate, 
-    ballType, 
-    courts, 
-    description, 
+  const {
+    name,
+    organizer,
+    location,
+    startDate,
+    ballType,
+    courts,
+    description,
     url } = req.body
     
-    const queryValues = [name, organizer, location, ballType, description, startDate, courts, url]
+    const queryValues = [name, organizer, location, "foam", description, startDate, courts, url]
 
-    const queryText = `
+  const queryText = `
       INSERT INTO "tournament" (
         "tournament_name", 
         "tournament_organizer",
@@ -44,20 +44,20 @@ router.post('/', (req, res) => {
   `
 
   pool.query(queryText, queryValues)
-  .then( response => {
-    res.sendStatus(200)
-  })
-  .catch( error => {
-    console.log('error in create tournament pool query', error)
-    res.sendStatus(500)
-  })
+    .then(response => {
+      res.sendStatus(200)
+    })
+    .catch(error => {
+      console.log('error in create tournament pool query', error)
+      res.sendStatus(500)
+    })
 })
 
 router.post('/participants', (req, res) => {
 
   // Creating queryValues by 
   const queryValues = []
-  req.body.map( index => {
+  req.body.map(index => {
     queryValues.push(index.teamID);
     queryValues.push(index.tournamentURL);
   })
@@ -69,7 +69,7 @@ router.post('/participants', (req, res) => {
 
     // Looping over queryValues to add ($1, $2), etc.
     for (let i = 0; i < rowsNeeded; i++) {
-      stringToReturn = stringToReturn + `($${ 1 + (i * 2)}, $${2 + (i * 2)}),`
+      stringToReturn = stringToReturn + `($${1 + (i * 2)}, $${2 + (i * 2)}),`
     }
     // Removing last comma
     stringToReturn = stringToReturn.slice(0, -1);
@@ -86,15 +86,56 @@ router.post('/participants', (req, res) => {
     VALUES ${placeholders}
     ;
   `
-   
+
   pool.query(queryText, queryValues)
-  .then( response => {
-    res.sendStatus(200);
-  })
-  .catch( error => {
-    console.log('error in pool query crete participants', error);
-    res.sendStatus(500);
-  })
+    .then(response => {
+      res.sendStatus(200);
+    })
+    .catch(error => {
+      console.log('error in pool query crete participants', error);
+      res.sendStatus(500);
+    })
+})
+
+
+// tournament update on database
+router.put('/', (req, res) => {
+  console.log('in tournament PUT', req.body);
+
+  const {
+    name,
+    organizer,
+    location,
+    startDate,
+    ballType,
+    courts,
+    description,
+    id } = req.body
+  console.log('name in put is', name, id);
+
+  const queryValues = [name, organizer, location, ballType, description, startDate, courts, id]
+
+  const queryText = `
+      UPDATE "tournament" 
+      SET
+        "tournament_name" = $1, 
+        "tournament_organizer" = $2,
+        "location" = $3,
+        "ball_type" = $4,
+        "description" = $5,
+        "start_date" = $6,
+        "courts" = $7
+      WHERE "id" = $8;
+  `
+
+  pool.query(queryText, queryValues)
+    .then(response => {
+      res.sendStatus(200)
+    })
+    .catch(error => {
+      console.log('error in edit tournament pool query', error)
+      res.sendStatus(500)
+    })
 })
 
 module.exports = router;

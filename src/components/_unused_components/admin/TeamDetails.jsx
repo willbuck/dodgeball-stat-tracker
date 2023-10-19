@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { Stack, TextField, Typography } from '@mui/material'
 
 export default function TeamDetails() {
