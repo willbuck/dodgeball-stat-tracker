@@ -15,8 +15,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  // console.log('in tournament POST', req.body);
-
   const {
     name,
     organizer,
@@ -48,7 +46,6 @@ router.post('/', (req, res) => {
       res.sendStatus(200)
     })
     .catch(error => {
-      console.log('error in create tournament pool query', error)
       res.sendStatus(500)
     })
 })
@@ -76,7 +73,6 @@ router.post('/participants', (req, res) => {
     return stringToReturn;
   }
   const placeholders = createPlaceholders(queryValues)
-  console.log('placeholders:', placeholders)
 
   const queryText = `
     INSERT INTO "participants" (
@@ -92,7 +88,6 @@ router.post('/participants', (req, res) => {
       res.sendStatus(200);
     })
     .catch(error => {
-      console.log('error in pool query crete participants', error);
       res.sendStatus(500);
     })
 })
@@ -100,8 +95,6 @@ router.post('/participants', (req, res) => {
 
 // tournament update on database
 router.put('/', (req, res) => {
-  console.log('in tournament PUT', req.body);
-
   const {
     name,
     organizer,
@@ -111,7 +104,6 @@ router.put('/', (req, res) => {
     courts,
     description,
     id } = req.body
-  console.log('name in put is', name, id);
 
   const queryValues = [name, organizer, location, ballType, description, startDate, courts, id]
 
@@ -133,7 +125,6 @@ router.put('/', (req, res) => {
       res.sendStatus(200)
     })
     .catch(error => {
-      console.log('error in edit tournament pool query', error)
       res.sendStatus(500)
     })
 })

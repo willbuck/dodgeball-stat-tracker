@@ -21,6 +21,7 @@ export default function TournamentList() {
   const dispatch = useDispatch();
   const history = useHistory();
   const tournaments = useSelector((store) => store.tournamentsReducer);
+
   const upcomingTournament = useSelector(
     (store) => store.tournamentsReducer[0]
   );
@@ -84,9 +85,6 @@ export default function TournamentList() {
               <CardContent>
                 <Typography variant="body1">
                   {tournament.tournament_name}{" "}
-                  {/* {tournament.start_date
-      ? tournament.start_date
-      : "Dates : TBD"} */}
                 </Typography>
                 <Typography variant="body2">{tournament.location}</Typography>
 
