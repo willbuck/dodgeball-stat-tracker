@@ -110,7 +110,7 @@ Welcome to our dodgeball stat tracker, progressive web application.  This applic
 <img src="./attachments/add-teams.png" width="140" height="300" /><img src="./attachments/game-detail.png" width="140" height="300" /><img src="./attachments/manage-teams.png" width="140" height="300" /><img src="./attachments/manage-tournaments.png" width="140" height="300" /><img src="./attachments/manage-users.png" width="140" height="300" />
 
 ## Scope Document
-Document [here][https://docs.google.com/document/d/1JGShjeD8cyOBLEfNXD_bK4BGUrSsnE_2Y5ZJUUYNcm4/edit#heading=h.lhguc6hte2r4].
+Document [here](https://docs.google.com/document/d/1JGShjeD8cyOBLEfNXD_bK4BGUrSsnE_2Y5ZJUUYNcm4/edit#heading=h.lhguc6hte2r4).
 
 ## Installation
 - Create a database named “usa_dodgeball”
