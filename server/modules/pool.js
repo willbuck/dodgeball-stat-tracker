@@ -28,7 +28,7 @@ else {
     pool = new pg.Pool({
         host: 'localhost',
         port: 5432,
-        database: 'usa_dodgeball'
+        database: 'usa_dodgeball_test'
     });
 }
 

@@ -178,10 +178,7 @@ function PlayerStats(props) {
                     {player.outs}
                 </Grid>
 
-
             </Grid>
-
         </ComponentTheme>
     )
 }
-

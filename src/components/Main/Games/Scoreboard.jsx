@@ -1,33 +1,22 @@
-import React from 'react';
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector, } from "react-redux";
-import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom';
-import findIDMatch from '../../../utilities/findIDMatch'
-
-// Components
-import PlayerCard from './PlayerCard';
-
 // MUI Imports
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import BackHandIcon from '@mui/icons-material/BackHand';
-import DoNotStepIcon from '@mui/icons-material/DoNotStep';
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 // Style Tools
-import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
 
 
-function Scoreboard(props) {
+export default function Scoreboard(props) {
+    // Deconstruct props
+    const { handleScore, teams, teamOneScore, teamTwoScore, } = props
 
+    // Component style
     const ComponentTheme = styled(Grid)(({ theme }) => ({
         '.scroll-container': {
             backgroundColor: 'primary.dark',
@@ -89,10 +78,7 @@ function Scoreboard(props) {
         }
     }));
 
-    const { handleScore, teams, teamOneScore, teamTwoScore, } = props
-
     return (
-
         <ComponentTheme
             className="scoreboard container"
             container
@@ -165,5 +151,3 @@ function Scoreboard(props) {
 
     )
 }
-
-export default Scoreboard;
