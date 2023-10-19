@@ -2,7 +2,6 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-
 router.get('/:tournamentId/:teamId', (req,res) => {
     const tournamentId = req.params.tournamentId;
     const teamId = req.params.teamId;
@@ -49,7 +48,6 @@ router.get('/:tournamentId/:teamId', (req,res) => {
             res.send(result.rows)
         }).catch((error) => {
             res.sendStatus(500);
-            console.log('ERROR with the GET searchTeam', error);
         })
 })
 

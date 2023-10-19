@@ -13,19 +13,29 @@ router.post("/", (req, res) => {
 
   const queryText = `
     INSERT INTO players (firstname, lastname, 
-        jersey_number, team_id, phone_number, 
-        can_referee, captain)
-    VALUES($1, $2, $3, $4, $5, $6, $7);`;
+    jersey_number, team_id, phone_number, 
+    can_referee, captain)
+    VALUES($1, $2, $3, $4, $5, $6, $7);
+    `
 
-  const queryParams = [firstName, lastName, jerseyNumber, teamId, phoneNumber, canReferee, isCaptain];
+  const queryParams = [
+    firstName,
+    lastName,
+    jerseyNumber,
+    teamId,
+    phoneNumber,
+    canReferee,
+    isCaptain,
+  ];
 
-    pool.query(queryText, queryParams)
-        .then((result) => {
-            res.sendStatus(201)
-        }).catch((error) => {
-            res.sendStatus(500);
-            console.error('Error with the POST /api/addPlayers:', error);
-        })
+  pool
+    .query(queryText, queryParams)
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
