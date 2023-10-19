@@ -5,7 +5,7 @@ function* addPlayer(action) {
   console.log("Action:", action.payload);
   yield axios.post("/api/addPlayer", action.payload);
   yield put({
-    type: 'GET_PLAYER',
+    type: "GET_PLAYER",
   });
 }
 

@@ -1,6 +1,4 @@
-//The global store for storing the games 
-// inside a specific tournament
-
+// Global store for games
 const gamesReducer = (state = [], action) => {
     switch(action.type){
         case 'SET_GAMES':

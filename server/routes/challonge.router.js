@@ -1,9 +1,11 @@
 const express = require('express');
-const pool = require('../modules/pool');
 const router = express.Router();
 const axios = require('axios');
 
-// Get tournament
+// Router handles all the requests made to the Challonge API
+// * Note: Challonge refers to teams as participants
+
+// Get specific tournament from Challonge
 router.get('/tournament', (req, res) => {
     const apiKey = process.env.CHALLONGE_API_KEY;
 
@@ -30,9 +32,7 @@ router.get('/tournament', (req, res) => {
     fetchTournament();
 });
 
-//! Get index of tournaments
-
-// Create tournament
+// Create a new tournament
 router.post('/tournament', (req, res) => {
     const apiKey = process.env.CHALLONGE_API_KEY;
     const endpointURL = `https://api.challonge.com/v1/tournaments.json`;
@@ -62,18 +62,6 @@ router.post('/tournament', (req, res) => {
     createTournament();
 });
 
-// Start tournament
-//& not sure if "start_at" will automatically start the tournament
-
-// Finalize tournament
-//& Any utility to this?
-
-// Randomize tournament seeds
-
-// Update tournament
-
-// Delete tournament
-
 // Get participant list for a tournament
 router.get('/tournament/participants', (req, res) => {
     const apiKey = process.env.CHALLONGE_API_KEY;
@@ -95,7 +83,6 @@ router.get('/tournament/participants', (req, res) => {
         }
     }
     fetchParticipants()
-
 })
 
 // Add participant to tournament
@@ -103,8 +90,7 @@ router.post('/tournament/participants', (req, res) => {
 
     const apiKey = process.env.CHALLONGE_API_KEY;
     const {participants, newTournamentURL} = req.body;
-    console.log('in challonge add participants:', participants, newTournamentURL);
-
+    
     const participantsToSend = participants.map( participant => {
         return {
             "name": participant.team_name, 
@@ -131,13 +117,7 @@ router.post('/tournament/participants', (req, res) => {
     createParticipant();
 });
 
-// Update participant
-
-// Delete participant
-
-//! Get match list for tournament
-
-//! Get individual match
+// Get individual match
 router.get('/match', (req, res) => {
     const apiKey = process.env.CHALLONGE_API_KEY;
 
@@ -152,15 +132,12 @@ router.get('/match', (req, res) => {
                     api_key: apiKey
                 }
             })
-            console.log('getMatches response:', response.data)
             res.send(response.data)
         } catch (error) {
-            console.log('error in getMatches:', error)
+            console.error('error in getMatches:', error)
         }
     }
     getMatches()
 })
-
-// Update match
 
 module.exports = router;

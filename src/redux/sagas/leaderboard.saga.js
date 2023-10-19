@@ -3,7 +3,6 @@ import axios from 'axios'
 
 function* fetchLeaderboard(action){
     const leaderboardData = yield axios.get(`/api/leaderboard/${action.payload}`)
-    console.log('THe leaderboard Data:', leaderboardData.data);
     yield put({
         type:'LEADERBOARD_DATA',
         payload:leaderboardData.data

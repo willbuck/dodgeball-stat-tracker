@@ -17,17 +17,15 @@ router.post("/", (req, res) => {
         can_referee, captain)
     VALUES($1, $2, $3, $4, $5, $6, $7);`;
 
-  const queryParams = [firstName, lastName, jerseyNumber, 
-    teamId, phoneNumber, canReferee, isCaptain];
+  const queryParams = [firstName, lastName, jerseyNumber, teamId, phoneNumber, canReferee, isCaptain];
 
     pool.query(queryText, queryParams)
         .then((result) => {
             res.sendStatus(201)
         }).catch((error) => {
             res.sendStatus(500);
-            console.log('Error with the POST /api/addPlayers:', error);
+            console.error('Error with the POST /api/addPlayers:', error);
         })
-
 });
 
 module.exports = router;
