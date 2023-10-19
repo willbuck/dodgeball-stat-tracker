@@ -1,6 +1,4 @@
-import React from 'react';
 import { Link, useLocation, } from 'react-router-dom';
-
 
 
 function Header() {
@@ -8,6 +6,8 @@ function Header() {
 
     let currentTitle = '';
 
+    // Switch statement to render header text
+    // based on the current react router url
     switch (true) {
         case location.pathname.startsWith('/gameview'):
             currentTitle = 'Game: ';
@@ -57,7 +57,6 @@ function Header() {
         default:
             currentTitle = 'Page Not Found';
     }
-
 
     return (
         <div className="header" style={{ display: 'flex', justifyContent: 'space-between' }}>

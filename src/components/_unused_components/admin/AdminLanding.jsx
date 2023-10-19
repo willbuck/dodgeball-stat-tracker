@@ -1,6 +1,7 @@
-import React from "react";
+// Routing
 import { Link } from 'react-router-dom'
 
+// Style components
 import { Box, Stack } from "@mui/material";
 
 function AdminLanding() {

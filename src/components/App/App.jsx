@@ -5,13 +5,13 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import ProtectedRoute from "../Utility/ProtectedRoute";
+import ProtectedRoute from "../_unused_components/utility/ProtectedRoute";
 
 // Hooks
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-// Component Imports
+// Component imports
 import TournamentList from "../Main/Tournaments/TournamentList";
 import LoginPage from '../Login-Register/Login/LoginPage';
 import RegisterPage from "../Login-Register/Register/RegisterPage";
@@ -20,16 +20,15 @@ import Header from "../Header-Footer/Header/Header";
 import Footer from '../Header-Footer/Footer/Footer'
 import GameDetail from '../Main/Games/GameDetail';
 
-// Admin Component Imports
-import AdminLanding from '../Admin/AdminLanding'
+// Admin component imports
 import CreateTournament from '../Admin/CreateTournament'
 import ManageTournaments from "../Admin/ManageTournaments";
 import AddTeam from '../Admin/AddTeam'
 import ManageTeams from '../Admin/ManageTeams'
 import ManageUsers from "../Admin/ManageUsers";
-import ManagePlayers from '../Admin/ManagePlayers'
+import ManagePlayers from '../_unused_components/admin/ManagePlayers'
 
-
+// Nav, header, etc. component imports
 import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
@@ -80,58 +79,56 @@ export default function App() {
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
 
-          {/* ADMIN ROUTES */}
-          <ProtectedRoute exact path="/admin">
-            <AdminLanding />
-          </ProtectedRoute>
-
-          <ProtectedRoute exact path="/admin/create-tournament">
+          {/* ADMIN COMPONENTS */}
+          <Route exact path="/admin/create-tournament">
             <CreateTournament />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/admin/manage-tournaments">
+          <Route exact path="/admin/manage-tournaments">
             <ManageTournaments />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/admin/add-team">
+          <Route exact path="/admin/add-team">
             <AddTeam />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/admin/manage-teams">
+          <Route exact path="/admin/manage-teams">
             <ManageTeams />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/admin/manage-users">
+          <Route exact path="/admin/manage-users">
             <ManageUsers />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute exact path="/admin/manage-players">
+          <Route exact path="/admin/manage-players">
             <ManagePlayers />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute
+          {/* MAIN USER COMPONENTS */}
+          <Route
             // logged in shows UserPage else shows LoginPage
             exact
             path="/home"
           >
             <TournamentList />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute
+          <Route
             // logged in shows InfoPage else shows LoginPage
             path="/gameview/:id"
           >
             <GameDetail />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute path="/games/:id">
+          <Route path="/games/:id">
             <GamesList />
-          </ProtectedRoute>
+          </Route>
 
-          <ProtectedRoute path="/leaderboard/:id">
+          <Route path="/leaderboard/:id">
             <Leaderboard />
-          </ProtectedRoute>
+          </Route>
 
+          {/* LOGIN / REGISTRATION */}
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
@@ -153,11 +150,7 @@ export default function App() {
               // Otherwise, show the registration page
               <RegisterPage />
             )}
-          </Route>
-
-          <Route exact path="/home">
-            <TournamentList />
-          </Route>
+          </Route>          
 
           {/* 404 */}
           <Route>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Modal } from '@mui/material';
 import { IconEdit } from '@tabler/icons-react';
 
-import EditPlayerForm from './EditPlayerForm'
+import EditPlayerForm from '../../Admin/EditPlayerForm'
 import AddPlayerForm from './AddPlayerForm';
 
 export default function ManagePlayers() {
@@ -13,7 +13,7 @@ export default function ManagePlayers() {
   const allPlayers = useSelector((store) => store.playersReducer)
   const [ playerToEdit, setPlayerToEdit ] = useState('')
   const [ isFormOpen, setIsFormOpen ] = useState(false)
-  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
+  const [ isAddFormOpen, setIsAddFormOpen ] = useState(false);
 
   useEffect(() => {
     dispatch({ type: "FETCH_PLAYERS", payload: user });

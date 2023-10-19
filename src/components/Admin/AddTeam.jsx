@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
+// Style components
 import { Container, TextField, Typography, Stack, Button, Box, Grid, Card, Badge } from '@mui/material'
 
 // imports for testing merge of add teams with manage teams below
@@ -14,15 +15,14 @@ import ManageTeamsModal from './ManageTeamsModal';
 import Autocomplete from "@mui/material/Autocomplete";
 import Divider from '@mui/material/Divider';
 
+
 export default function AddTeam() {
   const dispatch = useDispatch();
   const allTeams = useSelector((store) => store.teamsReducer)
   const allTournaments = useSelector((store) => store.tournamentsReducer)
 
-
   const [teamName, setTeamName] = useState('')
   const [teamColor, setTeamColor] = useState('')
-
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -30,7 +30,6 @@ export default function AddTeam() {
     // TODO: add jersey color
     const teamData = { teamName, teamColor }
     dispatch({ type: 'ADD_TEAM', payload: teamData })
-
     setTeamName('')
     setTeamColor('')
   }
@@ -53,7 +52,7 @@ export default function AddTeam() {
 
 
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -339,7 +338,6 @@ export default function AddTeam() {
             </div>
           ))}
         </div>
-
 
       </Container>
 

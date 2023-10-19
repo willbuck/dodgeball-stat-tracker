@@ -13,7 +13,7 @@ import {
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 
 export default function AddPlayerForm({ onClose }) {
   const teamStore = useSelector((store) => store.teamsReducer);
@@ -27,7 +27,7 @@ export default function AddPlayerForm({ onClose }) {
   const [isCaptain, setIsCaptain] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState("");
 
-  const handleSubmit = (event, SelectChangeEvent) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     // update DB / challonge
     const objectToSend = {
@@ -49,6 +49,7 @@ export default function AddPlayerForm({ onClose }) {
   const handleChangeTeam = (event) => {
     setSelectedTeam(event.target.value);
   };
+
   return (
     <Dialog open={true} onClose={onClose}>
       <DialogTitle>ADD Player</DialogTitle>

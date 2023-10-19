@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Box, Card, Typography, Grid, Container, Badge, Stack } from '@mui/material';
 import { IconTrash } from '@tabler/icons-react';
@@ -19,18 +19,16 @@ export default function ManageTeams() {
   const allTeams = useSelector((store) => store.teamsReducer)
   const allTournaments = useSelector((store) => store.tournamentsReducer)
 
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-
-  //! Should this function be async?
   const handleDelete = (id) => {
     dispatch({ type: "DELETE_TEAM", payload: id });
     dispatch({ type: 'FETCH_TEAMS' })
@@ -38,10 +36,7 @@ export default function ManageTeams() {
 
   const handleLocation = (id) => {
     dispatch({ type: "FETCH_MTEAM", payload: id });
-    // dispatch({ type: 'FETCH_TEAMS' })
   }
-
-
 
   // These handle teams search bar
   const [selectedTeam, setSelectedTeam] = useState(null);
@@ -51,13 +46,14 @@ export default function ManageTeams() {
     setSelectedTeam(newValue);
   };
 
-
-
-  // Creates Dictionary Object to Group tourament data to team data
+  // Creates Dictionary Object to Group tournament data to team data
   const teamsByTournament = {};
 
+  // 
   allTeams.forEach((team) => {
     const tournamentId = team.tournament_id;
+
+    // Find tournament with matching tournamentId
     const tournament = allTournaments.find((t) => t.id === tournamentId);
     if (tournament) {
       const tournamentName = tournament.tournament_name;
@@ -133,10 +129,12 @@ export default function ManageTeams() {
                 <EditLocationAltIcon />
                 <ManageTeamsModal />
               </MenuItem>
+
               <MenuItem onClick={() => handleDelete(anchorEl.value)} disableRipple>
                 <IconTrash />
                 Delete Team
               </MenuItem>
+
             </Menu>
           </Box>
         </Card>
