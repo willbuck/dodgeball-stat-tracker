@@ -1,3 +1,5 @@
+// These warnings will show a warning in the server log when the .env isn't setup correctly
+
 const badSecret = `
 ----------------------------
 

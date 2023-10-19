@@ -24,8 +24,7 @@ router.get('/', (req, res) => {
       FULL JOIN participants
         ON team.id = participants.team_id
       LEFT JOIN tournament
-        ON participants.tournament_url = tournament.url
-    ;
+        ON participants.tournament_url = tournament.url;
     `
 
   pool.query(querytext)

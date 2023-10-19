@@ -2,12 +2,8 @@ import { takeLatest, put } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* addTeamToTournament(action) {
-    console.log("??????", action.payload, action.team)
-
     let participants = action.team
-
     let newTournamentID = action.payload
-
     let sentObject = {participants, newTournamentID}
 
     try {

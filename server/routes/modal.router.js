@@ -4,9 +4,7 @@ const router = express.Router();
 
 router.get('/:id', (req,res) => {
 
-
     const queryText = `SELECT * FROM team WHERE id = $1;`
-
 
     const queryParams = [req.params.id]
     pool.query(queryText, queryParams)

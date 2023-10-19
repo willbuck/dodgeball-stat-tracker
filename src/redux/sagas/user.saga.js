@@ -12,7 +12,6 @@ function* fetchUser(action) {
     // Sending UUID info to user reducer
       // Doing this first because anonymous users trigger the error catch before the other SET_USER dispatch can run
     
-
     // Post UUID to database
     const {data} = yield axios.post('/api/user/uuid', action.payload);
     const userInfo = {uuid: data[0].uuid, pseudonym: data[0].pseudonym, uuid_index: data[0].id}

@@ -2,15 +2,10 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-// I need the statistics
-//of the offical_score keper
-// in a given tournament
-// ordering them by event_count
-// FOR the leaderboard page
+// Router for the Leaderboard component
 router.get("/:id", (req, res) => {
-  //the given tournament
-  const tournamentId = req.params.id;
 
+  const tournamentId = req.params.id;
   const queryText = `
   SELECT 
     players.id AS player_id,
@@ -52,7 +47,6 @@ router.get("/:id", (req, res) => {
       res.send(result.rows);
     })
     .catch((error) => {
-      console.log("ERROR with the  GET leaderboard", error);
       res.sendStatus(500);
     });
 });
