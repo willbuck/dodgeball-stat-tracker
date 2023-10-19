@@ -17,9 +17,6 @@ router.get('/', (req, res) => {
 
 // POST - Adding new team to DB
 router.post('/', (req, res) => {
-  console.log(`adding new team to DB...`)
-  console.log(`new team: ${req.body.teamName}`)
-
   const {
     teamName
   } = req.body
@@ -43,7 +40,6 @@ router.post('/', (req, res) => {
       res.sendStatus(200);
     })
     .catch(error => {
-      console.error(`Cannot add team to DB`, error);
       res.sendStatus(500);
     });
 });
@@ -57,7 +53,6 @@ router.delete('/:id', (req, res) => {
   pool.query(queryText, [ teamID ])
   .then(() => res.sendStatus(201))
   .catch((error) => {
-    console.log(`Cannot remove from party ${error}`);
     res.sendStatus(500);
   });  
 })

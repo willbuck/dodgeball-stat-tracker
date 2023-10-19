@@ -23,7 +23,6 @@ const manageUsersRouter = require('./routes/manageUsers.router');
 const allPlayersRouter = require('./routes/allPlayers.router')
 const statsRouter = require('./routes/stats.router');
 
-
 // do we need these???
 const addPlayersRouter = require('./routes/addPlayers.router')
 const updatePlayerRouter = require('./routes/updatePlayer.router')
@@ -36,15 +35,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Passport Session Configuration //
 app.use(sessionMiddleware);
 
-// start up passport sessions
+// Start up passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
 
-/* Routes */
+/* Server Routes */
 app.use('/api/user', userRouter);
 app.use('/api/challonge', challongeRouter);
 app.use('/api/tournament', tournamentRouter);
-// why is this playersRouter?  is it only for specific games?
+
 app.use('/api/players', playersRouter);
 app.use('/api/games', gamesRouter);
 app.use('/api/stats', statsRouter);
@@ -58,13 +57,8 @@ app.use('/api/allPlayers', allPlayersRouter);
 app.use('/api/addPlayer', addPlayersRouter);
 app.use('/api/updatePlayer', updatePlayerRouter);
 
-
 app.use('/api/manageUsers', manageUsersRouter);
 app.use('/api/admin/modal', modalRouter)
-
-
-
-
 
 // Serve static files
 app.use(express.static('build'));
@@ -74,5 +68,5 @@ const PORT = process.env.PORT || 5000;
 
 /** Listen * */
 app.listen(PORT, () => {
-  console.log(`Listening on port: ${PORT}`);
+  console.log(`🙉 on port: ${PORT}`);
 });
