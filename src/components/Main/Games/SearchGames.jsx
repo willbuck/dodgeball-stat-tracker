@@ -1,14 +1,13 @@
-import * as React from "react";
+// Hooks
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 
+// Style components
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
-export default function SearchGames() {
+export default function SearchGames(props) {
+  const { games } = props
   const history = useHistory()
-  
-  const games = useSelector((store) => store.gamesReducer);
 
   return (
     <Autocomplete
@@ -16,8 +15,8 @@ export default function SearchGames() {
       getOptionLabel={(option) =>
         `${option.team1_name} VS ${option.team2_name}`
       }
-      onChange={(event, game) => history.push(`/games/${tournament.id}`)}
+      onChange={(event, game) => history.push(`/games/${game.id}`)}
       renderInput={(params) => <TextField {...params} label="Games" />}
-    ></Autocomplete>
+    />
   );
 }

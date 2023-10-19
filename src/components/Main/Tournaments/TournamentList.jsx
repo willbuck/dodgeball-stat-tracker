@@ -1,13 +1,13 @@
-import * as React from "react";
+// Hooks
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+// Custom components
 import SearchTournament from "./SearchTournament";
-import nationals from "./nationals.jpeg";
 
 // MUI
 import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
@@ -17,16 +17,18 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 
+
 export default function TournamentList() {
+  // Hooks
   const dispatch = useDispatch();
   const history = useHistory();
-  const tournaments = useSelector((store) => store.tournamentsReducer);
-  const upcomingTournament = useSelector(
-    (store) => store.tournamentsReducer[0]
-  );
 
+  // Global state
+  const tournaments = useSelector(store => store.tournamentsReducer);
+  const upcomingTournament = useSelector(store => store.tournamentsReducer[0]);
+
+  // Navigate to tournament on click
   const handleClick = (id) => {
-    console.log(id);
     history.push(`/games/${id}`);
   };
 
@@ -44,7 +46,7 @@ export default function TournamentList() {
           margin: "5px",
         }}
       >
-        {/* <CardMedia component="img" image={nationals}></CardMedia> */}
+        {/* FEATURED TOURNAMENT CARD */}
         <CardContent>
           {upcomingTournament && (
             <>
@@ -54,7 +56,6 @@ export default function TournamentList() {
               <Typography variant="h6">
                 {upcomingTournament.location}
               </Typography>
-              <Typography variant="body1">September 1-4</Typography>
             </>
           )}
         </CardContent>
@@ -68,8 +69,13 @@ export default function TournamentList() {
           </Button>
         </CardActions>
       </Card>
+
       <Divider sx={{ marginTop: "20px", marginBottom: "20px" }} />
+
+      {/* SEARCHBAR COMPONENT */}
       <SearchTournament />
+
+      {/* FULL TOURNAMENT LIST */}
       <Grid container spacing={0}>
         {tournaments.slice(1).map((tournament) => (
           <Grid item xs={12} sm={6} md={4} key={tournament.id}>
@@ -83,14 +89,13 @@ export default function TournamentList() {
             >
               <CardContent>
                 <Typography variant="body1">
-                  {tournament.tournament_name}{" "}
-                  {/* {tournament.start_date
-      ? tournament.start_date
-      : "Dates : TBD"} */}
+                  {tournament.tournament_name}
                 </Typography>
-                <Typography variant="body2">{tournament.location}</Typography>
 
-                <Typography variant="body2"></Typography>
+                <Typography variant="body2">
+                  {tournament.location}
+                </Typography>
+
               </CardContent>
             </Card>
           </Grid>

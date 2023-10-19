@@ -1,21 +1,21 @@
-import React, { useEffect } from "react";
+// Routing components
 import {
   HashRouter as Router,
   Redirect,
   Route,
   Switch,
 } from "react-router-dom";
-
-import { useDispatch, useSelector } from "react-redux";
-
-
 import ProtectedRoute from "../Utility/ProtectedRoute";
 
+// Hooks
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
 // Component Imports
-import Home from "../Main/Home";
+import TournamentList from "../Main/Tournaments/TournamentList";
 import LoginPage from '../Login-Register/Login/LoginPage';
 import RegisterPage from "../Login-Register/Register/RegisterPage";
-import TournamentDetails from "../Main/Games/GamesList";
+import GamesList from "../Main/Games/GamesList";
 import Header from "../Header-Footer/Header/Header";
 import Footer from '../Header-Footer/Footer/Footer'
 import GameDetail from '../Main/Games/GameDetail';
@@ -29,20 +29,23 @@ import ManageTeams from '../Admin/ManageTeams'
 import ManageUsers from "../Admin/ManageUsers";
 import ManagePlayers from '../Admin/ManagePlayers'
 
+
 import BottomNavbar from "../BottomNavbar/BottomNavbar";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import './App.css';
 
 // Unique identifiers for anonymous users
 import { v4 as uuidv4 } from 'uuid';
-import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
+import { uniqueNamesGenerator, colors, animals } from "unique-names-generator";
 
-function App() {
+export default function App() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
 
   // Creating unique user ID
-  //! check for existing uuid before creating this?
+  //! this has been basically detached from anything dynamic
+  //! will likely need to be redone in a way that minds the 
+  //! PWA functionality
   const uniqueID = {
     // Generating UUID from DNS namespace
     uuid: uuidv4('usa_dodgeball', uuidv4.DNS),
@@ -111,7 +114,7 @@ function App() {
             exact
             path="/home"
           >
-            <Home />
+            <TournamentList />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -122,7 +125,7 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute path="/games/:id">
-            <TournamentDetails />
+            <GamesList />
           </ProtectedRoute>
 
           <ProtectedRoute path="/leaderboard/:id">
@@ -153,10 +156,10 @@ function App() {
           </Route>
 
           <Route exact path="/home">
-            <Home />
+            <TournamentList />
           </Route>
 
-          {/* If none of the other routes matched, we will show a 404. */}
+          {/* 404 */}
           <Route>
             <h1>404</h1>
           </Route>
@@ -167,5 +170,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

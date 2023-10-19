@@ -1,7 +1,5 @@
 //! Refactor goal: import helper functions
 
-import React from 'react';
-
 // Hooks
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector, } from "react-redux";

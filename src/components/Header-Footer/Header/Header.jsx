@@ -79,23 +79,9 @@ function Header() {
                 />
             </Link>
 
-            {/* Depracated And Moved to Bottom Navbar */}
-            {/* {location.pathname !== '/home' && (
-                <IconButton onClick={() => { history.goBack() }} sx={{ color: '#186BCC', }}>
-                    <ArrowBackIcon />
-                </IconButton>
-            )} */}
-
             <div>
                 <h2 className="header-title">{currentTitle}</h2>
-                {/* {currentTitle === 'Game View' &&
-                    <div>
-                        <h3>Score: {team1_score} - {team2_score}</h3>
-                    </div>
-                } */}
             </div>
-
-            <div>{/* Temporary Empty Div for Title Placement */}</div>
 
         </div>
     );
