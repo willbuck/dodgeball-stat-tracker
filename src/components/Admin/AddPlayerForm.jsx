@@ -48,7 +48,6 @@ export default function AddPlayerForm({ onClose }) {
 
   const handleChangeTeam = (event) => {
     setSelectedTeam(event.target.value);
-    console.log(event.target.value);
   };
   return (
     <Dialog open={true} onClose={onClose}>

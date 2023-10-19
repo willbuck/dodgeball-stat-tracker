@@ -29,13 +29,11 @@ export default function GamesList() {
 
   // Get tournament id from route params & format as number
   const { id, tournamentID = Number(id) } = useParams();
-  console.log('tournamentID:', tournamentID)
 
   // Get selected tournament object
   let selectedTournament;
   for (let tournament of allTournaments) {
     if (tournament.id === tournamentID) {
-      console.log('tournament:', tournament)
       selectedTournament = tournament;
     }
   }
@@ -62,7 +60,6 @@ export default function GamesList() {
   };
 
   const handleClickLeaderboard = () => {
-    console.log("In here", tournamentID);
     dispatch({
       type: "GET_STATISTICS",
       payload: tournamentID,

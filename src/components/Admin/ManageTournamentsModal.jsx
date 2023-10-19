@@ -34,7 +34,6 @@ export default function ManageTournamentsModal(tournamentId) {
     const allTournaments = useSelector((store) => store.tournamentsReducer)
 
     const organizerCandidates = allUsers.filter(user => user.auth_level === 4 || user.auth_level === 5);
-    // console.log('all users:', allUsers);
 
     useEffect(() => {
         dispatch({ type: "FETCH_USER_LIST" });

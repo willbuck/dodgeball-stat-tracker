@@ -29,7 +29,6 @@ export default function AddTeam() {
 
     // TODO: add jersey color
     const teamData = { teamName, teamColor }
-    console.log("adding team", teamData)
     dispatch({ type: 'ADD_TEAM', payload: teamData })
 
     setTeamName('')
@@ -71,9 +70,8 @@ export default function AddTeam() {
   }
 
   const handleLocation = (id) => {
-    console.log("id from team", id)
     dispatch({ type: "FETCH_MTEAM", payload: id });
-    //dispatch({ type: 'FETCH_TEAMS' })
+    // dispatch({ type: 'FETCH_TEAMS' })
   }
 
 

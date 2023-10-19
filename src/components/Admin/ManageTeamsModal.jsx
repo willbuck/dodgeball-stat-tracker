@@ -37,8 +37,6 @@ export default function ManageTeamsModal() {
   
 
   const handleAdd = (id) => {
-    console.log("tournament", id)
-    console.log("team thats sending...", team)
     dispatch({ type: 'TEAM_TO_TOURNAMENT', payload: id, team: team })
     handleClose()
   }

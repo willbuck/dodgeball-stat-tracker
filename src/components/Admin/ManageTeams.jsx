@@ -37,9 +37,8 @@ export default function ManageTeams() {
   }
 
   const handleLocation = (id) => {
-    console.log("id from team", id)
     dispatch({ type: "FETCH_MTEAM", payload: id });
-    //dispatch({ type: 'FETCH_TEAMS' })
+    // dispatch({ type: 'FETCH_TEAMS' })
   }
 
 

@@ -41,22 +41,16 @@ export default function ManageUsers() {
     }, []);
 
     const handleCaptain = (id) => {
-        console.log("allusers", allUsers)
-        console.log("user", id);
         dispatch({ type: "PROMOTE_USER", payload: id, auth: 3 });
         dispatch({ type: "FETCH_USER_LIST" });
     }
 
     const handleAdmin = (id) => {
-        console.log("allusers", allUsers)
-        console.log("user", id);
         dispatch({ type: "PROMOTE_USER", payload: id, auth: 4 });
         dispatch({ type: "FETCH_USER_LIST" });
     }
 
     const handleSiteAdmin = (id) => {
-        console.log("allusers", allUsers)
-        console.log("user", id);
         dispatch({ type: "PROMOTE_USER", payload: id, auth: 5 });
         dispatch({ type: "FETCH_USER_LIST" });
     }

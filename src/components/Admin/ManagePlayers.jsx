@@ -25,7 +25,6 @@ const handleClick = (player) => {
 }
 
 const handleAddPlayer = () => {
-    console.log('Hey you can add!')
     setIsAddFormOpen(true)
 }
 

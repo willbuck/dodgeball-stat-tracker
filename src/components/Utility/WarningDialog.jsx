@@ -14,7 +14,6 @@ export default function WarningDialog() {
   };
 
   const handleDelete = () => {
-    console.log('Delete clicked.');
     setOpen(false);
     setShowButtons(false);
   };

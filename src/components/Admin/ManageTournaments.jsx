@@ -35,8 +35,6 @@ export default function ManageTournaments() {
   const open = Boolean(anchorEl);
   const handleEdit = (event, tournamentId) => {
     setSelectedTournamentId(tournamentId);
-    console.log('tournament id before modal', selectedTournamentId);
-
     setAnchorEl(event.currentTarget);
   };
 

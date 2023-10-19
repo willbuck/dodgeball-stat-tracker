@@ -1,21 +1,10 @@
 import React from 'react';
-import { Link, useHistory, useLocation, } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-// import LogOutButton from '../LogOutButton/LogOutButton';
+import { Link, useLocation, } from 'react-router-dom';
 
-// MUI Components
-// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import IconButton from '@mui/material/IconButton';
-// import { Height } from '@mui/icons-material';
+
 
 function Header() {
-    const history = useHistory();
     const location = useLocation();
-    const user = useSelector((store) => store.user);
-    // const currentScore = useSelector((store) => store.playersReducer);
-    // const team1_score = currentScore.game.team1_score;
-    // const team2_score = currentScore.game.team2_score;
-
 
     let currentTitle = '';
 
