@@ -59,11 +59,6 @@ export default function ManageTournamentsModal(tournamentId) {
     const [organizer, setOrganizer] = useState(tournamentSelected.tournament_organizer)
     const [description, setDescription] = useState(tournamentSelected.description)
     const id = tournamentSelected.id;
-    
-    const handlePresentation = () => {
-        setName("Maple Grove Invitational")
-        setLocation("Maple Grove Arena")
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -105,7 +100,6 @@ export default function ManageTournamentsModal(tournamentId) {
                                 placeholder="Tournament Name"
                                 value={name}
                                 onChange={(event) => setName(event.target.value)}
-                                onClick={handlePresentation}
                             />
 
                             {/* Start Date input */}
